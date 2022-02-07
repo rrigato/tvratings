@@ -97,6 +97,8 @@ class TestEntityModel(unittest.TestCase):
         """All TelevisionRating attributes are None after instance intialization"""
         from tvratings.entities.entity_model import TelevisionRating
 
+
+
         television_rating_entity = TelevisionRating()
 
         

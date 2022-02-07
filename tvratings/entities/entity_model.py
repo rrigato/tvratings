@@ -1,15 +1,9 @@
 from datetime import date
 
-class ShowAggregate:
-    """Custom aggregration for a show"""
-
-    def __init__(self):
-        """Initialize all attributes to None"""
-        pass
 
 
 class TelevisionRating:
-    """Custom aggregration for a show"""
+    """Television rating for one night, one timeslot, one show"""
 
     def __init__(self):
         """Initialize all attributes to None"""
@@ -96,3 +90,30 @@ class TelevisionRating:
         if type(household_18_49) not in (float, type(None)):
             raise TypeError("TelevisionRating - household_18_49 datatype must be a float")
         self._household_18_49 = household_18_49
+
+
+
+
+class RatingMetric:
+    """Television rating for one night, one timeslot, one show"""
+
+    def __init__(self):
+        """Initialize all attributes to None"""
+        self.metric_description = None
+        self.rating = None
+        self.rating_18_49 = None
+        self.household = None
+        self.household_18_49 = None
+
+
+class ShowMetric:
+    """Custom metric for a specific show"""
+
+    def __init__(self):
+        """Initialize all attributes to None"""
+        self.show_name = None
+        self.metric_type = None
+        self.metric_value = None
+
+
+
