@@ -94,7 +94,7 @@ class TelevisionRating:
 
 
 
-class RatingMetric:
+class RatingsMetric:
     """Television rating for one night, one timeslot, one show"""
 
     def __init__(self):

@@ -95,12 +95,12 @@ class TestEntityModel(unittest.TestCase):
 
     def test_entity_model_entities_defaults_to_none(self):
         """All entity class attributes are None after instance intialization"""
-        from tvratings.entities.entity_model import RatingMetric
+        from tvratings.entities.entity_model import RatingsMetric
         from tvratings.entities.entity_model import TelevisionRating
 
 
         mock_entity_types = [
-            RatingMetric,
+            RatingsMetric,
             TelevisionRating
         ]
 
