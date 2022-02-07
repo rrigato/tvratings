@@ -85,16 +85,16 @@ class TestEntityModel(unittest.TestCase):
                 mock_television_rating = TelevisionRating()
 
                 with self.assertRaises(TypeError):
-                    mock_television_rating.zip_code = mock_invalid_type
+                    mock_television_rating.rating = mock_invalid_type
                 
                 with self.assertRaises(TypeError):
-                    mock_television_rating.air_quality_index = mock_invalid_type
+                    mock_television_rating.rating_18_49 = mock_invalid_type
 
                 with self.assertRaises(TypeError):
-                    mock_television_rating.fine_particulate_matter_2_5 = mock_invalid_type
+                    mock_television_rating.household = mock_invalid_type
 
                 with self.assertRaises(TypeError):
-                    mock_television_rating.coarse_particulate_matter_10 = mock_invalid_type
+                    mock_television_rating.household_18_49 = mock_invalid_type
 
 
     def test_television_rating_defaults_none(self):
