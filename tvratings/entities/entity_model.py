@@ -14,7 +14,7 @@ class TelevisionRating:
     def __init__(self):
         """Initialize all attributes to None"""
         self.show_air_date = None
-        self.timeslot = None
+        self.time_slot = None
         self.show_name = None
         self.rating = None
         self.rating_18_49 = None
@@ -33,14 +33,14 @@ class TelevisionRating:
 
 
     @property
-    def timeslot(self):
-        return(self._timeslot)
+    def time_slot(self):
+        return(self._time_slot)
 
-    @timeslot.setter
-    def timeslot(self, timeslot):
-        if type(timeslot) not in (str, type(None)):
-            raise TypeError("TelevisionRating - timeslot datatype must be a str")
-        self._timeslot = timeslot
+    @time_slot.setter
+    def time_slot(self, time_slot):
+        if type(time_slot) not in (str, type(None)):
+            raise TypeError("TelevisionRating - time_slot datatype must be a str")
+        self._time_slot = time_slot
 
 
     @property

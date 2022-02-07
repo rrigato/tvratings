@@ -7,7 +7,7 @@ class TestEntityModel(unittest.TestCase):
         from datetime import date
 
         mock_show_air_date = "2014-01-04"
-        mock_timeslot = "12:00"
+        mock_time_slot = "12:00"
         mock_show_name = "Bleach"
         mock_rating = 1084
         mock_rating_18_49 = None
@@ -19,7 +19,7 @@ class TestEntityModel(unittest.TestCase):
 
 
         television_rating_entity.show_air_date = date.fromisoformat(mock_show_air_date)
-        television_rating_entity.timeslot = mock_timeslot
+        television_rating_entity.time_slot = mock_time_slot
         television_rating_entity.show_name = mock_show_name
         television_rating_entity.rating = mock_rating
         television_rating_entity.rating_18_49 = mock_rating_18_49
@@ -28,7 +28,7 @@ class TestEntityModel(unittest.TestCase):
         
 
         self.assertEqual(television_rating_entity.show_air_date.isoformat(), mock_show_air_date)
-        self.assertEqual(television_rating_entity.timeslot, mock_timeslot)
+        self.assertEqual(television_rating_entity.time_slot, mock_time_slot)
         self.assertEqual(television_rating_entity.show_name, mock_show_name)
         self.assertEqual(television_rating_entity.rating, mock_rating)
         self.assertEqual(television_rating_entity.rating_18_49, mock_rating_18_49)
@@ -56,7 +56,7 @@ class TestEntityModel(unittest.TestCase):
                 mock_television_rating = TelevisionRating()
                 
                 with self.assertRaises(TypeError):
-                    mock_television_rating.timeslot = mock_invalid_type
+                    mock_television_rating.time_slot = mock_invalid_type
 
                 with self.assertRaises(TypeError):
                     mock_television_rating.show_name = mock_invalid_type
