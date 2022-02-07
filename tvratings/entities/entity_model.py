@@ -30,7 +30,29 @@ class TelevisionRating:
         if type(show_air_date) not in (date, type(None)):
             raise TypeError("TelevisionRating - show_air_date datatype must be a date")
         self._show_air_date = show_air_date
-        
+
+
+    @property
+    def timeslot(self):
+        return(self._timeslot)
+
+    @timeslot.setter
+    def timeslot(self, timeslot):
+        if type(timeslot) not in (str, type(None)):
+            raise TypeError("TelevisionRating - timeslot datatype must be a str")
+        self._timeslot = timeslot
+
+
+    @property
+    def show_name(self):
+        return(self._show_name)
+
+    @show_name.setter
+    def show_name(self, show_name):
+        if type(show_name) not in (str, type(None)):
+            raise TypeError("TelevisionRating - show_name datatype must be a str")
+        self._show_name = show_name
+
 
     @property
     def rating(self):

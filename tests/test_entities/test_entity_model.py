@@ -56,10 +56,10 @@ class TestEntityModel(unittest.TestCase):
                 mock_television_rating = TelevisionRating()
                 
                 with self.assertRaises(TypeError):
-                    mock_television_rating.burn_day = mock_invalid_type
+                    mock_television_rating.timeslot = mock_invalid_type
 
                 with self.assertRaises(TypeError):
-                    mock_television_rating.television_rating = mock_invalid_type
+                    mock_television_rating.show_name = mock_invalid_type
 
 
     def test_television_rating_bad_input_numeric_attributes(self):
