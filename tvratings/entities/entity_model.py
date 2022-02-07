@@ -99,21 +99,16 @@ class RatingMetric:
 
     def __init__(self):
         """Initialize all attributes to None"""
+        self.metric_key = None
         self.metric_description = None
         self.rating = None
         self.rating_18_49 = None
         self.household = None
         self.household_18_49 = None
-
-
-class ShowMetric:
-    """Custom metric for a specific show"""
-
-    def __init__(self):
-        """Initialize all attributes to None"""
-        self.show_name = None
-        self.metric_type = None
-        self.metric_value = None
+        '''
+            TODO - test cases and implementation
+            parameterize existing test cases?
+        '''
 
 
 

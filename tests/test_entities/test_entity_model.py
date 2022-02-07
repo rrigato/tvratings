@@ -93,21 +93,31 @@ class TestEntityModel(unittest.TestCase):
                     mock_television_rating.household_18_49 = mock_invalid_type
 
 
-    def test_television_rating_defaults_none(self):
-        """All TelevisionRating attributes are None after instance intialization"""
+    def test_entity_model_entities_defaults_to_none(self):
+        """All entity class attributes are None after instance intialization"""
+        from tvratings.entities.entity_model import RatingMetric
         from tvratings.entities.entity_model import TelevisionRating
 
 
+        mock_entity_types = [
+            RatingMetric,
+            TelevisionRating
+        ]
 
-        television_rating_entity = TelevisionRating()
+        for mock_entity_type in mock_entity_types:
+            with self.subTest(mock_entity_type=mock_entity_type):
+                
+                television_rating_entity = TelevisionRating()
 
         
-        television_rating_attributes = [
-            attribute_name for attribute_name in dir(television_rating_entity) 
-            if not attribute_name.startswith("_")
-        ]
+                television_rating_attributes = [
+                    attribute_name for attribute_name in dir(television_rating_entity) 
+                    if not attribute_name.startswith("_")
+                ]
 
-        [
-            self.assertIsNone(getattr(television_rating_entity, television_rating_attribute)) 
-            for television_rating_attribute in television_rating_attributes
-        ]
+                [
+                    self.assertIsNone(
+                        getattr(television_rating_entity, television_rating_attribute)
+                    ) 
+                    for television_rating_attribute in television_rating_attributes
+                ]
