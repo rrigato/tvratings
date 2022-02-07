@@ -1,4 +1,3 @@
-from copy import deepcopy
 import unittest
 
 class TestEntityModel(unittest.TestCase):
@@ -7,37 +6,34 @@ class TestEntityModel(unittest.TestCase):
         from tvratings.entities.entity_model import TelevisionRating
         from datetime import date
 
-        mock_burn_day = "3005-11-29"
-        mock_television_rating = "Burning Discouraged"
-        mock_zip_code = 20002
-        mock_air_quality_index = 79
-        mock_fine_particulate_matter_2_5 = 24.4
-        mock_coarse_particulate_matter_10 = 111
+        mock_show_air_date = "2014-01-04"
+        mock_timeslot = "12:00"
+        mock_show_name = "Bleach"
+        mock_rating = 1084
+        mock_rating_18_49 = None
+        mock_household = .8
+        mock_household_18_49 = None
 
 
         television_rating_entity = TelevisionRating()
 
 
-        television_rating_entity.burn_day = date.fromisoformat(mock_burn_day)
-        television_rating_entity.television_rating = mock_television_rating
-        television_rating_entity.zip_code = mock_zip_code
-        television_rating_entity.air_quality_index = mock_air_quality_index
-        television_rating_entity.fine_particulate_matter_2_5 = mock_fine_particulate_matter_2_5
-        television_rating_entity.coarse_particulate_matter_10 = mock_coarse_particulate_matter_10
+        television_rating_entity.show_air_date = date.fromisoformat(mock_show_air_date)
+        television_rating_entity.timeslot = mock_timeslot
+        television_rating_entity.show_name = mock_show_name
+        television_rating_entity.rating = mock_rating
+        television_rating_entity.rating_18_49 = mock_rating_18_49
+        television_rating_entity.household = mock_household
+        television_rating_entity.household_18_49 = mock_household_18_49
         
 
-        self.assertEqual(television_rating_entity.burn_day.isoformat(), mock_burn_day)
-        self.assertEqual(television_rating_entity.television_rating, mock_television_rating)
-        self.assertEqual(television_rating_entity.zip_code, mock_zip_code)
-        self.assertEqual(television_rating_entity.air_quality_index, mock_air_quality_index)
-        self.assertEqual(
-            television_rating_entity.fine_particulate_matter_2_5, 
-            mock_fine_particulate_matter_2_5
-        )
-        self.assertEqual(
-            television_rating_entity.coarse_particulate_matter_10, 
-            mock_coarse_particulate_matter_10
-        )
+        self.assertEqual(television_rating_entity.show_air_date.isoformat(), mock_show_air_date)
+        self.assertEqual(television_rating_entity.timeslot, mock_timeslot)
+        self.assertEqual(television_rating_entity.show_name, mock_show_name)
+        self.assertEqual(television_rating_entity.rating, mock_rating)
+        self.assertEqual(television_rating_entity.rating_18_49, mock_rating_18_49)
+        self.assertEqual(television_rating_entity.household, mock_household)
+        self.assertEqual(television_rating_entity.household_18_49, mock_household_18_49)
 
 
 
