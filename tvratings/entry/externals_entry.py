@@ -31,3 +31,4 @@ def get_valid_date(tvratings_day):
     logging.info("get_valid_date - ValidRequest returned")
     
     return(ValidRequest(request_filters={"ratings_date": valid_date}))
+    

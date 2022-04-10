@@ -3,7 +3,7 @@ import unittest
 
 class TestExternalsEntry(unittest.TestCase):
     def test_get_valid_date_request(self):
-        """Happy Path ValidRequest returned for a requested date"""
+        """Happy Path ValidRequest returned on valid YYYY-MM-DD formatted input"""
         from datetime import date
         from tvratings.entry.externals_entry import get_valid_date
         from tvratings.entry.request_objects import ValidRequest
