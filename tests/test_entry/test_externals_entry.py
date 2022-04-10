@@ -3,6 +3,7 @@ from unittest.mock import patch
 
 import unittest
 
+
 class TestExternalsEntry(unittest.TestCase):
     def test_get_valid_date_request(self):
         """Happy Path ValidRequest returned on valid YYYY-MM-DD formatted input"""
@@ -56,13 +57,24 @@ class TestExternalsEntry(unittest.TestCase):
         """Happy Path"""
         from datetime import date
         from fixtures.ratings_fixtures import get_mock_television_ratings
+        from tvratings.entities.entity_model import TelevisionRating
         from tvratings.entry.externals_entry import get_one_night_ratings
         from tvratings.entry.request_objects import ValidRequest
         from tvratings.entry.response_objects import ResponseSuccess
 
-
+        mock_input_date = date.fromisoformat("2014-01-04")
         mock_television_ratings = get_mock_television_ratings(number_of_ratings=6)
         load_one_date_mock.return_value = (deepcopy(mock_television_ratings), None)
 
 
-        get_one_night_ratings()
+        one_nights_ratings = get_one_night_ratings(valid_date_request=ValidRequest(
+                request_filters={"ratings_date": mock_input_date}
+            )
+        )
+
+
+        [
+            self.assertEqual(type(rating), TelevisionRating) 
+            for rating in one_nights_ratings.response_value
+        ]
+        self.assertEqual(len(mock_television_ratings), len(one_nights_ratings.response_value))

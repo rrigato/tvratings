@@ -1,3 +1,4 @@
+from copy import deepcopy
 from tvratings.entry.input_valdiators import validate_iso_8601_date 
 from tvratings.entry.request_objects import ValidRequest 
 from tvratings.entry.request_objects import InvalidRequest 
@@ -58,7 +59,7 @@ def get_one_night_ratings(valid_date_request):
         logging.info("get_one_night_ratings - load_one_date_error")
         return(ResponseFailure(error_message=load_one_date_error))
 
-    logging.info("get_one_night_ratings - ValidRequest returned")
+    logging.info("get_one_night_ratings - returning ResponseSuccess")
     
-    return(ValidRequest(request_filters={"ratings_date": valid_date}))
+    return(ResponseSuccess(response_value=deepcopy(television_ratings)))
     
