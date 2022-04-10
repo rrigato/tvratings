@@ -80,7 +80,7 @@ class TestExternalsEntry(unittest.TestCase):
 
 
     @patch("tvratings.entry.externals_entry.load_one_date")
-    def test_get_one_night_ratings(self, load_one_date_mock):
+    def test_get_one_night_ratings_response_failure(self, load_one_date_mock):
         """Unhappy Path repo layer error results in ResponseFailure"""
         from datetime import date
         from tvratings.entry.externals_entry import get_one_night_ratings

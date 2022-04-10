@@ -5,12 +5,13 @@ from tvratings.entities.entity_model import TelevisionRating
 
 
 def get_mock_television_ratings(number_of_ratings):
-    """Creates list of mock TelevisionRating entities
+    """Creates a list of mock TelevisionRating entities
 
         Parameters
         ----------
         number_of_ratings: int
             number of mock TelevisionRating elements to create
+            Assumes, but does not validate, being less than 12
 
         Returns
         -------
