@@ -54,13 +54,12 @@ class TestExternalsEntry(unittest.TestCase):
 
     @patch("tvratings.entry.externals_entry.load_one_date")
     def test_get_one_night_ratings(self, load_one_date_mock):
-        """Happy Path"""
+        """Happy Path ResponseSuccess of TelevisionRating returned"""
         from datetime import date
         from fixtures.ratings_fixtures import get_mock_television_ratings
         from tvratings.entities.entity_model import TelevisionRating
         from tvratings.entry.externals_entry import get_one_night_ratings
         from tvratings.entry.request_objects import ValidRequest
-        from tvratings.entry.response_objects import ResponseSuccess
 
         mock_input_date = date.fromisoformat("2014-01-04")
         mock_television_ratings = get_mock_television_ratings(number_of_ratings=6)
@@ -78,3 +77,27 @@ class TestExternalsEntry(unittest.TestCase):
             for rating in one_nights_ratings.response_value
         ]
         self.assertEqual(len(mock_television_ratings), len(one_nights_ratings.response_value))
+
+
+    @patch("tvratings.entry.externals_entry.load_one_date")
+    def test_get_one_night_ratings(self, load_one_date_mock):
+        """Unhappy Path repo layer error results in ResponseFailure"""
+        from datetime import date
+        from tvratings.entry.externals_entry import get_one_night_ratings
+        from tvratings.entry.request_objects import ValidRequest
+
+        mock_input_date = date.fromisoformat("2014-01-04")
+        mock_error_message = "Botocore: table name not found"
+        load_one_date_mock.return_value = (None, mock_error_message)
+
+
+        one_nights_ratings = get_one_night_ratings(valid_date_request=ValidRequest(
+                request_filters={"ratings_date": mock_input_date}
+            )
+        )
+
+
+        
+        self.assertEqual(str, type(one_nights_ratings.error_message))
+        self.assertFalse(one_nights_ratings)
+
