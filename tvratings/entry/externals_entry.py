@@ -1,28 +1,33 @@
+from tvratings.entry.input_valdiators import validate_iso_8601_date 
+from tvratings.entry.request_objects import ValidRequest 
+from tvratings.entry.request_objects import InvalidRequest 
+
 import logging
 
-def validate_iso_8601_date(iso_formatted_str):
-    """Confirms that provided input is a str in ISO 8601 YYYY-MM-DD format
+def get_valid_date(tvratings_day):
+    """Request object for invoking an interface that requires a datetime.date input
 
         Parameters
         ----------
-        iso_formatted_str: str
+        tvratings_day: str
             ISO 8601 YYYY-MM-DD format
 
         Returns
         -------
-        parsed_date: datetime.date
-            iso_formatted_str converted to a date
-
-        str_validation_error: None
-            str if input validation did not pass
+        valid_date_request: ValidRequest or InvalidRequest
+            ValidRequest with request_filters
+            {
+                ratings_date: datetime.date
+            }
+            or InvalidRequest
     """
-    if validate_str_input(str_input=iso_formatted_str, max_len=15) is not None:
-        return(None, validate_str_input(str_input=iso_formatted_str, max_len=15))
+    logging.info("get_valid_date - beginning input validation")
+    valid_date, date_parse_error = validate_iso_8601_date(iso_formatted_str=tvratings_day)
+    
+    if date_parse_error is not None:
+        logging.info("get_valid_date - InvalidRequest returned")
+        return(InvalidRequest(error_message=date_parse_error))
 
-    try:
-        return(date.fromisoformat(iso_formatted_str), None)
-
-    except Exception as error_suppression:
-        logging.exception("validate_iso_8601_date - date.fromisoformat failed")
-        return(None, "validate_iso_8601_date - str input not YYYY-MM-DD formatted")
-
+    logging.info("get_valid_date - ValidRequest returned")
+    
+    return(ValidRequest(request_filters={"ratings_date": valid_date}))

@@ -1,7 +1,6 @@
 from copy import deepcopy
 import unittest
 
-@unittest.skip("TODO - implement")
 class TestExternalsEntry(unittest.TestCase):
     def test_get_valid_date_request(self):
         """Happy Path ValidRequest returned for a requested date"""
@@ -22,13 +21,12 @@ class TestExternalsEntry(unittest.TestCase):
                 valid_date_request = get_valid_date(tvratings_day=mock_input_date)
 
                 self.assertEqual(type(valid_date_request), ValidRequest)
-                # self.assertEqual(
-                #     type(valid_date_request.request_filters["ratings_date"]),
-                #     date
-                # )
+                self.assertEqual(
+                    type(valid_date_request.request_filters["ratings_date"]),
+                    date
+                )
 
 
-    @unittest.skip("test_get_valid_date_request_bad_input")
     def test_get_valid_date_request_bad_input(self):
         """Unhappy Path, input format is not YYYY-MM-DD"""
         from tvratings.entry.externals_entry import get_valid_date
