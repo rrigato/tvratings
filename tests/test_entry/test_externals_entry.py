@@ -48,3 +48,9 @@ class TestExternalsEntry(unittest.TestCase):
 
                 self.assertEqual(type(valid_date_request), InvalidRequest)
                 self.assertEqual(type(valid_date_request.error_message), str)
+
+    @unittest.skip("TODO - get_one_night_ratings")
+    def test_get_one_night_ratings(self):
+        """Happy Path"""
+        from datetime import date
+        from tvratings.entry.externals_entry import get_one_night_ratings
