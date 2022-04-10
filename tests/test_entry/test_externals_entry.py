@@ -1,4 +1,6 @@
 from copy import deepcopy
+from unittest.mock import patch
+
 import unittest
 
 class TestExternalsEntry(unittest.TestCase):
@@ -49,8 +51,18 @@ class TestExternalsEntry(unittest.TestCase):
                 self.assertEqual(type(valid_date_request), InvalidRequest)
                 self.assertEqual(type(valid_date_request.error_message), str)
 
-    @unittest.skip("TODO - get_one_night_ratings")
-    def test_get_one_night_ratings(self):
+    @patch("tvratings.entry.externals_entry.load_one_date")
+    def test_get_one_night_ratings(self, load_one_date_mock):
         """Happy Path"""
         from datetime import date
+        from fixtures.ratings_fixtures import get_mock_television_ratings
         from tvratings.entry.externals_entry import get_one_night_ratings
+        from tvratings.entry.request_objects import ValidRequest
+        from tvratings.entry.response_objects import ResponseSuccess
+
+
+        mock_television_ratings = get_mock_television_ratings(number_of_ratings=6)
+        load_one_date_mock.return_value = (deepcopy(mock_television_ratings), None)
+
+
+        get_one_night_ratings()
