@@ -54,7 +54,7 @@ class TestExternalsEntry(unittest.TestCase):
 
     @patch("tvratings.entry.externals_entry.load_one_date")
     def test_get_one_night_ratings(self, load_one_date_mock):
-        """Happy Path ResponseSuccess of TelevisionRating returned"""
+        """Happy Path ResponseSuccess returns list of TelevisionRating"""
         from datetime import date
         from fixtures.ratings_fixtures import get_mock_television_ratings
         from tvratings.entities.entity_model import TelevisionRating
