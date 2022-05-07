@@ -1,0 +1,100 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "toonami ratings",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": [
+                        "how does this work",
+                        "what information do I need to provide to get the television ratings"
+                    ]
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "RatingsNightIntent",
+                    "slots": [
+                        {
+                            "name": "rating_occurred_on",
+                            "type": "AMAZON.DATE",
+                            "samples": [
+                                "postal code {rating_occurred_on}",
+                                "{rating_occurred_on}",
+                                "zip code {rating_occurred_on}",
+                                "{rating_occurred_on} is my postal code",
+                                "{rating_occurred_on} is my zip code"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "get the television ratings on {rating_occurred_on}",
+                        "get the television ratings for {rating_occurred_on}",
+                        "get the TV on {rating_occurred_on}",
+                        "what is the television ratings for {rating_occurred_on}",
+                        "Do you have the television ratings for {rating_occurred_on}",
+                        "Check the television ratings for {rating_occurred_on}",
+                        "the television ratings in {rating_occurred_on}",
+                        "{rating_occurred_on} television ratings"
+                    ]
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                }
+            ],
+            "types": []
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "RatingsNightIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "rating_occurred_on",
+                            "type": "AMAZON.DATE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1478075417589.1211875597270"
+                            }
+                            
+                        }
+                    ]
+                }
+            ],
+            "delegationStrategy": "ALWAYS"
+        },
+        "prompts": [
+            {
+                "id": "Elicit.Slot.1478075417589.1211875597270",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Which Saturday night do you want the ratings for?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "Please provide a Saturday night to lookup"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "What Saturday night would you like to know the television ratings for?"
+                    }
+                ]
+            }
+        ]
+    }
+}
