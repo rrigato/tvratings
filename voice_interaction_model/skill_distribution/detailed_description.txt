@@ -1,0 +1,16 @@
+Use this skill to get the television ratings for the Adult Swim Saturday night Toonami television block
+
+
+**FAQ**
+
+When does the most recent Saturday night ratings update?
+
+Typically 3-5 business days after the television block occurred
+
+When is the earliest you have television data available?
+
+Starting on 2012-05-26 through the present
+
+What do I do if I have the ratings for a night that the skill is currently missing?
+
+Please provide us the source of the missing ratings information as feedback by leaving this skill a review.

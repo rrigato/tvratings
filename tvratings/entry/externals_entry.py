@@ -5,10 +5,11 @@ from tvratings.entry.request_objects import InvalidRequest
 from tvratings.entry.response_objects import ResponseFailure 
 from tvratings.entry.response_objects import ResponseSuccess 
 from tvratings.repo.tvratings_backend import load_one_date 
+from typing import Union
 
 import logging
 
-def get_valid_date(tvratings_day):
+def get_valid_date(tvratings_day: str) -> Union[ValidRequest, InvalidRequest]:
     """Request object for invoking an interface that requires a datetime.date input
 
         Parameters
@@ -36,8 +37,8 @@ def get_valid_date(tvratings_day):
     
     return(ValidRequest(request_filters={"ratings_date": valid_date}))
 
-
-def get_one_night_ratings(valid_date_request):
+def get_one_night_ratings(valid_date_request: ValidRequest
+    ) -> Union[ResponseSuccess, ResponseFailure]:
     """Gets TelevisionRating entities for one night
 
         Parameters
