@@ -1,0 +1,3 @@
+Alexa, ask Toonami Ratings for one Saturday night television ratings
+Alexa, tell Toonami Ratings to check a nights television ratings
+Alexa, ask Toonami Ratings about the television ratings

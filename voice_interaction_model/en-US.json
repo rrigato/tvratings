@@ -36,12 +36,16 @@
                     "samples": [
                         "get the television ratings on {rating_occurred_on}",
                         "get the television ratings for {rating_occurred_on}",
+                        "about the television ratings for {rating_occurred_on}",
                         "get the TV on {rating_occurred_on}",
                         "what is the television ratings for {rating_occurred_on}",
                         "Do you have the television ratings for {rating_occurred_on}",
                         "Check the television ratings for {rating_occurred_on}",
                         "the television ratings in {rating_occurred_on}",
-                        "{rating_occurred_on} television ratings"
+                        "{rating_occurred_on} television ratings",
+                        "about the television ratings",
+                        "to check a nights television ratings",
+                        "for one Saturday night television ratings"
                     ]
                 },
                 {

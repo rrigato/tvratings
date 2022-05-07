@@ -1,5 +1,10 @@
 Amazon alexa skill for analyzing television ratings
 
+# TODO
+- upgrade from aws-sdk-core from 1.16.1 -> 1.17.1
+- repo layer implemetnation
+
+
 # getting_started
 
 1) Create a virtual environment and install dependencies:
