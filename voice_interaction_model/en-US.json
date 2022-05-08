@@ -25,11 +25,10 @@
                             "name": "rating_occurred_on",
                             "type": "AMAZON.DATE",
                             "samples": [
-                                "postal code {rating_occurred_on}",
+                                "ratings for {rating_occurred_on}",
                                 "{rating_occurred_on}",
-                                "zip code {rating_occurred_on}",
-                                "{rating_occurred_on} is my postal code",
-                                "{rating_occurred_on} is my zip code"
+                                "ratings occurred on {rating_occurred_on}",
+                                "{rating_occurred_on} ratings"
                             ]
                         }
                     ],

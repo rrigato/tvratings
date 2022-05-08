@@ -7,9 +7,9 @@ When does the most recent Saturday night ratings update?
 
 Typically 3-5 business days after the television block occurred
 
-When is the earliest you have television data available?
+What date ranges is tevision ratings available?
 
-Starting on 2012-05-26 through the present
+2012-05-26 through the present
 
 What do I do if I have the ratings for a night that the skill is currently missing?
 
