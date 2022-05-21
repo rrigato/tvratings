@@ -15,11 +15,18 @@ RUN yum install -y tar \
 
 # RUN yum -y install wget
 
-RUN cd /opt && wget https://www.python.org/ftp/python/3.9.13/Python-3.9.13.tgz \
-&& tar xzf Python-3.9.13.tgz && rm Python-3.9.13.tgz
+RUN cd /opt && \
+    wget https://www.python.org/ftp/python/3.9.13/Python-3.9.13.tgz && \
+    tar xzf Python-3.9.13.tgz && \
+    rm Python-3.9.13.tgz
 
-RUN cd /opt/Python-3.9.13 && ./configure --enable-optimizations && make altinstall
+RUN cd /opt/Python-3.9.13 && \ 
+    ./configure --enable-optimizations && make altinstall
 
 RUN python3.9 -m venv avenv
 
-# RUN source avenv/bin/activate
+COPY requirements/ requirements/
+
+RUN source avenv/bin/activate && \
+    mkdir python && \
+    pip install -r requirements/requirements-ask-layer.txt --target ./python 
