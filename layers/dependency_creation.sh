@@ -14,4 +14,4 @@ docker run -i -d --name $CONTAINER_NAME $IMAGE_NAME:latest
 docker cp $CONTAINER_NAME:/$BUILT_LAYER_NAME layers
 
 #remove container
-docker rm $CONTAINER_NAME
+docker rm -f $CONTAINER_NAME
