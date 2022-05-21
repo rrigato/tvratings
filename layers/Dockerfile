@@ -11,7 +11,8 @@ RUN yum install -y tar \
     bzip2-devel \
     libffi-devel \
     gzip \
-    make
+    make \
+    zip
 
 # RUN yum -y install wget
 
@@ -30,3 +31,5 @@ COPY requirements/ requirements/
 RUN source avenv/bin/activate && \
     mkdir python && \
     pip install -r requirements/requirements-ask-layer.txt --target ./python 
+
+RUN zip -r ask_layer.zip python
