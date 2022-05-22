@@ -1,7 +1,6 @@
 Amazon alexa skill for analyzing television ratings
 
 # TODO
-- upgrade from aws-sdk-core from 1.16.1 -> 1.17.1
 - repo layer implemetnation
 
 
@@ -41,7 +40,8 @@ detect-secrets scan > .secrets.baseline
 
 compare all tracked files to baseline the ```results``` key should be ```{}``` if no secrets are present
 ```bash
-detect-secrets scan
+detect-secrets scan | \
+python3 -c "import sys, json; print(json.load(sys.stdin)['results'])"
 ```
 ```powershell
 (detect-secrets scan | ConvertFrom-Json).results
