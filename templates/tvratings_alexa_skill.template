@@ -6,7 +6,7 @@ Parameters:
 
   alexaSkillsKitLayerName:
     Type: String
-    Default: ask-core-1-16-1
+    Default: ask-sdk-core-most-recent
 
   alexaSkillsKitLayerVersion:
     Type: String
@@ -28,7 +28,7 @@ Parameters:
     Type: Number
     Default: 256
     MinValue: 64
-    MaxValue: 1024
+    MaxValue: 10240
 
   lambdaTimeout:
     Type: Number
