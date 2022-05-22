@@ -6,21 +6,25 @@ Parameters:
  
   askMostRecentBucketKey:
     Type: String
-    Default: ask_sdk_core_1_17_1.zip
- 
+    Default: layers/ask_sdk_core_most_recent.zip
+
   askMostRecentVersionDescription:
     Type: String
-    Default: ask-core-most-recent
-
+    Default: ask-sdk-core==1.17.1 will always be the latest version
+ 
   askMostRecentVersionName:
     Type: String
-    Default: ask-sdk-core==1.17.1 will always be the latest version
+    Default: ask-sdk-core-most-recent
 
-  layerBucketKey:
+  deploymentBucketName:
+    Type: String
+    Default: lambda-deployment-bundles
+
+  oldLayerBucketKey:
     Type: String
     Default: ask_layer.zip
   
-  layerBucketName:
+  oldLayerBucketName:
     Type: String
     Default: burnday-app-artifacts
 
@@ -32,8 +36,8 @@ Resources:
       CompatibleRuntimes:
         - python3.9
       Content:
-        S3Bucket: !Ref layerBucketName
-        S3Key: !Ref layerBucketKey
+        S3Bucket: !Ref oldLayerBucketName
+        S3Key: !Ref oldLayerBucketKey
       Description: Alexa Skills kit python sdk for v1.16.1
       LayerName: ask-core-1-16-1
 
@@ -43,7 +47,7 @@ Resources:
       CompatibleRuntimes:
         - python3.9
       Content:
-        S3Bucket: !Ref layerBucketName
+        S3Bucket: !Ref deploymentBucketName
         S3Key: !Ref askMostRecentBucketKey
       Description: !Ref askMostRecentVersionDescription
       LayerName: !Ref askMostRecentVersionName
