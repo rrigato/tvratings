@@ -1,0 +1,54 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: Lambda function specification for a custom alexa skill
+
+Parameters:
+
+  alexaSkillsKitLayerName:
+    Type: String
+    Default: ask-core-1-16-1
+
+  alexaSkillsKitLayerVersion:
+    Type: String
+    Default: 1
+
+  functionHandler:
+    Type: String
+    Default: tvratings_skill.alexa_lambda_handler
+
+  lambdaExecutionRoleName:
+    Type: String
+    Default: tvratings_lambda_role
+
+  lambdaDeploymentBundles:
+    Type: String
+    Default: lambda-deployment-bundles
+
+  lambdaMemorySize:
+    Type: Number
+    Default: 256
+    MinValue: 64
+    MaxValue: 1024
+
+  lambdaTimeout:
+    Type: Number
+    Default: 5
+    MinValue: 1
+    MaxValue: 900
+
+  projectName:
+    Type: String
+    Default: tvratings
+
+Resources:
+
+
+  artifactBucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: !Sub ${projectName}-app-artifacts
+
+  lambdaDependencies:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: !Ref lambdaDeploymentBundles

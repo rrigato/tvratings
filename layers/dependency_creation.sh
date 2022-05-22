@@ -1,9 +1,10 @@
-export BUILT_LAYER_NAME=ask_layer.zip
-export CONTAINER_NAME=lambda-container
-export IMAGE_NAME=lambda-dependency
+export BUILT_LAYER_NAME="ask_sdk_core_1_17_1.zip"
+export CONTAINER_NAME="lambda-container"
+export IMAGE_NAME="lambda-dependency"
 
 
-docker build -t $IMAGE_NAME:latest -f layers/Dockerfile .
+docker build --build-arg BUILT_LAYER_NAME=$BUILT_LAYER_NAME \
+    -t $IMAGE_NAME:latest -f layers/Dockerfile .
 
 # to create a writable layer for testing
 # docker run --name $CONTAINER_NAME -it $IMAGE_NAME:latest
