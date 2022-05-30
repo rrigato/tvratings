@@ -1,6 +1,9 @@
 AWSTemplateFormatVersion: '2010-09-09'
 
-Description: Lambda layer for alexa skills kit python sdk
+Description: |
+  templates/tvratings_alexa_skill.template must be populated first because
+  the lambda layer zip archives must exist before creating this cloudformation 
+  stack
 
 Parameters:
  
