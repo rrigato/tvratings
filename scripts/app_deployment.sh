@@ -10,5 +10,5 @@ source avenv/bin/activate
 python -m unittest
 
 # --junk-paths __pycache__
-zip "${PROJECT_NAME}_deployment_package.zip"  -r tvratings \
+zip "${PROJECT_NAME}_deployment_package.zip"  externals/tvratings_skill.py -r tvratings  \
     -x *__pycache__* --quiet 
