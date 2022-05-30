@@ -30,9 +30,10 @@ zip $DEPLOYMENT_PACKAGE -r tvratings externals  \
 
 
 #add tvratings_skill.py to root of project
-zip -u $DEPLOYMENT_PACKAGE -j ahandlers/tvratings_skill.py  \
+zip -u $DEPLOYMENT_PACKAGE -j handlers/tvratings_skill.py  \
     -x *__pycache__* --quiet
 
 deactivate
 
+echo "----------------------"
 echo "deployment successful"
