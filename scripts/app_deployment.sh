@@ -3,6 +3,13 @@
 #exits program immediately if a command is not sucessful
 set -e
 
+export BUNDLE_DIR_NAME="deployment"
+export PROJECT_NAME="tvratings"
+export BUCKET_NAME="${PROJECT_NAME}-app-artifacts"
+export DEPLOYMENT_PACKAGE="${PROJECT_NAME}_deployment_package.zip"
+
+
+
 source avenv/bin/activate
 
 secret_scan_results=$(detect-secrets scan | \
@@ -28,6 +35,12 @@ zip $DEPLOYMENT_PACKAGE -r tvratings externals  \
 #add tvratings_skill.py to root of project
 zip -u $DEPLOYMENT_PACKAGE -j handlers/tvratings_skill.py  \
     -x *__pycache__* --quiet
+
+aws s3api put-object --bucket $BUCKET_NAME \
+    --key $DEPLOYMENT_PACKAGE \
+    --body $DEPLOYMENT_PACKAGE \
+    --tagging "cloudformation_managed=no&project=${PROJECT_NAME}&prod=yes"
+
 
 deactivate
 
