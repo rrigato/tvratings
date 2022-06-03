@@ -54,3 +54,28 @@ Resources:
     Type: 'AWS::S3::Bucket'
     Properties:
       BucketName: !Ref lambdaDeploymentBundles
+
+
+  lambdaPythonFunction:
+    Type: AWS::Lambda::Function
+    Properties: 
+
+      Code:
+        S3Bucket: !Ref artifactBucket
+        S3Key: !Sub ${projectName}_deployment_package.zip
+
+      Description: !Sub 'Alexa custom skill handler for ${projectName}'
+
+      FunctionName: !Sub ${projectName}-alexa-skill
+      Handler: !Ref functionHandler
+
+      # Layers: 
+      #   - !Sub 'arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:layer:${alexaSkillsKitLayerName}:${alexaSkillsKitLayerVersion}'
+
+      MemorySize: !Ref lambdaMemorySize
+      PackageType: Zip
+      Role: !Sub arn:aws:iam::${AWS::AccountId}:role/${lambdaExecutionRoleName}
+      Runtime: python3.9
+      Timeout: !Ref lambdaTimeout
+      TracingConfig: 
+        Mode: Active
