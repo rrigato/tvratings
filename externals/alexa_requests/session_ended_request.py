@@ -18,7 +18,7 @@ class SessionEndedRequestHandler(AbstractRequestHandler):
             can_class_handle_request: bool
                 True if this class can handle the provided request, False otherwise
         """
-        return is_request_type("SessionEndedRequest")(handler_input)
+        return(is_request_type("SessionEndedRequest")(handler_input))
 
     def handle(self, handler_input):
         """Applies business logic for the appropriate class handler
@@ -33,5 +33,5 @@ class SessionEndedRequestHandler(AbstractRequestHandler):
         """
         logging.info("SessionEndedRequestHandler.handle")
         
-        return handler_input.response_builder.response
+        return(handler_input.response_builder.response)
 
