@@ -2,9 +2,10 @@ from copy import deepcopy
 from datetime import date
 from random import paretovariate
 from tvratings.entities.entity_model import TelevisionRating
+from typing import Union
 
 
-def get_mock_television_ratings(number_of_ratings):
+def get_mock_television_ratings(number_of_ratings: int) -> list[TelevisionRating]:
     """Creates a list of mock TelevisionRating entities
 
         Parameters
@@ -39,3 +40,36 @@ def get_mock_television_ratings(number_of_ratings):
         television_ratings_list.append(mock_television_rating)
 
     return(deepcopy(television_ratings_list))
+
+
+
+
+def fake_dynamodb_query_response(number_of_ratings: int) -> dict[str, Union[int, list]]:
+    """AWS SDK Dynamodb query response
+
+        Parameters
+        ----------
+        number_of_ratings: 
+            How many mock ratings elements you want in the Items key
+
+        Returns
+        -------
+        Response structure for sdk documented here:
+        https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dynamodb.html#DynamoDB.Table.query
+        
+    """
+    sdk_response = {
+        "Items": [],
+        "Count": number_of_ratings,
+        "ScannedCount": number_of_ratings
+    }
+    for tv_show in get_mock_television_ratings(number_of_ratings):
+        sdk_response["Items"].append({
+            "RATINGS_OCCURRED_ON": tv_show.show_air_date,
+            "TIME": tv_show.time_slot,
+            "SHOW": tv_show.show_name,
+            "PERCENTAGE_OF_HOUSEHOLDS_AGE_18_49": tv_show.rating_18_49,
+            "TOTAL_VIEWERS": tv_show.rating
+        })
+
+    return(deepcopy(sdk_response))

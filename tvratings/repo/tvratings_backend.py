@@ -2,6 +2,9 @@ from fixtures.ratings_fixtures import get_mock_television_ratings
 from typing import Union
 from tvratings.entities.entity_model import TelevisionRating
 
+import boto3
+import os
+
 
 def load_one_date(ratings_occurred_on) -> tuple[Union[list[TelevisionRating], None], 
     Union[str, None]]:
@@ -22,5 +25,8 @@ def load_one_date(ratings_occurred_on) -> tuple[Union[list[TelevisionRating], No
         unexpected_error: None
             str if unable to load the television ratings from persistent storage 
     """
-    '''TODO - Implement'''
-    return(get_mock_television_ratings(2), None)
+    dynamodb_table = boto3.resource("Dynamodb", os.environ.get("AWS_REGION")).Table(
+        "prod_toonami_ratings"
+    )
+
+    return([], None)    
