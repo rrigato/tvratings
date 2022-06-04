@@ -3,11 +3,10 @@
 #exits program immediately if a command is not sucessful
 set -e
 
-export BUNDLE_DIR_NAME="deployment"
 export PROJECT_NAME="tvratings"
 export BUCKET_NAME="${PROJECT_NAME}-app-artifacts"
 export DEPLOYMENT_PACKAGE="${PROJECT_NAME}_deployment_package.zip"
-
+export FUNCTION_NAME="${PROJECT_NAME}-alexa-skill"
 
 
 source avenv/bin/activate
@@ -42,7 +41,7 @@ aws s3api put-object --bucket $BUCKET_NAME \
     --tagging "cloudformation_managed=no&project=${PROJECT_NAME}&prod=yes"
 
 
-aws lambda update-function-code --function-name "${PROJECT_NAME}-alexa-skill" \
+aws lambda update-function-code --function-name $FUNCTION_NAME \
     --s3-bucket $BUCKET_NAME \
     --s3-key $DEPLOYMENT_PACKAGE \
     --no-cli-pager
