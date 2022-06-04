@@ -7,7 +7,7 @@ import logging
 logging.getLogger().setLevel(logging.INFO)
 
 
-def alexa_lambda_handler():
+def alexa_lambda_handler(lambda_event, context):
     """Stub lambda handler test"""
     logging.info(dir(AbstractRequestHandler))
 
