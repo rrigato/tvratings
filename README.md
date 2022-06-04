@@ -26,10 +26,10 @@ python -m unittest
 3) install [aws cli v2](https://aws.amazon.com/cli/) for working with aws resources locally 
 
 
-# cloudformation create-stack
-
-```powershell
-aws cloudformation update-stack --stack-name tvratings-alexa-skill --template-body file://templates/tvratings_alexa_skill.template --tags Key=project,Value=tvratings Key=prod,Value=yes Key=cloudformation_managed,Value=yes
+# deploy-application
+```bash
+chmod +x scripts/app_deployment.sh
+scripts/app_deployment.sh
 ```
 
 
@@ -45,7 +45,4 @@ compare all tracked files to baseline the ```results``` key should be ```{}``` i
 ```bash
 detect-secrets scan | \
 python3 -c "import sys, json; print(json.load(sys.stdin)['results'])"
-```
-```powershell
-(detect-secrets scan | ConvertFrom-Json).results
 ```
