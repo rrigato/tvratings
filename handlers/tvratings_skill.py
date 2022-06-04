@@ -7,7 +7,7 @@ logger.setLevel(logging.INFO)
 
 
 def alexa_lambda_handler():
-    """Stub lambda handler"""
+    """Stub lambda handler test"""
     pass
 
 

@@ -42,6 +42,10 @@ aws s3api put-object --bucket $BUCKET_NAME \
     --tagging "cloudformation_managed=no&project=${PROJECT_NAME}&prod=yes"
 
 
+aws lambda update-function-code --function-name "${PROJECT_NAME}-alexa-skill" \
+    --s3-bucket $BUCKET_NAME \
+    --s3-key $DEPLOYMENT_PACKAGE 
+
 deactivate
 
 echo "----------------------"
