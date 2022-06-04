@@ -35,7 +35,7 @@ class DefaultExceptionHandler(AbstractExceptionHandler):
 
         speak_output = "Unexpected error, looks like you found a bug before the developers did!"
 
-        return (
+        return(
             handler_input.response_builder
                 .speak(speak_output)
                 .set_should_end_session(True)
