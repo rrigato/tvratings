@@ -76,6 +76,6 @@ if __name__ == "__main__":
         format="%(levelname)s | %(asctime)s.%(msecs)03d" + strftime("%z") + " | %(message)s",
         datefmt="%Y-%m-%dT%H:%M:%S", level=logging.DEBUG
     )
-    valid_request = get_one_night_ratings(get_valid_date("2014-01-04"))
+    valid_request = get_one_night_ratings(get_valid_date("2014-01-05"))
 
     print(valid_request.response_value)

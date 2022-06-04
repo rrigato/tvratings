@@ -14,16 +14,17 @@ class TestTvratingsBackend(unittest.TestCase):
         from tvratings.entities.entity_model import TelevisionRating
         from tvratings.repo.tvratings_backend import load_one_date
         
-        mock_rating_night = date(2014,1,4)
+        mock_rating_night = date(2014, 1, 4)
         mock_num_time_slots = [0, 3, 5]
 
         for mock_num_time_slot in mock_num_time_slots:
             with self.subTest(mock_num_time_slot=mock_num_time_slot):
 
-                boto3_resource_mock.return_value.Table.return_value = fake_dynamodb_query_response(
-                    mock_num_time_slot
+                boto3_resource_mock.return_value.Table.return_value.query.return_value = ( 
+                    fake_dynamodb_query_response(
+                        mock_num_time_slot
+                    )
                 )
-
                 television_ratings_entities, ratings_retrieval_error = load_one_date(mock_rating_night)
 
                 for tv_show in television_ratings_entities:
