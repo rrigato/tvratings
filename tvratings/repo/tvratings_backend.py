@@ -3,7 +3,8 @@ from typing import Union
 from tvratings.entities.entity_model import TelevisionRating
 
 
-def load_one_date(ratings_occurred_on) -> tuple[Union[list[TelevisionRating], None], Union[str, None]] :
+def load_one_date(ratings_occurred_on) -> tuple[Union[list[TelevisionRating], None], 
+    Union[str, None]]:
     """Loads all television ratings for one saturday night
 
         Parameters
