@@ -69,8 +69,8 @@ Resources:
       FunctionName: !Sub ${projectName}-alexa-skill
       Handler: !Ref functionHandler
 
-      # Layers: 
-      #   - !Sub 'arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:layer:${alexaSkillsKitLayerName}:${alexaSkillsKitLayerVersion}'
+      Layers: 
+        - !Sub 'arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:layer:${alexaSkillsKitLayerName}:${alexaSkillsKitLayerVersion}'
 
       MemorySize: !Ref lambdaMemorySize
       PackageType: Zip

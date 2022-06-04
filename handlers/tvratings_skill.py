@@ -1,14 +1,15 @@
+from ask_sdk_core.dispatch_components import AbstractRequestHandler
+from ask_sdk_core.utils import is_request_type
 
 import logging
 
 
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
+logging.getLogger().setLevel(logging.INFO)
 
 
 def alexa_lambda_handler():
     """Stub lambda handler test"""
-    pass
+    logging.info(dir(AbstractRequestHandler))
 
 
 if __name__ == "__main__":

@@ -44,7 +44,8 @@ aws s3api put-object --bucket $BUCKET_NAME \
 
 aws lambda update-function-code --function-name "${PROJECT_NAME}-alexa-skill" \
     --s3-bucket $BUCKET_NAME \
-    --s3-key $DEPLOYMENT_PACKAGE 
+    --s3-key $DEPLOYMENT_PACKAGE \
+    --no-cli-pager
 
 deactivate
 
