@@ -1,4 +1,9 @@
-def load_one_date(ratings_occurred_on):
+from fixtures.ratings_fixtures import get_mock_television_ratings
+from typing import Union
+from tvratings.entities.entity_model import TelevisionRating
+
+
+def load_one_date(ratings_occurred_on) -> tuple[Union[list[TelevisionRating], None], Union[str, None]] :
     """Loads all television ratings for one saturday night
 
         Parameters
@@ -16,4 +21,5 @@ def load_one_date(ratings_occurred_on):
         unexpected_error: None
             str if unable to load the television ratings from persistent storage 
     """
-    pass
+    '''TODO - Implement'''
+    return(get_mock_television_ratings(2), None)
