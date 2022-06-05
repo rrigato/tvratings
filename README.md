@@ -1,11 +1,8 @@
 Amazon alexa skill for analyzing television ratings
 
 # TODO
-- update cloudformation stacks description for both stacks
-- create lambda function for custom skill
 - create ask skill in skills console
-- repo layer implemetnation
-
+- externals implementation
 
 # getting_started
 
