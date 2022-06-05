@@ -76,12 +76,3 @@ def fake_dynamodb_query_response(number_of_ratings: int) -> dict[str, Union[int,
 
     return(deepcopy(sdk_response))
 
-
-def television_rating_attribute_names() -> list[str]:
-    """All attributes for a TelevisionRating entity
-    """
-    return(deepcopy([
-        attribute_name for attribute_name in dir(TelevisionRating) 
-            if not attribute_name.startswith("_")
-    ]))
-

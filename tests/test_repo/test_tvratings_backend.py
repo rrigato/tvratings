@@ -11,6 +11,7 @@ class TestTvratingsBackend(unittest.TestCase):
         """Happy Path dynamodb call succeeds"""
         from datetime import date
         from fixtures.ratings_fixtures import fake_dynamodb_query_response
+        from tvratings.entities.entity_model import television_rating_attribute_names
         from tvratings.entities.entity_model import TelevisionRating
         from tvratings.repo.tvratings_backend import load_one_date
         
@@ -29,7 +30,14 @@ class TestTvratingsBackend(unittest.TestCase):
 
                 for tv_show in television_ratings_entities:
                     self.assertIsInstance(tv_show, TelevisionRating)
+                    [
+                        self.assertIsNotNone(getattr(tv_show, attr_name),
+                            msg=f"\n\n {attr_name} not populated in returned entity list"
+                        )
+                        for attr_name in television_rating_attribute_names()
+                    ]
 
+                    
                 self.assertEqual(len(television_ratings_entities), 
                     mock_num_time_slot,
                     msg=( "\n\n load_one_date is not returning the same number of " + 

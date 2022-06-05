@@ -1,3 +1,4 @@
+from copy import deepcopy
 from datetime import date
 
 
@@ -111,4 +112,13 @@ class RatingsMetric:
         '''
 
 
+
+
+def television_rating_attribute_names() -> list[str]:
+    """All attributes for a TelevisionRating entity
+    """
+    return(deepcopy([
+        attribute_name for attribute_name in dir(TelevisionRating) 
+            if not attribute_name.startswith("_")
+    ]))
 
