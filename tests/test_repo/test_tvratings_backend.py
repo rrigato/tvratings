@@ -1,6 +1,4 @@
-from copy import deepcopy
 from unittest.mock import patch
-from unittest.mock import MagicMock
 import unittest
 
 
@@ -26,10 +24,14 @@ class TestTvratingsBackend(unittest.TestCase):
                         mock_num_time_slot
                     )
                 )
+
+
                 television_ratings_entities, ratings_retrieval_error = load_one_date(mock_rating_night)
+
 
                 for tv_show in television_ratings_entities:
                     self.assertIsInstance(tv_show, TelevisionRating)
+
                     [
                         self.assertIsNotNone(getattr(tv_show, attr_name),
                             msg=f"\n\n {attr_name} not populated in returned entity list"
@@ -41,19 +43,16 @@ class TestTvratingsBackend(unittest.TestCase):
                 self.assertEqual(len(television_ratings_entities), 
                     mock_num_time_slot,
                     msg=( "\n\n load_one_date is not returning the same number of " + 
-                    "TelevisionRating entities as Items returns from DynamoDB")
+                    "\nTelevisionRating entities as Items returns from DynamoDB")
                 )
                 self.assertIsNone(ratings_retrieval_error)
 
-    
 
     @patch("boto3.resource")
     def test_load_one_date_underlying_table_structure_changes(self, boto3_resource_mock):
-        """Key names in underlying table change causing an error"""
+        """Key names in underlying Dynamodb table change resulting in an error_message"""
         from datetime import date
         from fixtures.ratings_fixtures import fake_dynamodb_query_response
-        from tvratings.entities.entity_model import television_rating_attribute_names
-        from tvratings.entities.entity_model import TelevisionRating
         from tvratings.repo.tvratings_backend import load_one_date
         
         mock_rating_night = date(2014, 1, 4)
@@ -75,3 +74,4 @@ class TestTvratingsBackend(unittest.TestCase):
 
                 self.assertIsInstance(ratings_retrieval_error, str)
                 self.assertIsNone(television_ratings_entities)
+
