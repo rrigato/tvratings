@@ -47,3 +47,31 @@ class TestTvratingsBackend(unittest.TestCase):
 
     
 
+    @patch("boto3.resource")
+    def test_load_one_date_underlying_table_structure_changes(self, boto3_resource_mock):
+        """Key names in underlying table change causing an error"""
+        from datetime import date
+        from fixtures.ratings_fixtures import fake_dynamodb_query_response
+        from tvratings.entities.entity_model import television_rating_attribute_names
+        from tvratings.entities.entity_model import TelevisionRating
+        from tvratings.repo.tvratings_backend import load_one_date
+        
+        mock_rating_night = date(2014, 1, 4)
+        mock_num_time_slot = 1
+        required_keys = ["RATINGS_OCCURRED_ON", "TIME", "SHOW", "TOTAL_VIEWERS"]
+
+        for required_key in required_keys:
+            with self.subTest(required_key=required_key):
+                
+                dynamodb_item_missing_key_field = fake_dynamodb_query_response(mock_num_time_slot)
+                dynamodb_item_missing_key_field["Items"][0].pop(required_key)
+                boto3_resource_mock.return_value.Table.return_value.query.return_value = ( 
+                    dynamodb_item_missing_key_field
+                )
+
+
+                television_ratings_entities, ratings_retrieval_error = load_one_date(mock_rating_night)
+
+
+                self.assertIsInstance(ratings_retrieval_error, str)
+                self.assertIsNone(television_ratings_entities)

@@ -18,12 +18,12 @@ def _convert_dynamodb_query_to_entity(dynamodb_items: list) -> list[TelevisionRa
     for dynamodb_item in dynamodb_items:
         tv_show = TelevisionRating()
 
-        tv_show.show_air_date = dynamodb_item.get("RATINGS_OCCURRED_ON")
-        tv_show.time_slot = dynamodb_item.get("TIME")
-        tv_show.show_name = dynamodb_item.get("SHOW")
+        tv_show.show_air_date = dynamodb_item["RATINGS_OCCURRED_ON"]
+        tv_show.time_slot = dynamodb_item["TIME"]
+        tv_show.show_name = dynamodb_item["SHOW"]
         tv_show.household = dynamodb_item.get("PERCENTAGE_OF_HOUSEHOLDS")
         tv_show.household_18_49 = dynamodb_item.get("PERCENTAGE_OF_HOUSEHOLDS_AGE_18_49")
-        tv_show.rating = dynamodb_item.get("TOTAL_VIEWERS")
+        tv_show.rating = dynamodb_item["TOTAL_VIEWERS"]
         tv_show.rating_18_49 = dynamodb_item.get("TOTAL_VIEWERS_AGE_18_49")
 
         all_tvratings.append(tv_show)
@@ -52,25 +52,29 @@ def load_one_date(ratings_occurred_on: date) -> tuple[Union[list[TelevisionRatin
         unexpected_error
             str if unable to load the television ratings from persistent storage 
     """
+    try:    
+        dynamodb_table = boto3.resource("dynamodb", os.environ.get("AWS_REGION")).Table(
+            "prod_toonami_ratings"
+        )
 
-    dynamodb_table = boto3.resource("dynamodb", os.environ.get("AWS_REGION")).Table(
-        "prod_toonami_ratings"
-    )
+        logging.info("load_one_date - obtained table resource")
 
-    logging.info("load_one_date - obtained table resource")
+        dynamodb_response = dynamodb_table.query(
+            KeyConditionExpression=Key("RATINGS_OCCURRED_ON").eq(ratings_occurred_on.isoformat())
+        )
 
-    dynamodb_response = dynamodb_table.query(
-        KeyConditionExpression=Key("RATINGS_OCCURRED_ON").eq(ratings_occurred_on.isoformat())
-    )
+        logging.info("load_one_date - obtained dynamodb_response")
 
-    logging.info("load_one_date - obtained dynamodb_response")
-
-    if len(dynamodb_response["Items"]) == 0:
-        logging.info("load_one_date - dynamodb_response Items list has no elements")
-        return([], None)
+        if len(dynamodb_response["Items"]) == 0:
+            logging.info("load_one_date - dynamodb_response Items list has no elements")
+            return([], None)
 
 
-    logging.info("load_one_date - invoking _convert_dynamodb_query_to_entity")
+        logging.info("load_one_date - invoking _convert_dynamodb_query_to_entity")
 
-    return(_convert_dynamodb_query_to_entity(dynamodb_response["Items"]), None)
-    
+        return(_convert_dynamodb_query_to_entity(dynamodb_response["Items"]), None)
+        
+
+    except Exception as error_suppression:
+        logging.exception("load_one_date - unexpected error")
+        return(None, "load_one_date - error while retrieving persisted television_ratings")
