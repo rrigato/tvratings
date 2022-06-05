@@ -16,7 +16,7 @@ class TestTvratingsBackend(unittest.TestCase):
         from tvratings.repo.tvratings_backend import load_one_date
         
         mock_rating_night = date(2014, 1, 4)
-        mock_num_time_slots = [0, 3, 5]
+        mock_num_time_slots = [0, 1, 3, 5]
 
         for mock_num_time_slot in mock_num_time_slots:
             with self.subTest(mock_num_time_slot=mock_num_time_slot):
