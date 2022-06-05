@@ -48,7 +48,8 @@ def get_one_night_ratings(valid_date_request: ValidRequest
         Returns
         -------
         tvratings_response: ResponseSuccess or ResponseFailure
-            ResponseSuccess.response_value list of TelevisionRating entities 
+            ResponseSuccess.response_value tvratings.repo.tvratings_backend.load_one_date
+
             [] if no TelevisionRating entites match ratings_date provided in the request_filter 
     """
     logging.info("get_one_night_ratings - new television request")

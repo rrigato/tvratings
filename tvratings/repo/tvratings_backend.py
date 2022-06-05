@@ -46,7 +46,14 @@ def load_one_date(ratings_occurred_on: date) -> tuple[Union[list[TelevisionRatin
         -------
         television_ratings
             Each element is a TelevisionRating entity
+                Attributes guarunteed to be populated per entity:
+                    - show_air_date
+                    - time_slot
+                    - show_name
+                    - rating
+
             No matching ratings for ratings_occurred_on returns []
+            
             Any unexpected processing errors returns None
 
         unexpected_error
