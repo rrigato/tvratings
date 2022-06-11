@@ -10,12 +10,21 @@
                 {
                     "name": "AMAZON.HelpIntent",
                     "samples": [
-                        "how does this work",
-                        "what information do I need to provide to get the television ratings"
+                        "Do I provide the Saturday night date or Sunday of the airing",
+                        "what information do I need to provide to get the television ratings",
+                        "how does this work"
                     ]
                 },
                 {
                     "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.FallbackIntent",
                     "samples": []
                 },
                 {
@@ -25,10 +34,10 @@
                             "name": "rating_occurred_on",
                             "type": "AMAZON.DATE",
                             "samples": [
-                                "ratings for {rating_occurred_on}",
-                                "{rating_occurred_on}",
+                                "{rating_occurred_on} ratings",
                                 "ratings occurred on {rating_occurred_on}",
-                                "{rating_occurred_on} ratings"
+                                "{rating_occurred_on}",
+                                "ratings for {rating_occurred_on}"
                             ]
                         }
                     ],
@@ -46,14 +55,6 @@
                         "to check a nights television ratings",
                         "for one Saturday night television ratings"
                     ]
-                },
-                {
-                    "name": "AMAZON.NavigateHomeIntent",
-                    "samples": []
-                },
-                {
-                    "name": "AMAZON.FallbackIntent",
-                    "samples": []
                 }
             ],
             "types": []
@@ -71,9 +72,15 @@
                             "confirmationRequired": false,
                             "elicitationRequired": true,
                             "prompts": {
-                                "elicitation": "Elicit.Slot.1478075417589.1211875597270"
-                            }
-                            
+                                "elicitation": "Elicit.Slot.462230603211.508393153869"
+                            },
+                            "validations": [
+                                {
+                                    "type": "isGreaterThanOrEqualTo",
+                                    "prompt": "Slot.Validation.462230603211.508393153869.1470342052743",
+                                    "value": "2012-05-26"
+                                }
+                            ]
                         }
                     ]
                 }
@@ -82,11 +89,11 @@
         },
         "prompts": [
             {
-                "id": "Elicit.Slot.1478075417589.1211875597270",
+                "id": "Elicit.Slot.462230603211.508393153869",
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Which Saturday night do you want the ratings for?"
+                        "value": "What Saturday night would you like to know the television ratings for?"
                     },
                     {
                         "type": "PlainText",
@@ -94,7 +101,20 @@
                     },
                     {
                         "type": "PlainText",
-                        "value": "What Saturday night would you like to know the television ratings for?"
+                        "value": "Which Saturday night do you want the ratings for?"
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.462230603211.508393153869.1470342052743",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Please choose a date after May twenty tweleve"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "The oldest rating information we have is from May twenty-sixth, two thousand and tweleve"
                     }
                 ]
             }
