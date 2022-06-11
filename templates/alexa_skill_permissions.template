@@ -1,0 +1,22 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: Specifies the Alexa Skill ID that can invoke a lambda function 
+
+Parameters:
+ 
+  alexaSkillId:
+    Type: String
+    Description: Amazon Alexa Skill ID that is allowed to invoke the lambda function
+  
+  lambdaFunctionName:
+    Type: String
+    Default: tvratings-alexa-skill
+
+Resources:
+  alexaLambdaTrigger:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref lambdaFunctionName
+      Action: lambda:InvokeFunction
+      Principal: alexa-appkit.amazon.com
+      EventSourceToken: !Ref alexaSkillId
