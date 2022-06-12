@@ -1,6 +1,7 @@
 from ask_sdk_core.skill_builder import SkillBuilder
 from externals.alexa_exceptions.default_graceful_exit import DefaultExceptionHandler
 from externals.alexa_intents.cancel_stop_intent import CancelOrStopIntentHandler
+from externals.alexa_intents.fallback_intent import FallbackIntentHandler
 from externals.alexa_intents.help_intent import HelpRequestHandler
 from externals.alexa_requests.session_ended_request import SessionEndedRequestHandler
 
@@ -28,6 +29,7 @@ def get_alexa_lambda_handler():
         request handlers are processed from top to bottom
     '''
     alexa_skill.add_request_handler(CancelOrStopIntentHandler())
+    alexa_skill.add_request_handler(FallbackIntentHandler())
     alexa_skill.add_request_handler(HelpRequestHandler())
     alexa_skill.add_request_handler(SessionEndedRequestHandler())
 
