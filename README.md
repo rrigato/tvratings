@@ -1,8 +1,10 @@
 Amazon alexa skill for analyzing television ratings
 
 # TODO
-- create ask skill in skills console
-- externals implementation
+- design it twice for launch_intent.py welcome message
+- PR for dev into master
+- ToonamiRatingsIntent event structure
+- externals implementation for 
 
 # getting_started
 
