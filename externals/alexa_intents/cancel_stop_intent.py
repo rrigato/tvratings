@@ -19,6 +19,7 @@ class CancelOrStopIntentHandler(AbstractRequestHandler):
         return (is_intent_name("AMAZON.CancelIntent")(handler_input) or
                 is_intent_name("AMAZON.StopIntent")(handler_input))
 
+
     def handle(self, handler_input: HandlerInput) -> Response:
         """Applies business logic for the appropriate class handler"""
         
