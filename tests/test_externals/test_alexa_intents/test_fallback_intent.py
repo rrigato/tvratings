@@ -27,16 +27,13 @@ class TestFallbackIntent(unittest.TestCase):
 
         self.assertTrue(
             expected_message in actual_response_message["response"]["outputSpeech"]["ssml"],
-            msg="""\n
+            msg=f"""\n
                 Expected Alexa Response - 
-                {expected_response} 
+                {expected_message} 
                 \n
                 Actual Alexa Response - 
-                {actual_response}
-            """.format(
-                    expected_response=expected_message,
-                    actual_response=actual_response_message["response"]["outputSpeech"]["ssml"]
-                )
+                {actual_response_message["response"]["outputSpeech"]["ssml"]}
+            """
         )
 
         '''
