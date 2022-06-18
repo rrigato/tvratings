@@ -38,7 +38,14 @@
       "intent": {
         "name": "RatingsNightIntent",
         "confirmationStatus": "NONE",
-        "slots": {}
+        "slots": {
+          "rating_occurred_on": {
+            "name": "rating_occurred_on",
+            "value": "2014-01-04",
+            "confirmationStatus": "NONE",
+            "source": "USER"
+          }
+        }
       },
       "dialogState": "STARTED"
   }
