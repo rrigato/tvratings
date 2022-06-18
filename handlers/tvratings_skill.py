@@ -1,5 +1,4 @@
-from ask_sdk_core.dispatch_components import AbstractRequestHandler
-from ask_sdk_core.utils import is_request_type
+from externals.alexa_intents.intent_dispatcher import get_alexa_lambda_handler
 
 import logging
 
@@ -7,9 +6,7 @@ import logging
 logging.getLogger().setLevel(logging.INFO)
 
 
-def alexa_lambda_handler(lambda_event, context):
-    """Stub lambda handler test"""
-    logging.info(dir(AbstractRequestHandler))
+alexa_lambda_handler = get_alexa_lambda_handler()
 
 
 if __name__ == "__main__":
