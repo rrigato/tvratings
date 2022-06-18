@@ -1,8 +1,6 @@
 Amazon alexa skill for analyzing television ratings
 
 # TODO
-- design it twice for launch_intent.py welcome message
-- PR for dev into master
 - Compare externals implementations to other projects
 - Get ToonamiRatingsIntent json from ask console
 - intent_handler type hinting
