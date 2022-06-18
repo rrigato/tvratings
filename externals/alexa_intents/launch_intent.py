@@ -21,7 +21,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
     def handle(self, handler_input: HandlerInput) -> Response:
         """Applies business logic for the appropriate class handler"""
 
-        skill_startup_message = "Welcome to the toonami television ratings provider"
+        skill_startup_message = "Welcoome to the toonami television ratings provider"
         logging.info("LaunchRequestHandler - handle")
         
         return (

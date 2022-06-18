@@ -29,9 +29,10 @@ class TestLaunchIntent(unittest.TestCase):
 
         self.assertTrue(
             expected_message in actual_response_message["response"]["outputSpeech"]["ssml"],
-            msg=f"""
+            msg=f"""\n
                 Expected Alexa Response - 
                 {expected_message} 
+                \n
                 Actual Alexa Response - 
                 {actual_response_message["response"]["outputSpeech"]["ssml"]}
             """
