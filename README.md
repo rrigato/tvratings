@@ -1,12 +1,9 @@
 Amazon alexa skill for analyzing television ratings
 
 # TODO
-- Compare externals implementations to other projects
-- Get ToonamiRatingsIntent json from ask console
-- intent_handler type hinting
-- ToonamiRatingsIntent event structure
+- test_ratings_night_intent.py -> test_burn_status_intent.py
 - externals implementation for lambda handler
-- 
+- Publish skill using info in voice_interaction_model/skill_distribution/*
 
 # getting_started
 
