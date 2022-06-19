@@ -12,29 +12,28 @@ class TestRatingsNightIntent(unittest.TestCase):
             cls.intent_request = json.load(intent_request)
 
 
-    # @unittest.skip("skipping for now")
-    # @patch("externals.alexa_intents.burn_status_intent.location_burn_status")
+    @patch("externals.alexa_intents.ratings_night_intent.get_one_night_ratings")
     @patch("externals.alexa_intents.ratings_night_intent.get_valid_date")
-    def test_burn_status_intent(self, get_valid_date_mock):
-        # mock_location_burn_status):
-        """BurnStatusIntentHandler.handle executes usecase and returns burn status"""
-        # from burnday.entities.entity_model import BurnStatus
-        # from burnday.entry.response_objects import ResponseSuccess
+    def test_ratings_night_intent(self, get_valid_date_mock, 
+        get_one_night_ratings_mock):
+        """RatingsNightIntentHandler.handle executes succesfully"""
         from externals.alexa_intents.intent_dispatcher import get_alexa_lambda_handler
+        from fixtures.ratings_fixtures import get_mock_television_ratings
+        from tvratings.entry.response_objects import ResponseSuccess
         from tvratings.entry.request_objects import ValidRequest
         
         mock_ratings_ocurred_on = self.intent_request["request"]["intent"]["slots"][
             "rating_occurred_on"]["value"]
 
-        expected_message = mock_ratings_ocurred_on
-        # mock_burn_status_entity = BurnStatus()
-        # mock_burn_status_entity.burn_status = expected_message
+        expected_message = "The highest ratings for that night were"
+        mock_television_ratings = get_mock_television_ratings(7)
+
         get_valid_date_mock.return_value = ValidRequest(request_filters={
             "ratings_date": mock_ratings_ocurred_on
         })
-        # mock_location_burn_status.return_value = ResponseSuccess(
-        #     response_value=mock_burn_status_entity
-        # )
+        get_one_night_ratings_mock.return_value = ResponseSuccess(
+            response_value=mock_television_ratings
+        )
 
         alexa_lambda_handler = get_alexa_lambda_handler()
 

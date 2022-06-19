@@ -1,8 +1,9 @@
 Amazon alexa skill for analyzing television ratings
 
 # TODO
-- test_ratings_night_intent.py -> test_burn_status_intent.py
-- externals implementation for lambda handler
+- make test_ratings_night_intent pass by selecting the highest/(lowest?) rating for that night
+- #test_burn_status_intent_response_failure
+  - Search for the above test case and replicate its logic in test_ratings_night_intent.py
 - Publish skill using info in voice_interaction_model/skill_distribution/*
 
 # getting_started

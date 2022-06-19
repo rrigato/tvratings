@@ -4,6 +4,7 @@ from ask_sdk_core.utils import get_slot
 from ask_sdk_core.utils import is_intent_name
 from ask_sdk_model.response import Response
 from tvratings.entry.externals_entry import get_valid_date
+from tvratings.entry.externals_entry import get_one_night_ratings
 
 import logging
 
@@ -36,7 +37,9 @@ def _orchestrate_ratings_retrieval(handler_input: HandlerInput) -> str:
         _orchestrate_ratings_retrieval - ratings_date -
             {valid_ratings_night.request_filters["ratings_date"]}
         """)
-        
+
+
+
     return(valid_ratings_night.request_filters["ratings_date"])
 
 
