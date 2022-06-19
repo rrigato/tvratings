@@ -1,4 +1,5 @@
 from copy import deepcopy
+from unittest.mock import MagicMock
 from unittest.mock import patch
 
 import json
@@ -14,8 +15,8 @@ class TestRatingsNightIntent(unittest.TestCase):
 
     @patch("externals.alexa_intents.ratings_night_intent.get_one_night_ratings")
     @patch("externals.alexa_intents.ratings_night_intent.get_valid_date")
-    def test_ratings_night_intent(self, get_valid_date_mock, 
-        get_one_night_ratings_mock):
+    def test_ratings_night_intent(self, get_valid_date_mock: MagicMock, 
+        get_one_night_ratings_mock: MagicMock):
         """RatingsNightIntentHandler.handle executes succesfully"""
         from externals.alexa_intents.intent_dispatcher import get_alexa_lambda_handler
         from fixtures.ratings_fixtures import get_mock_television_ratings
