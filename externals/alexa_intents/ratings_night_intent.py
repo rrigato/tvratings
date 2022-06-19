@@ -38,7 +38,13 @@ def _orchestrate_ratings_retrieval(handler_input: HandlerInput) -> str:
             {valid_ratings_night.request_filters["ratings_date"]}
         """)
 
-
+    '''
+        TODO - 
+        load the list of TelevisionRatings from usecase
+        parse high and low
+        separate messages for ResponseFailure, ResponseSuccess([])
+        or list of TelevisionRatings entities returned
+    '''
 
     return(valid_ratings_night.request_filters["ratings_date"])
 
