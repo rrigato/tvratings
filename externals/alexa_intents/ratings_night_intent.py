@@ -52,7 +52,7 @@ def _orchestrate_ratings_retrieval(handler_input: HandlerInput) -> str:
 
 
 class RatingsNightIntentHandler(AbstractRequestHandler):
-    """Handler for Skill Launch."""
+    """Handler for RatingsNightIntent"""
     def can_handle(self, handler_input: HandlerInput) -> bool:
         """Determines the type of input the class can handle
 
