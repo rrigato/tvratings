@@ -21,11 +21,17 @@ class TestRatingsNightIntent(unittest.TestCase):
         # from burnday.entities.entity_model import BurnStatus
         # from burnday.entry.response_objects import ResponseSuccess
         from externals.alexa_intents.intent_dispatcher import get_alexa_lambda_handler
+        from tvratings.entry.request_objects import ValidRequest
         
-        expected_message = "mock message from usecase"
+        mock_ratings_ocurred_on = self.intent_request["request"]["intent"]["slots"][
+            "rating_occurred_on"]["value"]
+
+        expected_message = mock_ratings_ocurred_on
         # mock_burn_status_entity = BurnStatus()
         # mock_burn_status_entity.burn_status = expected_message
-        get_valid_date_mock.return_value = True
+        get_valid_date_mock.return_value = ValidRequest(request_filters={
+            "ratings_date": mock_ratings_ocurred_on
+        })
         # mock_location_burn_status.return_value = ResponseSuccess(
         #     response_value=mock_burn_status_entity
         # )
@@ -39,9 +45,7 @@ class TestRatingsNightIntent(unittest.TestCase):
         )
 
 
-        get_valid_date_mock.assert_called_once_with(
-            self.intent_request["request"]["intent"]["slots"]["rating_occurred_on"]["value"]
-        )
+        self.assertTrue(get_valid_date_mock.assert_called)
 
         self.assertTrue(
             expected_message in actual_response_message["response"]["outputSpeech"]["ssml"],

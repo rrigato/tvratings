@@ -9,10 +9,10 @@ import logging
 
 
 
-def _get_intent_slot_value(handler_input: HandlerInput, slot_name: str) -> str:
-    """loads the slot_name from handler_input or returns None"""
+def _get_intent_slot_value(handler_input: HandlerInput, slot_name_to_select: str) -> str:
+    """loads the slot_name_to_select from handler_input or returns None"""
     try:
-        return(get_slot(handler_input=handler_input, slot_name="burn_location").value)
+        return(get_slot(handler_input=handler_input, slot_name=slot_name_to_select).value)
     except Exception:
         logging.exception("_get_intent_slot_value - error retrieving slot")
         return(None)
@@ -30,7 +30,7 @@ def _orchestrate_ratings_retrieval(handler_input: HandlerInput) -> str:
     
     if bool(valid_ratings_night) is False:
         logging.info("_orchestrate_ratings_retrieval - InvalidRequestObject returned")
-
+        return("Invalid television rating date provided")
     
     logging.info(f"""
         _orchestrate_ratings_retrieval - ratings_date -
@@ -65,6 +65,6 @@ class RatingsNightIntentHandler(AbstractRequestHandler):
         return (
             handler_input.response_builder
                 .speak(entry_response_message)
-                .ask(entry_response_message)
+                .set_should_end_session(True)
                 .response
         )
