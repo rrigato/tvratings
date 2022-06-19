@@ -61,13 +61,13 @@ class TestRatingsNightIntent(unittest.TestCase):
 
 
     @patch("externals.alexa_intents.ratings_night_intent.RatingsNightIntentHandler.handle")
-    def test_ratings_night_intent_unexpected_error(self, mock_burn_status_handle):
+    def test_ratings_night_intent_unexpected_error(self, entry_intent_handler):
         """RatingsNightIntentHandler.handle raises unexpected errror that is handled gracefully"""
         from externals.alexa_intents.intent_dispatcher import get_alexa_lambda_handler
 
         alexa_lambda_handler = get_alexa_lambda_handler()
 
-        mock_burn_status_handle.side_effect = TimeoutError("Unexpected Network timeout")
+        entry_intent_handler.side_effect = TimeoutError("Unexpected Network timeout")
 
         actual_response_message = alexa_lambda_handler(
             deepcopy(self.intent_request), 
