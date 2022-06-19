@@ -12,23 +12,23 @@ class TestRatingsNightIntent(unittest.TestCase):
             cls.intent_request = json.load(intent_request)
 
 
-    @unittest.skip("skipping for now")
-    @patch("externals.alexa_intents.burn_status_intent.location_burn_status")
-    @patch("externals.alexa_intents.burn_status_intent.validate_location_burn_status")
-    def test_burn_status_intent(self, mock_validate_location_burn_status, 
-        mock_location_burn_status):
+    # @unittest.skip("skipping for now")
+    # @patch("externals.alexa_intents.burn_status_intent.location_burn_status")
+    @patch("externals.alexa_intents.ratings_night_intent.get_valid_date")
+    def test_burn_status_intent(self, get_valid_date_mock):
+        # mock_location_burn_status):
         """BurnStatusIntentHandler.handle executes usecase and returns burn status"""
-        from burnday.entities.entity_model import BurnStatus
-        from burnday.entry.response_objects import ResponseSuccess
+        # from burnday.entities.entity_model import BurnStatus
+        # from burnday.entry.response_objects import ResponseSuccess
         from externals.alexa_intents.intent_dispatcher import get_alexa_lambda_handler
         
-        expected_message = "mock burn status message returned from usecase"
-        mock_burn_status_entity = BurnStatus()
-        mock_burn_status_entity.burn_status = expected_message
-        mock_validate_location_burn_status.return_value = True
-        mock_location_burn_status.return_value = ResponseSuccess(
-            response_value=mock_burn_status_entity
-        )
+        expected_message = "mock message from usecase"
+        # mock_burn_status_entity = BurnStatus()
+        # mock_burn_status_entity.burn_status = expected_message
+        get_valid_date_mock.return_value = True
+        # mock_location_burn_status.return_value = ResponseSuccess(
+        #     response_value=mock_burn_status_entity
+        # )
 
         alexa_lambda_handler = get_alexa_lambda_handler()
 
@@ -39,10 +39,8 @@ class TestRatingsNightIntent(unittest.TestCase):
         )
 
 
-        mock_validate_location_burn_status.assert_called_once_with(
-            zip_code=int(
-                self.intent_request["request"]["intent"]["slots"]["burn_location"]["value"]
-            )
+        get_valid_date_mock.assert_called_once_with(
+            self.intent_request["request"]["intent"]["slots"]["rating_occurred_on"]["value"]
         )
 
         self.assertTrue(
