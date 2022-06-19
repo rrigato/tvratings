@@ -1,6 +1,7 @@
 Amazon alexa skill for analyzing television ratings
 
 # TODO
+- deploy code once unit tests are passing
 - make test_ratings_night_intent pass by selecting the highest/(lowest?) rating for that night
 - #test_burn_status_intent_response_failure
   - Search for the above test case and replicate its logic in test_ratings_night_intent.py
