@@ -3,6 +3,7 @@ from ask_sdk_core.handler_input import HandlerInput
 from ask_sdk_core.utils import get_slot
 from ask_sdk_core.utils import is_intent_name
 from ask_sdk_model.response import Response
+from tvratings.entities.entity_model import TelevisionRating
 from tvratings.entry.externals_entry import get_valid_date
 from tvratings.entry.externals_entry import get_one_night_ratings
 
@@ -19,34 +20,58 @@ def _get_intent_slot_value(handler_input: HandlerInput, slot_name_to_select: str
         return(None)
 
 
+def _format_response_message(television_ratings_success: list[TelevisionRating]) -> str:
+    """Appropritate response str based on television_ratings_success list"""
+    
+    if len(television_ratings_success) == 0:
+        logging.info("_format_response_message - no TelevisionRating entities returned")
+        return("There are no television ratings for the night you selected")
+
+    logging.info("_format_response_message - invocation begin")
+    return("test message")
+
 
 def _orchestrate_ratings_retrieval(handler_input: HandlerInput) -> str:
     """Orchestrates RequestObject and entry implementation to pull ratings
     """
-    logging.info("_orchestrate_ratings_retrieval - invocation begin")
-    
-    valid_ratings_night = get_valid_date(
-        _get_intent_slot_value(handler_input, "rating_occurred_on")
-    )
-    
-    if bool(valid_ratings_night) is False:
-        logging.info("_orchestrate_ratings_retrieval - InvalidRequestObject returned")
-        return("Invalid television rating date provided")
-    
-    logging.info(f"""
-        _orchestrate_ratings_retrieval - ratings_date -
-            {valid_ratings_night.request_filters["ratings_date"]}
-        """)
+    try:
+        logging.info("_orchestrate_ratings_retrieval - invocation begin")
+        
+        valid_ratings_night = get_valid_date(
+            _get_intent_slot_value(handler_input, "rating_occurred_on")
+        )
+        
+        if bool(valid_ratings_night) is False:
+            logging.info("_orchestrate_ratings_retrieval - InvalidRequestObject returned")
+            return("Invalid television rating date provided")
+        
+        logging.info(f"""
+            _orchestrate_ratings_retrieval - ratings_date -
+                {valid_ratings_night.request_filters["ratings_date"]}
+            """)
 
-    '''
-        TODO - 
-        load the list of TelevisionRatings from usecase
-        parse high and low
-        separate messages for ResponseFailure, ResponseSuccess([])
-        or list of TelevisionRatings entities returned
-    '''
+        '''
+            TODO - 
+            load the list of TelevisionRatings from usecase
+            parse high and low
+            separate messages for ResponseFailure, ResponseSuccess([])
+            or list of TelevisionRatings entities returned
+        '''
+        one_night_ratings = get_one_night_ratings(valid_ratings_night.request_filters["ratings_date"])
 
-    return(valid_ratings_night.request_filters["ratings_date"])
+        if bool(one_night_ratings) is False:
+            logging.info(
+                f"_orchestrate_ratings_retrieval - ResponseFailure {one_night_ratings.error_message}"
+            )
+            return("We encountered an error when loading the ratings for that night")
+        
+        logging.info("_orchestrate_ratings_retrieval - valid response")
+
+        return(_format_response_message(one_night_ratings.response_value))
+
+    except Exception as error_passthrough:
+        logging.exception("_orchestrate_ratings_retrieval - unexpected exception suppression")
+        return("Unexpected error occurred when loading the television ratings")
 
 
 
