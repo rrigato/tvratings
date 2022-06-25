@@ -109,3 +109,4 @@ class RatingsNightIntentHandler(AbstractRequestHandler):
                 .set_should_end_session(True)
                 .response
         )
+

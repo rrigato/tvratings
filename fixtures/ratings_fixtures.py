@@ -65,7 +65,7 @@ def fake_dynamodb_query_response(number_of_ratings: int) -> dict[str, Union[int,
     }
     for tv_show in get_mock_television_ratings(number_of_ratings):
         sdk_response["Items"].append({
-            "RATINGS_OCCURRED_ON": tv_show.show_air_date,
+            "RATINGS_OCCURRED_ON": tv_show.show_air_date.isoformat(),
             "TIME": tv_show.time_slot,
             "SHOW": tv_show.show_name,
             "PERCENTAGE_OF_HOUSEHOLDS_AGE_18_49": tv_show.household_18_49,

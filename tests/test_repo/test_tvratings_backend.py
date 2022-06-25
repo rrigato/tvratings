@@ -57,7 +57,7 @@ class TestTvratingsBackend(unittest.TestCase):
         
         mock_rating_night = date(2014, 1, 4)
         mock_num_time_slot = 1
-        required_keys = ["RATINGS_OCCURRED_ON", "TIME", "SHOW", "TOTAL_VIEWERS"]
+        required_keys = ["TIME", "SHOW", "TOTAL_VIEWERS"]
 
         for required_key in required_keys:
             with self.subTest(required_key=required_key):

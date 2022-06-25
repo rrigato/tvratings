@@ -8,7 +8,8 @@ import logging
 import os
 
 
-def _convert_dynamodb_query_to_entity(dynamodb_items: list) -> list[TelevisionRating]:
+def _convert_dynamodb_query_to_entity(dynamodb_items: list, 
+    ratings_occurred_on: date) -> list[TelevisionRating]:
     """Converts DynamoDB external query to list of TelevisionRating entities
     """
     logging.info("_convert_dynamodb_query_to_entity - invocation begin")
@@ -18,7 +19,7 @@ def _convert_dynamodb_query_to_entity(dynamodb_items: list) -> list[TelevisionRa
     for dynamodb_item in dynamodb_items:
         tv_show = TelevisionRating()
 
-        tv_show.show_air_date = dynamodb_item["RATINGS_OCCURRED_ON"]
+        tv_show.show_air_date = ratings_occurred_on
         tv_show.time_slot = dynamodb_item["TIME"]
         tv_show.show_name = dynamodb_item["SHOW"]
         tv_show.household = dynamodb_item.get("PERCENTAGE_OF_HOUSEHOLDS")
@@ -79,7 +80,10 @@ def load_one_date(ratings_occurred_on: date) -> tuple[Union[list[TelevisionRatin
 
         logging.info("load_one_date - invoking _convert_dynamodb_query_to_entity")
 
-        return(_convert_dynamodb_query_to_entity(dynamodb_response["Items"]), None)
+        return(
+            _convert_dynamodb_query_to_entity(dynamodb_response["Items"], ratings_occurred_on),
+            None
+        )
         
 
     except Exception as error_suppression:
