@@ -26,7 +26,7 @@ class TestRatingsNightIntent(unittest.TestCase):
         mock_ratings_ocurred_on = self.intent_request["request"]["intent"]["slots"][
             "rating_occurred_on"]["value"]
 
-        expected_message = "The highest ratings for that night were"
+        expected_message = "The ratings for that Saturday night were"
         mock_television_ratings = get_mock_television_ratings(7)
 
         get_valid_date_mock.return_value = ValidRequest(request_filters={

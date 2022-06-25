@@ -20,15 +20,22 @@ def _get_intent_slot_value(handler_input: HandlerInput, slot_name_to_select: str
         return(None)
 
 
-def _format_response_message(television_ratings_success: list[TelevisionRating]) -> str:
-    """Appropritate response str based on television_ratings_success list"""
+def _format_response_message(television_ratings: list[TelevisionRating]) -> str:
+    """Appropritate response str based on television_ratings list"""
     
-    if len(television_ratings_success) == 0:
+    if len(television_ratings) == 0:
         logging.info("_format_response_message - no TelevisionRating entities returned")
         return("There are no television ratings for the night you selected")
 
-    logging.info("_format_response_message - invocation begin")
-    return("test message")
+    
+    logging.info("_format_response_message - Iterating list")
+
+    output_string = "The ratings for that Saturday night were "
+
+    for television_rating in television_ratings:
+        output_string += f"{television_rating.show_name} with {television_rating.rating} viewers "
+
+    return(output_string)
 
 
 def _orchestrate_ratings_retrieval(handler_input: HandlerInput) -> str:
