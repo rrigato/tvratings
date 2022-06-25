@@ -22,10 +22,17 @@ def _convert_dynamodb_query_to_entity(dynamodb_items: list,
         tv_show.show_air_date = ratings_occurred_on
         tv_show.time_slot = dynamodb_item["TIME"]
         tv_show.show_name = dynamodb_item["SHOW"]
-        tv_show.household = dynamodb_item.get("PERCENTAGE_OF_HOUSEHOLDS")
-        tv_show.household_18_49 = dynamodb_item.get("PERCENTAGE_OF_HOUSEHOLDS_AGE_18_49")
-        tv_show.rating = dynamodb_item["TOTAL_VIEWERS"]
-        tv_show.rating_18_49 = dynamodb_item.get("TOTAL_VIEWERS_AGE_18_49")
+
+        if dynamodb_item.get("PERCENTAGE_OF_HOUSEHOLDS") is not None:
+            tv_show.household = float(dynamodb_item.get("PERCENTAGE_OF_HOUSEHOLDS"))
+
+        if dynamodb_item.get("PERCENTAGE_OF_HOUSEHOLDS_AGE_18_49") is not None:
+            tv_show.household_18_49 = float(dynamodb_item.get("PERCENTAGE_OF_HOUSEHOLDS_AGE_18_49"))
+        
+        tv_show.rating = int(dynamodb_item["TOTAL_VIEWERS"])
+
+        if dynamodb_item.get("TOTAL_VIEWERS_AGE_18_49") is not None:
+            tv_show.rating_18_49 = int(dynamodb_item.get("TOTAL_VIEWERS_AGE_18_49"))
 
         all_tvratings.append(tv_show)
 
