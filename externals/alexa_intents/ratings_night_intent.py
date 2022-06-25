@@ -64,7 +64,7 @@ def _orchestrate_ratings_retrieval(handler_input: HandlerInput) -> str:
             separate messages for ResponseFailure, ResponseSuccess([])
             or list of TelevisionRatings entities returned
         '''
-        one_night_ratings = get_one_night_ratings(valid_ratings_night.request_filters["ratings_date"])
+        one_night_ratings = get_one_night_ratings(valid_ratings_night)
 
         if bool(one_night_ratings) is False:
             logging.info(

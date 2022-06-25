@@ -79,3 +79,44 @@ class TestRatingsNightIntent(unittest.TestCase):
     
         self.assertTrue(actual_response_message["response"]["shouldEndSession"])
 
+
+
+
+    @patch("externals.alexa_intents.ratings_night_intent.get_one_night_ratings")
+    @patch("externals.alexa_intents.ratings_night_intent.get_valid_date")
+    def test_ratings_night_intent_e2e_bugs(self, get_valid_date_mock: MagicMock, 
+        get_one_night_ratings_mock: MagicMock):
+        """E2E bugs: 
+            - passing datetime.date to get_one_night_ratings instead of ValidRequest object
+        """
+        from externals.alexa_intents.intent_dispatcher import get_alexa_lambda_handler
+        from fixtures.ratings_fixtures import get_mock_television_ratings
+        from tvratings.entry.response_objects import ResponseSuccess
+        from tvratings.entry.request_objects import ValidRequest
+        
+        mock_ratings_ocurred_on = self.intent_request["request"]["intent"]["slots"][
+            "rating_occurred_on"]["value"]
+
+        mock_television_ratings = get_mock_television_ratings(7)
+
+        get_valid_date_mock.return_value = ValidRequest(request_filters={
+            "ratings_date": mock_ratings_ocurred_on
+        })
+        get_one_night_ratings_mock.return_value = ResponseSuccess(
+            response_value=mock_television_ratings
+        )
+
+        alexa_lambda_handler = get_alexa_lambda_handler()
+
+
+        actual_response_message = alexa_lambda_handler(
+            deepcopy(self.intent_request), 
+            None
+        )
+
+        args, kwargs = get_one_night_ratings_mock.call_args
+        self.assertIsInstance(args[0], ValidRequest, msg="""\n\n
+        Not passing a ValidRequest object to entry interface
+        """
+        )
+

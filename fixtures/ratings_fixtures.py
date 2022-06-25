@@ -21,7 +21,7 @@ def get_mock_television_ratings(number_of_ratings: int) -> list[TelevisionRating
     """
     television_ratings_list = []
 
-    for rating_num in zip(range(number_of_ratings)):
+    for rating_num in range(number_of_ratings):
 
         mock_television_rating = TelevisionRating()
 
