@@ -97,7 +97,8 @@ class TestRatingsNightIntent(unittest.TestCase):
         mock_ratings_ocurred_on = self.intent_request["request"]["intent"]["slots"][
             "rating_occurred_on"]["value"]
 
-        mock_television_ratings = get_mock_television_ratings(7)
+        mock_num_ratings = 10
+        mock_television_ratings = get_mock_television_ratings(mock_num_ratings)
 
         get_valid_date_mock.return_value = ValidRequest(request_filters={
             "ratings_date": mock_ratings_ocurred_on
@@ -118,5 +119,11 @@ class TestRatingsNightIntent(unittest.TestCase):
         self.assertIsInstance(args[0], ValidRequest, msg="""\n\n
         Not passing a ValidRequest object to entry interface
         """
+        )
+
+        self.assertEqual(
+            actual_response_message["response"]["outputSpeech"]["ssml"].count("<item>"),
+            mock_num_ratings,
+            msg="""\n\n Error do not have one list item for each television ratings"""    
         )
 

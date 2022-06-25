@@ -30,10 +30,20 @@ def _format_response_message(television_ratings: list[TelevisionRating]) -> str:
     
     logging.info("_format_response_message - Iterating list")
 
-    output_string = "The ratings for that Saturday night were "
+    output_string = "The ratings for that Saturday night were <list type=\"bullet\"> "
 
     for television_rating in television_ratings:
-        output_string += f"{television_rating.show_name} with {television_rating.rating} viewers "
+        output_string += f"""
+        <item> 
+            <description>
+            {television_rating.show_name} with {television_rating.rating} thousand viewers 
+            </description>
+        </item>
+        """
+
+    output_string += " </list>"
+
+    logging.info(f"_format_response_message - {output_string}")
 
     return(output_string)
 
