@@ -22,14 +22,39 @@ def _get_intent_slot_value(handler_input: HandlerInput, slot_name_to_select: str
 
 
 
-def _ratings_boundary_format(television_rating: TelevisionRating) -> str:
+def _time_slot_data_quality(television_rating: TelevisionRating) -> str:
+    """Cleaning the time_slot field of am/pm distinctions
+    """
+
+    logging.info(f"_time_slot_data_quality - pre-parse {television_rating.time_slot}")
+    
+    output_time_slot_message = television_rating.time_slot
+
+    if television_rating.time_slot is None:
+        logging.info("_time_slot_data_quality - ending sentence")
+        return(".")
+
+    output_time_slot_message = output_time_slot_message.replace(".", "")
+    output_time_slot_message = output_time_slot_message.replace(" ", "")
+
+    for possible_character in output_time_slot_message:
+        if possible_character.isalpha():
+            output_time_slot_message = output_time_slot_message.replace(possible_character, "")
+            
+
+    logging.info(f"_time_slot_data_quality - pre-parse {output_time_slot_message}")
+    
+    return(f"for the {output_time_slot_message} time slot.")
+    
+
+def _ratings_data_quality(television_rating: TelevisionRating) -> str:
     """Applies calculation logic based on whether the rating is over or under 1 million
     """
-    if television_rating.rating > 1000:
-        logging.info("_ratings_boundary_format - over 1 million")
+    if television_rating.rating >= 1000:
+        logging.info("_ratings_data_quality - over 1 million")
         return(f"{television_rating.rating/1000} million")
     
-    logging.info("_ratings_boundary_format - under 1 million")
+    logging.info("_ratings_data_quality - under 1 million")
 
     return(f"{television_rating.rating} thousand")
 
@@ -50,8 +75,8 @@ def _format_response_message(television_ratings: list[TelevisionRating]) -> str:
     for television_rating in television_ratings:
         output_string += f"""
             {television_rating.show_name} with 
-            {_ratings_boundary_format(television_rating)} viewers
-            at {television_rating.time_slot}.
+            {_ratings_data_quality(television_rating)} viewers
+            {_time_slot_data_quality(television_rating)}
         """
 
     logging.info(f"_format_response_message - {output_string}")
