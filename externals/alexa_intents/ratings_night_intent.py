@@ -30,18 +30,12 @@ def _format_response_message(television_ratings: list[TelevisionRating]) -> str:
     
     logging.info("_format_response_message - Iterating list")
 
-    output_string = "The ratings for that Saturday night were <list type=\"bullet\"> "
+    output_string = "The ratings for that Saturday night were: "
 
     for television_rating in television_ratings:
         output_string += f"""
-        <item> 
-            <description>
-            {television_rating.show_name} with {television_rating.rating} thousand viewers 
-            </description>
-        </item>
+            {television_rating.show_name} with {television_rating.rating} thousand viewers.
         """
-
-    output_string += " </list>"
 
     logging.info(f"_format_response_message - {output_string}")
 
@@ -67,13 +61,7 @@ def _orchestrate_ratings_retrieval(handler_input: HandlerInput) -> str:
                 {valid_ratings_night.request_filters["ratings_date"]}
             """)
 
-        '''
-            TODO - 
-            load the list of TelevisionRatings from usecase
-            parse high and low
-            separate messages for ResponseFailure, ResponseSuccess([])
-            or list of TelevisionRatings entities returned
-        '''
+
         one_night_ratings = get_one_night_ratings(valid_ratings_night)
 
         if bool(one_night_ratings) is False:

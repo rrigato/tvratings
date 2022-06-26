@@ -1,8 +1,8 @@
 Amazon alexa skill for analyzing television ratings
 
 # TODO
-- deploy code once unit tests are passing
-- make test_ratings_night_intent pass by selecting the highest/(lowest?) rating for that night
+- [externals/alexa_intents/ratings_night_intent.py#35](externals/alexa_intents/ratings_night_intent.py#35)
+- merge dev to master
 - #test_burn_status_intent_response_failure
   - Search for the above test case and replicate its logic in test_ratings_night_intent.py
 - Publish skill using info in voice_interaction_model/skill_distribution/*

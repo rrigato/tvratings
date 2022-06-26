@@ -116,14 +116,15 @@ class TestRatingsNightIntent(unittest.TestCase):
         )
 
         args, kwargs = get_one_night_ratings_mock.call_args
-        self.assertIsInstance(args[0], ValidRequest, msg="""\n\n
-        Not passing a ValidRequest object to entry interface
-        """
+        self.assertIsInstance(
+            args[0], ValidRequest, msg="""\n\n
+                Not passing a ValidRequest object to entry interface
+            """
         )
 
         self.assertEqual(
-            actual_response_message["response"]["outputSpeech"]["ssml"].count("<item>"),
+            actual_response_message["response"]["outputSpeech"]["ssml"].count("thousand viewers."),
             mock_num_ratings,
-            msg="""\n\n Error do not have one list item for each television ratings"""    
+            msg="""\n\n Error do not have one description for each television rating"""
         )
 
