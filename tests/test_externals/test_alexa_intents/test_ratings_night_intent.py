@@ -88,6 +88,7 @@ class TestRatingsNightIntent(unittest.TestCase):
         get_one_night_ratings_mock: MagicMock):
         """E2E bugs: 
             - passing datetime.date to get_one_night_ratings instead of ValidRequest object
+            - ratings over 1 million is formatted properly
         """
         from externals.alexa_intents.intent_dispatcher import get_alexa_lambda_handler
         from fixtures.ratings_fixtures import get_mock_television_ratings
@@ -99,6 +100,7 @@ class TestRatingsNightIntent(unittest.TestCase):
 
         mock_num_ratings = 10
         mock_television_ratings = get_mock_television_ratings(mock_num_ratings)
+        mock_television_ratings[0].rating = 1000
 
         get_valid_date_mock.return_value = ValidRequest(request_filters={
             "ratings_date": mock_ratings_ocurred_on
@@ -123,8 +125,14 @@ class TestRatingsNightIntent(unittest.TestCase):
         )
 
         self.assertEqual(
-            actual_response_message["response"]["outputSpeech"]["ssml"].count("thousand viewers."),
+            actual_response_message["response"]["outputSpeech"]["ssml"].count("viewers."),
             mock_num_ratings,
-            msg="""\n\n Error do not have one description for each television rating"""
+            msg="""\n\n do not have one description for each television rating"""
+        )
+
+        self.assertGreater(
+            actual_response_message["response"]["outputSpeech"]["ssml"].count("million viewers."),
+            0,
+            msg="""\n\n Ratings over 1 million are not formatted properly"""
         )
 

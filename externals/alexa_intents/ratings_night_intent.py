@@ -20,6 +20,21 @@ def _get_intent_slot_value(handler_input: HandlerInput, slot_name_to_select: str
         return(None)
 
 
+
+
+def _ratings_boundary_format(television_rating: TelevisionRating) -> str:
+    """Applies calculation logic based on whether the rating is over or under 1 million
+    """
+    if television_rating.rating > 1000:
+        logging.info("_ratings_boundary_format - over 1 million")
+        return(f"{television_rating.rating/1000} million")
+    
+    logging.info("_ratings_boundary_format - under 1 million")
+
+    return(f"{television_rating.rating} thousand")
+
+
+
 def _format_response_message(television_ratings: list[TelevisionRating]) -> str:
     """Appropritate response str based on television_ratings list"""
     
@@ -34,7 +49,8 @@ def _format_response_message(television_ratings: list[TelevisionRating]) -> str:
 
     for television_rating in television_ratings:
         output_string += f"""
-            {television_rating.show_name} with {television_rating.rating} thousand viewers.
+            {television_rating.show_name} with 
+            {_ratings_boundary_format(television_rating)} viewers.
         """
 
     logging.info(f"_format_response_message - {output_string}")
