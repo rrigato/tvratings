@@ -48,6 +48,7 @@
                         "for the television ratings on {rating_occurred_on}",
                         "for the ratings on {rating_occurred_on}",
                         "for the tv ratings {rating_occurred_on}",
+                        "to check the tv ratings for {rating_occurred_on}",
                         "check the tv ratings {rating_occurred_on}",
                         "get the television ratings for {rating_occurred_on}",
                         "about the television ratings for {rating_occurred_on}",
