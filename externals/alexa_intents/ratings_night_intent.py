@@ -50,7 +50,8 @@ def _format_response_message(television_ratings: list[TelevisionRating]) -> str:
     for television_rating in television_ratings:
         output_string += f"""
             {television_rating.show_name} with 
-            {_ratings_boundary_format(television_rating)} viewers.
+            {_ratings_boundary_format(television_rating)} viewers
+            at {television_rating.time_slot}.
         """
 
     logging.info(f"_format_response_message - {output_string}")

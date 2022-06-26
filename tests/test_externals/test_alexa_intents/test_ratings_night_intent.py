@@ -125,13 +125,13 @@ class TestRatingsNightIntent(unittest.TestCase):
         )
 
         self.assertEqual(
-            actual_response_message["response"]["outputSpeech"]["ssml"].count("viewers."),
+            actual_response_message["response"]["outputSpeech"]["ssml"].count("viewers"),
             mock_num_ratings,
             msg="""\n\n do not have one description for each television rating"""
         )
 
         self.assertGreater(
-            actual_response_message["response"]["outputSpeech"]["ssml"].count("million viewers."),
+            actual_response_message["response"]["outputSpeech"]["ssml"].count("million viewers"),
             0,
             msg="""\n\n Ratings over 1 million are not formatted properly"""
         )
