@@ -9,8 +9,8 @@ Typically 3-5 business days after the television block occurred
 
 What date ranges is television ratings available?
 
-2012-05-26 through the present with the exception of the following dates:
-- 2017-06-03 until 2018-11-03
+2012-05-26 through 2017-06-03
+2018-11-03 through the present
 
 What do I do if I have the ratings for a night that the skill is currently missing?
 
