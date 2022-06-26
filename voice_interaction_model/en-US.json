@@ -43,6 +43,8 @@
                     ],
                     "samples": [
                         "get the television ratings on {rating_occurred_on}",
+                        "for the television ratings on {rating_occurred_on}",
+                        "for the ratings on {rating_occurred_on}",
                         "get the television ratings for {rating_occurred_on}",
                         "about the television ratings for {rating_occurred_on}",
                         "get the TV on {rating_occurred_on}",
