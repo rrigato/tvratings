@@ -46,3 +46,5 @@ python3 -c "import sys, json; print(json.load(sys.stdin)['results'])"
 
 # feature-requests
 - Get the highest and lowest ratings for a provided television show name
+- Get the first and last showing of a show
+- Highest and lowest ratings for a time period 
