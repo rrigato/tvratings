@@ -1,6 +1,8 @@
 # alexa-skill-link
 https://www.amazon.com/dp/B0B5596H7C/
 
+Enabling the above skill allows you to get the television ratings for Adult Swim's Saturday night
+Toonami television block.
 
 # getting-started
 
