@@ -1,7 +1,8 @@
-Amazon alexa skill for analyzing television ratings
+# alexa-skill-link
+https://www.amazon.com/dp/B0B5596H7C/
 
 
-# getting_started
+# getting-started
 
 1) Create a virtual environment and install dependencies:
 
@@ -27,7 +28,7 @@ scripts/app_deployment.sh
 ```
 
 
-# detect_secrets
+# detect-secrets
 implement to ensure no secrets are commited locally:
 
 setup a baseline where all tracked files will be compared to:
