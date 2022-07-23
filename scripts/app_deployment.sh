@@ -48,5 +48,7 @@ aws lambda update-function-code --function-name $FUNCTION_NAME \
 
 deactivate
 
+git push origin master
+
 echo "----------------------"
 echo "deployment successful"
