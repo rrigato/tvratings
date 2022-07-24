@@ -8,7 +8,7 @@ import logging
 import os
 
 
-def _convert_dynamodb_query_to_entity(dynamodb_items: list, 
+def _convert_dynamodb_query_to_entity(dynamodb_items: list[dict], 
     ratings_occurred_on: date) -> list[TelevisionRating]:
     """Converts DynamoDB external query to list of TelevisionRating entities
     """
