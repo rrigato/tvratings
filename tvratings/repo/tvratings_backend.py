@@ -31,6 +31,9 @@ def _convert_dynamodb_query_to_entity(dynamodb_items: list,
         
         tv_show.rating = int(dynamodb_item["TOTAL_VIEWERS"])
 
+        if dynamodb_item.get("YEAR") is not None:
+            tv_show.rating_year = int(dynamodb_item.get("YEAR"))
+
         if dynamodb_item.get("TOTAL_VIEWERS_AGE_18_49") is not None:
             tv_show.rating_18_49 = int(dynamodb_item.get("TOTAL_VIEWERS_AGE_18_49"))
 

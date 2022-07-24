@@ -73,7 +73,8 @@ def fake_dynamodb_query_response(number_of_ratings: int) -> dict[str, Union[int,
             "PERCENTAGE_OF_HOUSEHOLDS_AGE_18_49": str(tv_show.household_18_49),
             "PERCENTAGE_OF_HOUSEHOLDS": str(tv_show.household),
             "TOTAL_VIEWERS_AGE_18_49": str(tv_show.rating_18_49),
-            "TOTAL_VIEWERS": str(tv_show.rating)
+            "TOTAL_VIEWERS": str(tv_show.rating),
+            "YEAR": str(tv_show.rating_year)
         })
 
     return(deepcopy(sdk_response))
