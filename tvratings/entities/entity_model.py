@@ -93,6 +93,15 @@ class TelevisionRating:
         self._household_18_49 = household_18_49
 
 
+    @property
+    def rating_18_49(self):
+        return(self._rating_18_49)
+
+    @rating_18_49.setter
+    def rating_18_49(self, rating_18_49):
+        if type(rating_18_49) not in (int, type(None)):
+            raise TypeError("TelevisionRating - rating_18_49 datatype must be a int")
+        self._rating_18_49 = rating_18_49
 
 
 class RatingsMetric:
