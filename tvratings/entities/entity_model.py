@@ -15,6 +15,7 @@ class TelevisionRating:
         self.rating_18_49 = None
         self.household = None
         self.household_18_49 = None
+        self.rating_year = None
 
     @property
     def show_air_date(self):
@@ -94,14 +95,15 @@ class TelevisionRating:
 
 
     @property
-    def rating_18_49(self):
-        return(self._rating_18_49)
+    def rating_year(self):
+        return(self._rating_year)
 
-    @rating_18_49.setter
-    def rating_18_49(self, rating_18_49):
-        if type(rating_18_49) not in (int, type(None)):
-            raise TypeError("TelevisionRating - rating_18_49 datatype must be a int")
-        self._rating_18_49 = rating_18_49
+    @rating_year.setter
+    def rating_year(self, rating_year):
+        if type(rating_year) not in (int, type(None)):
+            raise TypeError(
+                "TelevisionRating - rating_year datatype must be a int")
+        self._rating_year = rating_year
 
 
 class RatingsMetric:
