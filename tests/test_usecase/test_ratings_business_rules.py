@@ -4,7 +4,7 @@ import unittest
 
 class TestRatingsBusinessRules(unittest.TestCase):
     def test_select_highest_ratings(self):
-        """"""
+        """Highest TelevisionRating element returned"""
         from fixtures.ratings_fixtures import get_mock_television_ratings
         from tvratings.usecase.ratings_business_rules import select_highest_ratings
         mock_tv_ratings = get_mock_television_ratings(
@@ -31,3 +31,13 @@ class TestRatingsBusinessRules(unittest.TestCase):
                     of the list of mock_tv_ratings
                     """
                 )
+
+
+    def test_select_lowest_ratings(self):
+        """lowest TelevisionRating element returned"""
+        pass
+
+
+    def test_rating_data_quality(self):
+        """Business rules for minimum and maximum possible ratings"""
+        pass
