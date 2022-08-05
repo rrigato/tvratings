@@ -121,3 +121,38 @@ class TestEntityModel(unittest.TestCase):
                     ) 
                     for television_rating_attribute in television_rating_attributes
                 ]
+
+
+    def test_television_ratings_matches_fixture(self):
+        """Each attribute in fixutre is a property for the entity"""
+        from fixtures.ratings_fixtures import get_mock_television_ratings
+        from tvratings.entities.entity_model import TelevisionRating
+
+
+        fixture_television_rating_attributes = [
+            attribute_name for attribute_name 
+            in dir(get_mock_television_ratings(1)[0]) 
+            if not attribute_name.startswith("_")
+        ]
+        
+        television_rating_attributes = [
+            attribute_name for attribute_name 
+            in dir(TelevisionRating) 
+            if not attribute_name.startswith("_")
+        ]
+        
+        self.assertEqual(
+            len(fixture_television_rating_attributes),
+            len(television_rating_attributes),
+            msg="""\n
+                Every fixture attribute might not have a corresponding
+                property for TelevisionRating entity
+            """
+            )
+
+        for fixture_attr in fixture_television_rating_attributes:
+            self.assertIn(
+                fixture_attr,
+                television_rating_attributes
+            )
+

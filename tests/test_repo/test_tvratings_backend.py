@@ -26,7 +26,8 @@ class TestTvratingsBackend(unittest.TestCase):
                 )
 
 
-                television_ratings_entities, ratings_retrieval_error = load_one_date(mock_rating_night)
+                television_ratings_entities, ratings_retrieval_error = load_one_date(
+                    mock_rating_night)
 
 
                 for tv_show in television_ratings_entities:
