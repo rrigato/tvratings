@@ -118,8 +118,7 @@ class RatingsMetric:
         self.household = None
         self.household_18_49 = None
         '''
-            TODO - test cases and implementation
-            parameterize existing test cases?
+            NOTE - only architecture defined, not yet used
         '''
 
 
