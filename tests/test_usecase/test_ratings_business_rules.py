@@ -69,13 +69,19 @@ class TestRatingsBusinessRules(unittest.TestCase):
 
 
     def test_filter_by_rating(self):
-        """Business rules for TelevisionRating.rating attribute data quality"""
+        """TelevisionRating.rating attribute used to filter list"""
         from fixtures.ratings_fixtures import get_mock_television_ratings
         from tvratings.usecase.ratings_business_rules import filter_by_rating
 
+        rating_is_none = get_mock_television_ratings(10)
+
+        rating_is_none[3].rating = None
+        rating_is_none[6].rating = None
+        rating_is_none[8].rating = None
+
         mock_ratings = [
             {
-                "ratings_list": get_mock_television_ratings(10),
+                "ratings_list": rating_is_none,
                 "expected_count": 7
             }
         ]
@@ -84,11 +90,11 @@ class TestRatingsBusinessRules(unittest.TestCase):
             with self.subTest(mock_rating=mock_rating):
 
 
-                filter_by_rating(mock_rating["ratings_list"])
+                tv_ratings = filter_by_rating(mock_rating["ratings_list"])
 
 
                 self.assertEqual(
-                    len(mock_rating["ratings_list"]),
+                    len(tv_ratings),
                     mock_rating["expected_count"]
                 )
 
