@@ -79,10 +79,21 @@ class TestRatingsBusinessRules(unittest.TestCase):
         rating_is_none[6].rating = None
         rating_is_none[8].rating = None
 
+        rating_below_min = get_mock_television_ratings(10)
+
+        
+        rating_below_min[4].rating = 10
+        rating_below_min[7].rating = 2
+        rating_below_min[9].rating = 4
+
         mock_ratings = [
             {
                 "ratings_list": rating_is_none,
                 "expected_count": 7
+            },
+            {
+                "ratings_list": rating_below_min,
+                "expected_count": 8
             }
         ]
 
