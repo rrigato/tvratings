@@ -101,3 +101,25 @@ class TestExternalsEntry(unittest.TestCase):
         self.assertEqual(str, type(one_nights_ratings.error_message))
         self.assertFalse(one_nights_ratings)
 
+
+    @patch("tvratings.entry.externals_entry.load_one_date")
+    def test_year_high_low(self, load_one_date_mock):
+        """Unhappy Path repo layer error results in ResponseFailure"""
+        from datetime import date
+        '''TODO
+        from tvratings.entry.externals_entry import year_high_low
+        - repo function to load_one_year of data
+        - call ratings_business_rules.filter_by_rating
+        - call select_lowest_ratings
+        - call select_highest_ratings
+        - Return a new type of entity with bool == true
+        and properties highest_tv_rating and lowest_tv_rating
+        TelevisionRating
+        '''
+
+    def test_valid_year(self):
+        """parse year from alexa intent request
+        takes int? 
+        return valid value or error message
+        """
+        pass
