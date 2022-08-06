@@ -68,6 +68,27 @@ class TestRatingsBusinessRules(unittest.TestCase):
 
 
 
-    def test_rating_data_quality(self):
-        """Business rules for minimum and maximum possible ratings"""
-        pass
+    def test_filter_by_rating(self):
+        """Business rules for TelevisionRating.rating attribute data quality"""
+        from fixtures.ratings_fixtures import get_mock_television_ratings
+        from tvratings.usecase.ratings_business_rules import filter_by_rating
+
+        mock_ratings = [
+            {
+                "ratings_list": get_mock_television_ratings(10),
+                "expected_count": 7
+            }
+        ]
+
+        for mock_rating in mock_ratings:
+            with self.subTest(mock_rating=mock_rating):
+
+
+                filter_by_rating(mock_rating["ratings_list"])
+
+
+                self.assertEqual(
+                    len(mock_rating["ratings_list"]),
+                    mock_rating["expected_count"]
+                )
+
