@@ -43,7 +43,6 @@ def _check_if_none(tv_ratings_list:
     ])
 
 
-
 def _check_below_min(tv_ratings_list: 
     list[TelevisionRating]) -> list[TelevisionRating]:
     """"""
@@ -51,6 +50,16 @@ def _check_below_min(tv_ratings_list:
     return([
         tv_rating for tv_rating in tv_ratings_list
         if tv_rating.rating >= 5
+    ])
+
+
+def _check_above_max(tv_ratings_list: 
+    list[TelevisionRating]) -> list[TelevisionRating]:
+    """"""
+    logging.info(f"_check_above_max - {len(tv_ratings_list)}")
+    return([
+        tv_rating for tv_rating in tv_ratings_list
+        if tv_rating.rating < 10000
     ])
 
 
@@ -64,5 +73,7 @@ def filter_by_rating(tv_ratings_list:
     tv_ratings_list = _check_if_none(tv_ratings_list)
 
     tv_ratings_list = _check_below_min(tv_ratings_list)
+
+    tv_ratings_list = _check_above_max(tv_ratings_list)
 
     return(tv_ratings_list)

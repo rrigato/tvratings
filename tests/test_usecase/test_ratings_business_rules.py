@@ -73,19 +73,26 @@ class TestRatingsBusinessRules(unittest.TestCase):
         from fixtures.ratings_fixtures import get_mock_television_ratings
         from tvratings.usecase.ratings_business_rules import filter_by_rating
 
+        '''よない無い
+        '''
         rating_is_none = get_mock_television_ratings(10)
 
-        rating_is_none[3].rating = None
+        rating_is_none[1].rating = None
         rating_is_none[6].rating = None
         rating_is_none[8].rating = None
 
         rating_below_min = get_mock_television_ratings(10)
-
         
         rating_below_min[4].rating = 10
         rating_below_min[7].rating = 2
         rating_below_min[9].rating = 4
 
+        rating_above_max = get_mock_television_ratings(10)
+        '''上一万悪い
+        '''
+        rating_above_max[1].rating = 10000
+        rating_above_max[9].rating = 9999
+        
         mock_ratings = [
             {
                 "ratings_list": rating_is_none,
@@ -94,6 +101,10 @@ class TestRatingsBusinessRules(unittest.TestCase):
             {
                 "ratings_list": rating_below_min,
                 "expected_count": 8
+            },
+            {
+                "ratings_list": rating_above_max,
+                "expected_count": 9
             }
         ]
 
