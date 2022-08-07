@@ -147,9 +147,18 @@ class TestExternalsEntry(unittest.TestCase):
         ]
         for mock_input_date in mock_input_dates:
             with self.subTest(mock_input_date=mock_input_date):
+
+
                 clean_valid_year, invalid_year_error_message = valid_year(
                     mock_input_date["mock_year"]
                 )
+
+
+                if mock_input_date["error_type"] == type(None):
+                    self.assertEqual(
+                        clean_valid_year,
+                        mock_input_date["mock_year"]
+                    )
 
                 self.assertIsInstance(
                     invalid_year_error_message,
