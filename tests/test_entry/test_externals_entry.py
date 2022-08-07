@@ -103,11 +103,11 @@ class TestExternalsEntry(unittest.TestCase):
 
 
     @patch("tvratings.entry.externals_entry.load_one_date")
-    def test_year_high_low(self, load_one_date_mock):
+    def test_year_rating_summary(self, load_one_date_mock):
         """Unhappy Path repo layer error results in ResponseFailure"""
         from datetime import date
         '''TODO
-        from tvratings.entry.externals_entry import year_high_low
+        from tvratings.entry.externals_entry import year_rating_summary
         - repo function to load_one_year of data
         - call ratings_business_rules.filter_by_rating
         - call select_lowest_ratings

@@ -3,6 +3,7 @@ from datetime import date
 from random import randint
 from random import paretovariate
 from tvratings.entities.entity_model import TelevisionRating
+from tvratings.entry.response_objects import YearRatingSummary
 from typing import Union
 
 
@@ -78,4 +79,20 @@ def fake_dynamodb_query_response(number_of_ratings: int) -> dict[str, Union[int,
         })
 
     return(deepcopy(sdk_response))
+
+
+
+
+def mock_year_rating_summary() -> YearRatingSummary:
+    """mock YearRatingSummary with all fields populated
+    """
+    mock_year_rating_summary = YearRatingSummary()
+
+    mock_year_rating_summary.highest_rating = int(
+        100 * paretovariate(1))
+
+    mock_year_rating_summary.lowest_rating = int(
+        100 * paretovariate(1))
+
+    return(mock_year_rating_summary)
 

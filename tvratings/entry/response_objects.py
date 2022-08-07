@@ -28,3 +28,6 @@ class ResponseFailure():
     @property
     def error_message(self):
         return(self._error_message)
+
+class YearRatingSummary():
+    pass
