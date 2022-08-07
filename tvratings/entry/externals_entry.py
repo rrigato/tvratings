@@ -67,6 +67,19 @@ def get_one_night_ratings(valid_date_request: ValidRequest
     
 
 
+def valid_year(year_to_validate: int) -> tuple[
+        Union[int, None], Union[str, None]]:
+    """returns int, None if year_to_validate is valid
+    otherwise returns None, error_message
+    """
+    if year_to_validate < 2012:
+        return(None, "Provided year must be greater than 2012")
+
+    
+    return(year_to_validate, None)
+
+
+
 
 if __name__ == "__main__":
     from time import strftime

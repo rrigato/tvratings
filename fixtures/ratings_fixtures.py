@@ -6,6 +6,8 @@ from tvratings.entities.entity_model import TelevisionRating
 from tvratings.entry.response_objects import YearRatingSummary
 from typing import Union
 
+import json
+
 
 def get_mock_television_ratings(number_of_ratings: int) -> list[TelevisionRating]:
     """Creates a list of mock TelevisionRating entities
@@ -95,4 +97,15 @@ def mock_year_rating_summary() -> YearRatingSummary:
         100 * paretovariate(1)), 9999)
 
     return(mock_year_rating_summary)
+
+
+def mock_year_high_low_intent() -> dict:
+    """deepcopied returned from this file location
+    tests/events/intent_requests/year_high_low_intent.json
+    """
+    with open("tests/events/intent_requests/year_high_low_intent.json",
+        "r") as intent_json:
+        intent_request = json.load(intent_json)
+
+    return(deepcopy(intent_request))
 

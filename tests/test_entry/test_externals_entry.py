@@ -122,4 +122,36 @@ class TestExternalsEntry(unittest.TestCase):
         takes int? 
         return valid value or error message
         """
-        pass
+        from fixtures.ratings_fixtures import mock_year_high_low_intent
+        from tvratings.entry.externals_entry import valid_year
+
+        
+        '''TODO
+        - come up with a way to test years beyond the current year
+        dynamically that will not result in test flake
+        '''
+        mock_input_dates = [
+            {
+                "mock_year": 1997,
+                "error_type": str
+            },
+            {
+                "mock_year": 2011,
+                "error_type": str
+            },
+            {
+                "mock_year": 2012,
+                "error_type": type(None)
+            }
+            
+        ]
+        for mock_input_date in mock_input_dates:
+            with self.subTest(mock_input_date=mock_input_date):
+                clean_valid_year, invalid_year_error_message = valid_year(
+                    mock_input_date["mock_year"]
+                )
+
+                self.assertIsInstance(
+                    invalid_year_error_message,
+                    mock_input_date["error_type"]
+                )
