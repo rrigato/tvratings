@@ -164,3 +164,5 @@ class TestExternalsEntry(unittest.TestCase):
                     invalid_year_error_message,
                     mock_input_date["error_type"]
                 )
+
+                
