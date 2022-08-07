@@ -30,7 +30,7 @@ def get_mock_television_ratings(number_of_ratings: int) -> list[TelevisionRating
         mock_television_rating.show_air_date = date.fromisoformat("2014-01-04")
         mock_television_rating.time_slot = str(rating_num) + ":00 am"
         mock_television_rating.show_name = "MOCK_SHOW" + str(rating_num)
-        mock_television_rating.rating = int(100 * paretovariate(1))
+        mock_television_rating.rating = min(int(100 * paretovariate(1)), 9999)
         mock_television_rating.rating_18_49 = max(
             int(mock_television_rating.rating - (10*paretovariate(3))), 25
         )
@@ -88,11 +88,11 @@ def mock_year_rating_summary() -> YearRatingSummary:
     """
     mock_year_rating_summary = YearRatingSummary()
 
-    mock_year_rating_summary.highest_rating = int(
-        100 * paretovariate(1))
+    mock_year_rating_summary.highest_rating = min(int(
+        100 * paretovariate(1)), 9999)
 
-    mock_year_rating_summary.lowest_rating = int(
-        100 * paretovariate(1))
+    mock_year_rating_summary.lowest_rating = min(int(
+        100 * paretovariate(1)), 9999)
 
     return(mock_year_rating_summary)
 
