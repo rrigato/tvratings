@@ -76,6 +76,7 @@ class TestResponseObjects(unittest.TestCase):
             if not attr_name.startswith("_")
         ]
 
+        self.assertTrue(mock_year_rating_summary())
         self.assertEqual(
             len(empty_response_properties),
             len(populated_response_properties),
@@ -86,5 +87,11 @@ class TestResponseObjects(unittest.TestCase):
 
         )
 
-        self.assertTrue(mock_year_rating_summary())
+        self.assertIsInstance(
+            mock_year_rating_summary().highest_rating, int
+        )
+        self.assertIsInstance(
+            mock_year_rating_summary().lowest_rating, int
+        )
+
 
