@@ -60,3 +60,31 @@ class TestResponseObjects(unittest.TestCase):
                 with self.assertRaises(TypeError):
                     mock_response_object = ResponseFailure(error_message=mock_error_message)
 
+
+    def test_year_rating_summary(self):
+        """response object is true with all fields populated"""
+        from fixtures.ratings_fixtures import mock_year_rating_summary
+        from tvratings.entry.response_objects import YearRatingSummary
+
+        empty_response_properties = [
+            attr_name for attr_name in dir(YearRatingSummary())
+            if not attr_name.startswith("_")
+        ]
+
+        populated_response_properties = [
+            attr_name for attr_name in dir(mock_year_rating_summary())
+            if not attr_name.startswith("_")
+        ]
+
+        self.assertEqual(
+            len(empty_response_properties),
+            len(populated_response_properties),
+            msg=f"""\n
+            Number of populated properties in fixture 
+            does not align with object
+            """
+
+        )
+
+        self.assertTrue(mock_year_rating_summary())
+
