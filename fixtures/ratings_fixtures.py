@@ -3,7 +3,10 @@ from datetime import date
 from random import randint
 from random import paretovariate
 from tvratings.entities.entity_model import TelevisionRating
+from tvratings.entry.response_objects import YearRatingSummary
 from typing import Union
+
+import json
 
 
 def get_mock_television_ratings(number_of_ratings: int) -> list[TelevisionRating]:
@@ -29,7 +32,7 @@ def get_mock_television_ratings(number_of_ratings: int) -> list[TelevisionRating
         mock_television_rating.show_air_date = date.fromisoformat("2014-01-04")
         mock_television_rating.time_slot = str(rating_num) + ":00 am"
         mock_television_rating.show_name = "MOCK_SHOW" + str(rating_num)
-        mock_television_rating.rating = int(100 * paretovariate(1))
+        mock_television_rating.rating = min(int(100 * paretovariate(1)), 9999)
         mock_television_rating.rating_18_49 = max(
             int(mock_television_rating.rating - (10*paretovariate(3))), 25
         )
@@ -78,4 +81,31 @@ def fake_dynamodb_query_response(number_of_ratings: int) -> dict[str, Union[int,
         })
 
     return(deepcopy(sdk_response))
+
+
+
+
+def mock_year_rating_summary() -> YearRatingSummary:
+    """mock YearRatingSummary with all fields populated
+    """
+    mock_year_rating_summary = YearRatingSummary()
+
+    mock_year_rating_summary.highest_rating = min(int(
+        100 * paretovariate(1)), 9999)
+
+    mock_year_rating_summary.lowest_rating = min(int(
+        100 * paretovariate(1)), 9999)
+
+    return(mock_year_rating_summary)
+
+
+def mock_year_high_low_intent() -> dict:
+    """deepcopied returned from this file location
+    tests/events/intent_requests/year_high_low_intent.json
+    """
+    with open("tests/events/intent_requests/year_high_low_intent.json",
+        "r") as intent_json:
+        intent_request = json.load(intent_json)
+
+    return(deepcopy(intent_request))
 

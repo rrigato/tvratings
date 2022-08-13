@@ -1,4 +1,5 @@
 from copy import deepcopy
+from datetime import datetime
 from tvratings.entry.input_valdiators import validate_iso_8601_date 
 from tvratings.entry.request_objects import ValidRequest 
 from tvratings.entry.request_objects import InvalidRequest 
@@ -65,6 +66,23 @@ def get_one_night_ratings(valid_date_request: ValidRequest
     
     return(ResponseSuccess(response_value=deepcopy(television_ratings)))
     
+
+
+def valid_year(year_to_validate: int) -> tuple[
+        Union[int, None], Union[str, None]]:
+    """returns int, None if year_to_validate is valid
+    otherwise returns None, error_message
+    """
+    if year_to_validate < 2012:
+        return(None, "Provided year must be greater than 2012")
+
+    if datetime.today().year < year_to_validate:
+        return(
+            None, 
+            f"Year must be less than or equal to {year_to_validate}")
+    
+    return(year_to_validate, None)
+
 
 
 

@@ -103,11 +103,11 @@ class TestExternalsEntry(unittest.TestCase):
 
 
     @patch("tvratings.entry.externals_entry.load_one_date")
-    def test_year_high_low(self, load_one_date_mock):
+    def test_year_rating_summary(self, load_one_date_mock):
         """Unhappy Path repo layer error results in ResponseFailure"""
         from datetime import date
         '''TODO
-        from tvratings.entry.externals_entry import year_high_low
+        from tvratings.entry.externals_entry import year_rating_summary
         - repo function to load_one_year of data
         - call ratings_business_rules.filter_by_rating
         - call select_lowest_ratings
@@ -118,8 +118,53 @@ class TestExternalsEntry(unittest.TestCase):
         '''
 
     def test_valid_year(self):
-        """parse year from alexa intent request
-        takes int? 
-        return valid value or error message
-        """
-        pass
+        """return valid value or error message"""
+        from datetime import datetime
+        from fixtures.ratings_fixtures import mock_year_high_low_intent
+        from tvratings.entry.externals_entry import valid_year
+
+        
+        mock_input_dates = [
+            {
+                "mock_year": 1997,
+                "error_type": str
+            },
+            {
+                "mock_year": 2011,
+                "error_type": str
+            },
+            {
+                "mock_year": datetime.today().year + 1,
+                "error_type": str
+            },
+            {
+                "mock_year": datetime.today().year + 1000,
+                "error_type": str
+            },
+            {
+                "mock_year": 2012,
+                "error_type": type(None)
+            }
+            
+        ]
+        for mock_input_date in mock_input_dates:
+            with self.subTest(mock_input_date=mock_input_date):
+
+
+                clean_valid_year, invalid_year_error_message = valid_year(
+                    mock_input_date["mock_year"]
+                )
+
+
+                if mock_input_date["error_type"] == type(None):
+                    self.assertEqual(
+                        clean_valid_year,
+                        mock_input_date["mock_year"]
+                    )
+
+                self.assertIsInstance(
+                    invalid_year_error_message,
+                    mock_input_date["error_type"]
+                )
+
+                
