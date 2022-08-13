@@ -1,3 +1,4 @@
+from unittest.mock import MagicMock
 from unittest.mock import patch
 import unittest
 
@@ -76,3 +77,15 @@ class TestTvratingsBackend(unittest.TestCase):
                 self.assertIsInstance(ratings_retrieval_error, str)
                 self.assertIsNone(television_ratings_entities)
 
+
+
+    @patch("boto3.resource")
+    def test_load_one_year(self, 
+        boto3_resource_mock: MagicMock):
+        """"""
+        from datetime import date
+        from fixtures.ratings_fixtures import fake_dynamodb_query_response
+        
+        ''' TODO - 
+            from tvratings.repo.tvratings_backend import load_one_date
+        '''
