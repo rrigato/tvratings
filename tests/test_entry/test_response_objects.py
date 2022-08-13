@@ -87,11 +87,3 @@ class TestResponseObjects(unittest.TestCase):
 
         )
 
-        self.assertIsInstance(
-            mock_year_rating_summary().highest_rating, int
-        )
-        self.assertIsInstance(
-            mock_year_rating_summary().lowest_rating, int
-        )
-
-
