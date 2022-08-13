@@ -3,7 +3,7 @@ from datetime import date
 from random import randint
 from random import paretovariate
 from tvratings.entities.entity_model import TelevisionRating
-from tvratings.entry.response_objects import YearRatingSummary
+from tvratings.entities.entity_model import YearRatingSummary
 from typing import Union
 
 import json

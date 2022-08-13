@@ -1,5 +1,6 @@
 from copy import deepcopy
 from datetime import datetime
+from tvratings.entities.entity_model import YearRatingSummary
 from tvratings.entry.input_valdiators import validate_iso_8601_date 
 from tvratings.entry.request_objects import ValidRequest 
 from tvratings.entry.request_objects import InvalidRequest 
@@ -83,6 +84,18 @@ def valid_year(year_to_validate: int) -> tuple[
     
     return(year_to_validate, None)
 
+
+
+
+def year_ratings_summary(rating_year: int) -> Union[
+    YearRatingSummary, ResponseFailure]:
+    """returns TvRatingsSummary for year of television ratings 
+    selected by rating_year
+    """
+    logging.info("year_ratings_summary - invocation begin")
+    
+    logging.info("year_ratings_summary - invocation end")
+    return(YearRatingSummary())
 
 
 
