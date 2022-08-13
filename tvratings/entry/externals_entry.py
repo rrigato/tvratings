@@ -1,4 +1,5 @@
 from copy import deepcopy
+from datetime import datetime
 from tvratings.entry.input_valdiators import validate_iso_8601_date 
 from tvratings.entry.request_objects import ValidRequest 
 from tvratings.entry.request_objects import InvalidRequest 
@@ -75,6 +76,10 @@ def valid_year(year_to_validate: int) -> tuple[
     if year_to_validate < 2012:
         return(None, "Provided year must be greater than 2012")
 
+    if datetime.today().year < year_to_validate:
+        return(
+            None, 
+            f"Year must be less than or equal to {year_to_validate}")
     
     return(year_to_validate, None)
 

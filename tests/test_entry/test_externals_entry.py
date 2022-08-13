@@ -118,18 +118,12 @@ class TestExternalsEntry(unittest.TestCase):
         '''
 
     def test_valid_year(self):
-        """parse year from alexa intent request
-        takes int? 
-        return valid value or error message
-        """
+        """return valid value or error message"""
+        from datetime import datetime
         from fixtures.ratings_fixtures import mock_year_high_low_intent
         from tvratings.entry.externals_entry import valid_year
 
         
-        '''TODO
-        - come up with a way to test years beyond the current year
-        dynamically that will not result in test flake
-        '''
         mock_input_dates = [
             {
                 "mock_year": 1997,
@@ -137,6 +131,14 @@ class TestExternalsEntry(unittest.TestCase):
             },
             {
                 "mock_year": 2011,
+                "error_type": str
+            },
+            {
+                "mock_year": datetime.today().year + 1,
+                "error_type": str
+            },
+            {
+                "mock_year": datetime.today().year + 1000,
                 "error_type": str
             },
             {
