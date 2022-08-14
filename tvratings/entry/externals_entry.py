@@ -7,6 +7,7 @@ from tvratings.entry.request_objects import InvalidRequest
 from tvratings.entry.response_objects import ResponseFailure 
 from tvratings.entry.response_objects import ResponseSuccess 
 from tvratings.repo.tvratings_backend import load_one_date 
+from tvratings.repo.tvratings_backend import load_one_year
 from typing import Union
 
 import logging
@@ -92,7 +93,14 @@ def year_ratings_summary(rating_year: int) -> Union[
     """returns TvRatingsSummary for year of television ratings 
     selected by rating_year
     """
-    logging.info("year_ratings_summary - invocation begin")
+    year_of_ratings, ratings_retrieval_error = load_one_year(
+        rating_year)
+
+    if ratings_retrieval_error is not None:
+        logging.info(
+            "year_ratings_summary - propagating unexpected error"
+        )
+        return(ratings_retrieval_error)
     
     logging.info("year_ratings_summary - invocation end")
     return(YearRatingSummary())

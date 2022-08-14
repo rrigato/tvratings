@@ -1,5 +1,5 @@
 from copy import deepcopy
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 import unittest
 
@@ -102,11 +102,22 @@ class TestExternalsEntry(unittest.TestCase):
         self.assertFalse(one_nights_ratings)
 
 
-    @patch("tvratings.entry.externals_entry.load_one_date")
-    def test_year_ratings_summary(self, load_one_date_mock):
+    @patch("tvratings.entry.externals_entry.load_one_year")
+    def test_year_ratings_summary(self, load_one_year_mock: MagicMock):
         """Unhappy Path repo layer error results in ResponseFailure"""
         from datetime import date
+        from fixtures.ratings_fixtures import get_mock_television_ratings
         from tvratings.entry.externals_entry import year_ratings_summary
+        
+        mock_rating_year = 2014
+        load_one_year_mock.return_value = (
+            get_mock_television_ratings(10), None    
+        )
+
+        tv_ratings_summary = year_ratings_summary(mock_rating_year)
+
+
+        load_one_year_mock.assert_called_once()
         '''TODO
         - repo function to load_one_year of data
         - call ratings_business_rules.filter_by_rating
@@ -116,6 +127,26 @@ class TestExternalsEntry(unittest.TestCase):
         and properties highest_tv_rating and lowest_tv_rating
         TelevisionRating
         '''
+
+
+    @patch("tvratings.entry.externals_entry.load_one_year")
+    def test_year_ratings_summary_unexpected_error(self, 
+        load_one_year_mock: MagicMock):
+        """Unhappy Path repo layer error results in ResponseFailure"""
+        from datetime import date
+        from fixtures.ratings_fixtures import get_mock_television_ratings
+        from tvratings.entry.externals_entry import year_ratings_summary
+        
+        mock_rating_year = 2014
+        mock_error_message = "Unexpected ratings retrieval error"
+        load_one_year_mock.return_value = (
+            None, mock_error_message
+        )
+
+        tv_ratings_summary = year_ratings_summary(mock_rating_year)
+
+
+        load_one_year_mock.assert_called_once()
 
     def test_valid_year(self):
         """return valid value or error message"""
