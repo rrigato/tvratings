@@ -108,15 +108,15 @@ def _orchestrate_ratings_summary(
             error_message="No ratings passed data quality check"
         )
 
-    highest_tv_rating = select_highest_ratings(year_of_ratings)
-    lowest_tv_rating = select_highest_ratings(year_of_ratings)
-
-    ratings_summary_instance.highest_rating = highest_tv_rating.rating
+    
+    ratings_summary_instance.highest_rating = select_highest_ratings(
+        year_of_ratings).rating
 
     logging.info(
         "_orchestrate_ratings_summary - obtained highest rating")
 
-    ratings_summary_instance.lowest_rating = lowest_tv_rating.rating
+    ratings_summary_instance.lowest_rating = select_lowest_ratings(
+        year_of_ratings).rating
 
     logging.info(
         "_orchestrate_ratings_summary - obtained lowest rating")

@@ -105,7 +105,6 @@ class TestExternalsEntry(unittest.TestCase):
     @patch("tvratings.entry.externals_entry.load_one_year")
     def test_year_ratings_summary(self, load_one_year_mock: MagicMock):
         """Unhappy Path repo layer error results in ResponseFailure"""
-        from datetime import date
         from fixtures.ratings_fixtures import get_mock_television_ratings
         from tvratings.entities.entity_model import YearRatingSummary
         from tvratings.entry.externals_entry import year_ratings_summary
@@ -128,23 +127,12 @@ class TestExternalsEntry(unittest.TestCase):
             for attr_name in dir(tv_ratings_summary)
             if not attr_name.startswith("_")
         ]
-        
-        '''TODO
-        - repo function to load_one_year of data
-        - call ratings_business_rules.filter_by_rating
-        - call select_lowest_ratings
-        - call select_highest_ratings
-        - Return a new type of entity with bool == true
-        and properties highest_tv_rating and lowest_tv_rating
-        TelevisionRating
-        '''
 
 
     @patch("tvratings.entry.externals_entry.load_one_year")
     def test_year_ratings_summary_unexpected_error(self, 
         load_one_year_mock: MagicMock):
         """Unhappy Path repo layer error results in ResponseFailure"""
-        from datetime import date
         from fixtures.ratings_fixtures import get_mock_television_ratings
         from tvratings.entry.response_objects import ResponseFailure
         from tvratings.entry.externals_entry import year_ratings_summary
@@ -152,7 +140,8 @@ class TestExternalsEntry(unittest.TestCase):
         mock_rating_year = 2014
         mock_error_message = "Unexpected ratings retrieval error"
         '''TODO - 
-            Evaluate highest risk of error that needs to be tested
+            Pipe back manual component test feedback once 
+            repo.load_one_year works
         '''
         load_one_year_mock.return_value = (
             None, mock_error_message
@@ -160,8 +149,8 @@ class TestExternalsEntry(unittest.TestCase):
 
         tv_ratings_summary = year_ratings_summary(mock_rating_year)
 
-
         self.assertIsInstance(tv_ratings_summary, ResponseFailure)
+
 
     def test_valid_year(self):
         """return valid value or error message"""
