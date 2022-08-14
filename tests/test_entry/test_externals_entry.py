@@ -107,6 +107,7 @@ class TestExternalsEntry(unittest.TestCase):
         """Unhappy Path repo layer error results in ResponseFailure"""
         from datetime import date
         from fixtures.ratings_fixtures import get_mock_television_ratings
+        from tvratings.entities.entity_model import YearRatingSummary
         from tvratings.entry.externals_entry import year_ratings_summary
         
         mock_rating_year = 2014
@@ -117,7 +118,17 @@ class TestExternalsEntry(unittest.TestCase):
         tv_ratings_summary = year_ratings_summary(mock_rating_year)
 
 
-        load_one_year_mock.assert_called_once()
+        self.assertIsInstance(tv_ratings_summary, YearRatingSummary)
+        
+        
+        [
+            self.assertIsNotNone(getattr(
+                tv_ratings_summary, attr_name)
+            ) 
+            for attr_name in dir(tv_ratings_summary)
+            if not attr_name.startswith("_")
+        ]
+        
         '''TODO
         - repo function to load_one_year of data
         - call ratings_business_rules.filter_by_rating
@@ -135,10 +146,14 @@ class TestExternalsEntry(unittest.TestCase):
         """Unhappy Path repo layer error results in ResponseFailure"""
         from datetime import date
         from fixtures.ratings_fixtures import get_mock_television_ratings
+        from tvratings.entry.response_objects import ResponseFailure
         from tvratings.entry.externals_entry import year_ratings_summary
         
         mock_rating_year = 2014
         mock_error_message = "Unexpected ratings retrieval error"
+        '''TODO - 
+            Evaluate highest risk of error that needs to be tested
+        '''
         load_one_year_mock.return_value = (
             None, mock_error_message
         )
@@ -146,7 +161,7 @@ class TestExternalsEntry(unittest.TestCase):
         tv_ratings_summary = year_ratings_summary(mock_rating_year)
 
 
-        load_one_year_mock.assert_called_once()
+        self.assertIsInstance(tv_ratings_summary, ResponseFailure)
 
     def test_valid_year(self):
         """return valid value or error message"""

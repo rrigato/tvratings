@@ -100,9 +100,20 @@ def year_ratings_summary(rating_year: int) -> Union[
         logging.info(
             "year_ratings_summary - propagating unexpected error"
         )
-        return(ratings_retrieval_error)
+        return(ResponseFailure(
+            error_message=ratings_retrieval_error
+        ))
     
-    logging.info("year_ratings_summary - invocation end")
+    if len(year_of_ratings) == 0:
+        logging.info(
+            "year_ratings_summary - no tv ratings for year"
+        )
+        return ResponseFailure(
+            error_message="No ratings found for provided year"
+        )
+    
+    logging.info("year_ratings_summary - invocation complete")
+
     return(YearRatingSummary())
 
 
