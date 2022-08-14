@@ -1,6 +1,6 @@
 from copy import deepcopy
 from datetime import datetime
-from tvratings.entities.entity_model import YearRatingSummary
+from tvratings.entities.entity_model import TelevisionRating, YearRatingSummary
 from tvratings.entry.input_valdiators import validate_iso_8601_date 
 from tvratings.entry.request_objects import ValidRequest 
 from tvratings.entry.request_objects import InvalidRequest 
@@ -8,6 +8,9 @@ from tvratings.entry.response_objects import ResponseFailure
 from tvratings.entry.response_objects import ResponseSuccess 
 from tvratings.repo.tvratings_backend import load_one_date 
 from tvratings.repo.tvratings_backend import load_one_year
+from tvratings.usecase.ratings_business_rules import filter_by_rating
+from tvratings.usecase.ratings_business_rules import select_highest_ratings
+from tvratings.usecase.ratings_business_rules import select_lowest_ratings
 from typing import Union
 
 import logging
@@ -88,6 +91,40 @@ def valid_year(year_to_validate: int) -> tuple[
 
 
 
+def _orchestrate_ratings_summary(
+    year_of_ratings: list[TelevisionRating]) -> Union[
+    YearRatingSummary, ResponseFailure]:
+    """assumes year_of_ratings is not None
+    """
+    ratings_summary_instance = YearRatingSummary()
+    year_of_ratings = filter_by_rating(year_of_ratings)
+
+    if len(year_of_ratings) == 0:
+        logging.info(
+            "_orchestrate_ratings_summary - all ratings" +
+            "dropped in data quality filter"
+        )
+        ResponseFailure(
+            error_message="No ratings passed data quality check"
+        )
+
+    highest_tv_rating = select_highest_ratings(year_of_ratings)
+    lowest_tv_rating = select_highest_ratings(year_of_ratings)
+
+    ratings_summary_instance.highest_rating = highest_tv_rating.rating
+
+    logging.info(
+        "_orchestrate_ratings_summary - obtained highest rating")
+
+    ratings_summary_instance.lowest_rating = lowest_tv_rating.rating
+
+    logging.info(
+        "_orchestrate_ratings_summary - obtained lowest rating")
+
+    return(ratings_summary_instance)
+
+
+
 def year_ratings_summary(rating_year: int) -> Union[
     YearRatingSummary, ResponseFailure]:
     """returns TvRatingsSummary for year of television ratings 
@@ -103,6 +140,10 @@ def year_ratings_summary(rating_year: int) -> Union[
         return(ResponseFailure(
             error_message=ratings_retrieval_error
         ))
+
+    logging.info(
+        f"year_ratings_summary - ratings retrieved for{rating_year}"
+        )
     
     if len(year_of_ratings) == 0:
         logging.info(
@@ -112,9 +153,9 @@ def year_ratings_summary(rating_year: int) -> Union[
             error_message="No ratings found for provided year"
         )
     
-    logging.info("year_ratings_summary - invocation complete")
+    logging.info("year_ratings_summary - invoking private interfaces")
 
-    return(YearRatingSummary())
+    return(_orchestrate_ratings_summary(year_of_ratings))
 
 
 
