@@ -1,5 +1,5 @@
 from copy import deepcopy
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 import unittest
 
@@ -102,20 +102,55 @@ class TestExternalsEntry(unittest.TestCase):
         self.assertFalse(one_nights_ratings)
 
 
-    @patch("tvratings.entry.externals_entry.load_one_date")
-    def test_year_rating_summary(self, load_one_date_mock):
+    @patch("tvratings.entry.externals_entry.load_one_year")
+    def test_year_ratings_summary(self, load_one_year_mock: MagicMock):
         """Unhappy Path repo layer error results in ResponseFailure"""
-        from datetime import date
-        '''TODO
-        from tvratings.entry.externals_entry import year_rating_summary
-        - repo function to load_one_year of data
-        - call ratings_business_rules.filter_by_rating
-        - call select_lowest_ratings
-        - call select_highest_ratings
-        - Return a new type of entity with bool == true
-        and properties highest_tv_rating and lowest_tv_rating
-        TelevisionRating
+        from fixtures.ratings_fixtures import get_mock_television_ratings
+        from tvratings.entities.entity_model import YearRatingSummary
+        from tvratings.entry.externals_entry import year_ratings_summary
+        
+        mock_rating_year = 2014
+        load_one_year_mock.return_value = (
+            get_mock_television_ratings(10), None    
+        )
+
+        tv_ratings_summary = year_ratings_summary(mock_rating_year)
+
+
+        self.assertIsInstance(tv_ratings_summary, YearRatingSummary)
+        
+        
+        [
+            self.assertIsNotNone(getattr(
+                tv_ratings_summary, attr_name)
+            ) 
+            for attr_name in dir(tv_ratings_summary)
+            if not attr_name.startswith("_")
+        ]
+
+
+    @patch("tvratings.entry.externals_entry.load_one_year")
+    def test_year_ratings_summary_unexpected_error(self, 
+        load_one_year_mock: MagicMock):
+        """Unhappy Path repo layer error results in ResponseFailure"""
+        from fixtures.ratings_fixtures import get_mock_television_ratings
+        from tvratings.entry.response_objects import ResponseFailure
+        from tvratings.entry.externals_entry import year_ratings_summary
+        
+        mock_rating_year = 2014
+        mock_error_message = "Unexpected ratings retrieval error"
+        '''TODO - 
+            Pipe back manual component test feedback once 
+            repo.load_one_year works
         '''
+        load_one_year_mock.return_value = (
+            None, mock_error_message
+        )
+
+        tv_ratings_summary = year_ratings_summary(mock_rating_year)
+
+        self.assertIsInstance(tv_ratings_summary, ResponseFailure)
+
 
     def test_valid_year(self):
         """return valid value or error message"""
@@ -140,6 +175,10 @@ class TestExternalsEntry(unittest.TestCase):
             {
                 "mock_year": datetime.today().year + 1000,
                 "error_type": str
+            },
+            {
+                "mock_year": datetime.today().year,
+                "error_type": type(None)
             },
             {
                 "mock_year": 2012,

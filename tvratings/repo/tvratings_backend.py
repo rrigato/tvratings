@@ -99,3 +99,15 @@ def load_one_date(ratings_occurred_on: date) -> tuple[Union[list[TelevisionRatin
     except Exception as error_suppression:
         logging.exception("load_one_date - unexpected error")
         return(None, "load_one_date - error while retrieving persisted television_ratings")
+
+
+
+
+def load_one_year(ratings_year: int) -> tuple[
+    Union[list[TelevisionRating], None], Union[str, None]]:
+    """returns None, error_message if error 
+    returns [], None if no ratings found for year
+    """
+    logging.info("load_one_year - invocation begin")
+    logging.info("load_one_year - invocation end")
+    
