@@ -1,6 +1,7 @@
 from copy import deepcopy
 from datetime import datetime
-from tvratings.entities.entity_model import TelevisionRating, YearRatingSummary
+from tvratings.entities.entity_model import TelevisionRating
+from tvratings.entities.entity_model import YearRatingSummary
 from tvratings.entry.input_valdiators import validate_iso_8601_date 
 from tvratings.entry.request_objects import ValidRequest 
 from tvratings.entry.request_objects import InvalidRequest 
@@ -127,8 +128,7 @@ def _orchestrate_ratings_summary(
 
 def year_ratings_summary(rating_year: int) -> Union[
     YearRatingSummary, ResponseFailure]:
-    """returns TvRatingsSummary for year of television ratings 
-    selected by rating_year
+    """Summary statistics for the provided rating_year
     """
     year_of_ratings, ratings_retrieval_error = load_one_year(
         rating_year)
