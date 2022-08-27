@@ -2,6 +2,8 @@ from unittest.mock import MagicMock
 from unittest.mock import patch
 import unittest
 
+from tvratings.repo.tvratings_backend import load_one_year
+
 
 class TestTvratingsBackend(unittest.TestCase):
 
@@ -78,14 +80,45 @@ class TestTvratingsBackend(unittest.TestCase):
                 self.assertIsNone(television_ratings_entities)
 
 
-
+    @unittest.skip("skipping for now")
     @patch("boto3.resource")
     def test_load_one_year(self, 
         boto3_resource_mock: MagicMock):
         """"""
         from datetime import date
         from fixtures.ratings_fixtures import fake_dynamodb_query_response
-        
+        from tvratings.repo.tvratings_backend import load_one_year
+        mock_ratings_year = 2014
         ''' TODO - 
-            from tvratings.repo.tvratings_backend import load_one_date
         '''
+
+        valid_tv_rating = load_one_year(mock_ratings_year)
+
+        boto3_resource_mock.assert_called_once()
+
+
+    @patch("boto3.resource")
+    def test_load_one_year_unexpected_error(self, 
+        boto3_resource_mock: MagicMock):
+        """"""
+        from botocore.stub import ANY
+        from botocore.stub import Stubber
+        from datetime import date
+        from fixtures.ratings_fixtures import fake_dynamodb_query_response
+        from tvratings.repo.tvratings_backend import load_one_year
+        import botocore.session
+
+        mock_error_message = "simulate boto3 client error"
+        mock_ratings_year = 2014
+        with (
+            botocore.session.get_session().create_client('dynamodb')
+        ) as mock_dynamodb_client:
+
+            boto3_resource_mock.return_value = mock_dynamodb_client
+            load_one_year(mock_ratings_year)
+            print("assertion")
+        
+        ''' TODO - feedback test logic
+        '''
+
+        

@@ -108,6 +108,9 @@ def load_one_year(ratings_year: int) -> tuple[
     """returns None, error_message if error 
     returns [], None if no ratings found for year
     """
-    logging.info("load_one_year - invocation begin")
-    logging.info("load_one_year - invocation end")
-    
+
+    dynamodb_table = boto3.resource("dynamodb", os.environ.get("AWS_REGION")).Table(
+        "prod_toonami_ratings"
+    )
+
+    logging.info("load_one_year - obtained table resource")
