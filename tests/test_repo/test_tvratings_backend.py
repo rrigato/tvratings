@@ -80,7 +80,6 @@ class TestTvratingsBackend(unittest.TestCase):
                 self.assertIsNone(television_ratings_entities)
 
 
-    @unittest.skip("skipping for now")
     @patch("boto3.resource")
     def test_load_one_year(self, 
         boto3_resource_mock: MagicMock):
@@ -94,9 +93,12 @@ class TestTvratingsBackend(unittest.TestCase):
 
         valid_tv_rating = load_one_year(mock_ratings_year)
 
-        boto3_resource_mock.assert_called_once()
+        args, kwargs = boto3_resource_mock.return_value.Table.return_value.query.call_args
+        self.assertEqual(kwargs["IndexName"], "YEAR_ACCESS")
+        self.assertIsNotNone(kwargs["KeyConditionExpression"])
+        
 
-
+    @unittest.skip("skipping for now")
     @patch("boto3.resource")
     def test_load_one_year_unexpected_error(self, 
         boto3_resource_mock: MagicMock):

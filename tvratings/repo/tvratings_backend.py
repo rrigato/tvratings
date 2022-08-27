@@ -109,11 +109,40 @@ def load_one_year(ratings_year: int) -> tuple[
     returns [], None if no ratings found for year
     """
 
-    dynamodb_table = boto3.resource("dynamodb", 
-    os.environ.get("AWS_REGION")).Table(
+    dynamodb_table = boto3.resource(
+        "dynamodb", 
+        os.environ.get("AWS_REGION")
+    ).Table(
         "prod_toonami_ratings"
     )
 
     logging.info("load_one_year - obtained table resource")
 
-    # dynamodb_table.query(hello="world")
+    dynamodb_response = dynamodb_table.query(
+        IndexName="YEAR_ACCESS",
+        KeyConditionExpression=Key(
+            "YEAR").eq(ratings_year)
+    )
+
+    logging.info("load_one_year - obtained dynamodb_response")
+
+    if len(dynamodb_response["Items"]) == 0:
+        logging.info(
+            "load_one_year - dynamodb_response Items list empty"
+        )
+        return([], None)
+
+
+
+
+if __name__ == "__main__":
+    from time import strftime
+    import logging
+    import os
+    os.environ["AWS_REGION"] = "us-east-1"
+    logging.basicConfig(
+        format="%(levelname)s | %(asctime)s.%(msecs)03d" + strftime("%z") + " | %(message)s",
+        datefmt="%Y-%m-%dT%H:%M:%S", level=logging.INFO
+    )
+    load_one_year(2014)
+
