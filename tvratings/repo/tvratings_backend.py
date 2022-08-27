@@ -109,8 +109,11 @@ def load_one_year(ratings_year: int) -> tuple[
     returns [], None if no ratings found for year
     """
 
-    dynamodb_table = boto3.resource("dynamodb", os.environ.get("AWS_REGION")).Table(
+    dynamodb_table = boto3.resource("dynamodb", 
+    os.environ.get("AWS_REGION")).Table(
         "prod_toonami_ratings"
     )
 
     logging.info("load_one_year - obtained table resource")
+
+    # dynamodb_table.query(hello="world")

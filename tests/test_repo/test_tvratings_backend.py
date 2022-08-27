@@ -107,15 +107,24 @@ class TestTvratingsBackend(unittest.TestCase):
         from fixtures.ratings_fixtures import fake_dynamodb_query_response
         from tvratings.repo.tvratings_backend import load_one_year
         import botocore.session
+        import boto3
 
+        dynamodb_client = (
+            botocore.session.get_session().create_client("dynamodb")
+        )
         mock_error_message = "simulate boto3 client error"
         mock_ratings_year = 2014
-        with (
-            botocore.session.get_session().create_client('dynamodb')
-        ) as mock_dynamodb_client:
-
-            boto3_resource_mock.return_value = mock_dynamodb_client
-            load_one_year(mock_ratings_year)
+        with Stubber(dynamodb_client) as dynamodb_stubber:
+            dynamodb_stubber.add_response(
+                "query", 
+                fake_dynamodb_query_response(4),
+                
+                expected_params={}
+            )
+            # boto3_resource_mock.return_value.Table.return_value = (
+            #     dynamodb_client
+            # )
+            # load_one_year(mock_ratings_year)
             print("assertion")
         
         ''' TODO - feedback test logic
