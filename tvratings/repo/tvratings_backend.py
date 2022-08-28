@@ -8,8 +8,8 @@ import logging
 import os
 
 
-def _convert_dynamodb_query_to_entity(dynamodb_items: list[dict], 
-    ratings_occurred_on: date) -> list[TelevisionRating]:
+def _convert_dynamodb_query_to_entity(dynamodb_items: list[dict]
+    ) -> list[TelevisionRating]:
     """Converts DynamoDB external query to list of TelevisionRating entities
     """
     logging.info("_convert_dynamodb_query_to_entity - invocation begin")
@@ -19,7 +19,9 @@ def _convert_dynamodb_query_to_entity(dynamodb_items: list[dict],
     for dynamodb_item in dynamodb_items:
         tv_show = TelevisionRating()
 
-        tv_show.show_air_date = ratings_occurred_on
+        tv_show.show_air_date = date.fromisoformat(
+            dynamodb_item["RATINGS_OCCURRED_ON"]
+        )
         tv_show.time_slot = dynamodb_item["TIME"]
         tv_show.show_name = dynamodb_item["SHOW"]
 
@@ -91,7 +93,9 @@ def load_one_date(ratings_occurred_on: date) -> tuple[Union[list[TelevisionRatin
         logging.info("load_one_date - invoking _convert_dynamodb_query_to_entity")
 
         return(
-            _convert_dynamodb_query_to_entity(dynamodb_response["Items"], ratings_occurred_on),
+            _convert_dynamodb_query_to_entity(
+                dynamodb_response["Items"]
+            ),
             None
         )
         
@@ -108,6 +112,54 @@ def load_one_year(ratings_year: int) -> tuple[
     """returns None, error_message if error 
     returns [], None if no ratings found for year
     """
-    logging.info("load_one_year - invocation begin")
-    logging.info("load_one_year - invocation end")
-    
+    try:
+        dynamodb_table = boto3.resource(
+            "dynamodb", 
+            os.environ.get("AWS_REGION")
+        ).Table(
+            "prod_toonami_ratings"
+        )
+
+        logging.info("load_one_year - obtained table resource")
+
+        dynamodb_response = dynamodb_table.query(
+            IndexName="YEAR_ACCESS",
+            KeyConditionExpression=Key("YEAR").eq(ratings_year)
+        )
+
+        logging.info("load_one_year - obtained dynamodb_response")
+
+        if len(dynamodb_response["Items"]) == 0:
+            logging.info(
+                "load_one_year - dynamodb_response Items list empty"
+            )
+            return([], None)
+
+        return(
+            _convert_dynamodb_query_to_entity(
+                dynamodb_response["Items"]
+            ),
+            None
+        )
+
+
+    except Exception as error_suppression:
+        logging.exception("load_year_date - unexpected error")
+        return(
+            None, 
+            "load_year_date - error while retrieving television ratings"
+        )
+
+
+
+if __name__ == "__main__":
+    from time import strftime
+    import logging
+    import os
+    os.environ["AWS_REGION"] = "us-east-1"
+    logging.basicConfig(
+        format="%(levelname)s | %(asctime)s.%(msecs)03d" + strftime("%z") + " | %(message)s",
+        datefmt="%Y-%m-%dT%H:%M:%S", level=logging.INFO
+    )
+    load_one_year(2014)
+

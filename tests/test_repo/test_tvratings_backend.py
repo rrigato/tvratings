@@ -78,14 +78,56 @@ class TestTvratingsBackend(unittest.TestCase):
                 self.assertIsNone(television_ratings_entities)
 
 
-
     @patch("boto3.resource")
     def test_load_one_year(self, 
         boto3_resource_mock: MagicMock):
-        """"""
-        from datetime import date
+        """Load one year of TelevisionRating Entities"""
         from fixtures.ratings_fixtures import fake_dynamodb_query_response
+        from tvratings.entities.entity_model import TelevisionRating
+        from tvratings.repo.tvratings_backend import load_one_year
+
+        mock_num_ratings = 52
+        mock_ratings_year = 2014
+        boto3_resource_mock.return_value.Table.return_value.query.return_value = (
+            fake_dynamodb_query_response(mock_num_ratings)
+        )
+
+
+        valid_tv_ratings, ratings_retrieval_error = load_one_year(
+            mock_ratings_year
+        )
+
+
+        self.assertIsNone(ratings_retrieval_error)
+        self.assertEqual(len(valid_tv_ratings), mock_num_ratings)
+        for tv_rating in valid_tv_ratings:
+            self.assertIsInstance(tv_rating, TelevisionRating)
         
-        ''' TODO - 
-            from tvratings.repo.tvratings_backend import load_one_date
-        '''
+        args, kwargs = boto3_resource_mock.return_value.Table.return_value.query.call_args
+        self.assertEqual(kwargs["IndexName"], "YEAR_ACCESS")
+        self.assertIsNotNone(kwargs["KeyConditionExpression"])
+        
+
+    @patch("boto3.resource")
+    def test_load_one_year_unexpected_error(self, 
+        boto3_resource_mock: MagicMock):
+        """Boto3 throws runtime error"""
+        from tvratings.repo.tvratings_backend import load_one_year
+        
+
+        mock_error_message = "simulate boto3 client error"
+        boto3_resource_mock.return_value.Table.return_value.query.side_effect = RuntimeError(
+            mock_error_message
+        )
+        mock_ratings_year = 2014
+        
+
+        valid_tv_ratings, ratings_retrieval_error = load_one_year(
+            mock_ratings_year
+        )
+        
+        
+        self.assertIsNone(valid_tv_ratings)
+        self.assertIsInstance(ratings_retrieval_error, str)
+
+        
