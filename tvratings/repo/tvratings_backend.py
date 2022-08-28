@@ -8,8 +8,8 @@ import logging
 import os
 
 
-def _convert_dynamodb_query_to_entity(dynamodb_items: list[dict], 
-    ratings_occurred_on: date) -> list[TelevisionRating]:
+def _convert_dynamodb_query_to_entity(dynamodb_items: list[dict]
+    ) -> list[TelevisionRating]:
     """Converts DynamoDB external query to list of TelevisionRating entities
     """
     logging.info("_convert_dynamodb_query_to_entity - invocation begin")
@@ -19,10 +19,9 @@ def _convert_dynamodb_query_to_entity(dynamodb_items: list[dict],
     for dynamodb_item in dynamodb_items:
         tv_show = TelevisionRating()
 
-        tv_show.show_air_date = ratings_occurred_on
-        # tv_show.show_air_date = date.fromisoformat(
-        #     dynamodb_item["RATING_OCCURRED_ON"]
-        # )
+        tv_show.show_air_date = date.fromisoformat(
+            dynamodb_item["RATINGS_OCCURRED_ON"]
+        )
         tv_show.time_slot = dynamodb_item["TIME"]
         tv_show.show_name = dynamodb_item["SHOW"]
 
@@ -95,8 +94,7 @@ def load_one_date(ratings_occurred_on: date) -> tuple[Union[list[TelevisionRatin
 
         return(
             _convert_dynamodb_query_to_entity(
-                dynamodb_response["Items"], 
-                ratings_occurred_on
+                dynamodb_response["Items"]
             ),
             None
         )
@@ -140,8 +138,7 @@ def load_one_year(ratings_year: int) -> tuple[
 
     return(
         _convert_dynamodb_query_to_entity(
-            dynamodb_response["Items"], 
-            None
+            dynamodb_response["Items"]
         ),
         None
     )
