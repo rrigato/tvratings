@@ -112,36 +112,45 @@ def load_one_year(ratings_year: int) -> tuple[
     """returns None, error_message if error 
     returns [], None if no ratings found for year
     """
-
-    dynamodb_table = boto3.resource(
-        "dynamodb", 
-        os.environ.get("AWS_REGION")
-    ).Table(
-        "prod_toonami_ratings"
-    )
-
-    logging.info("load_one_year - obtained table resource")
-
-    dynamodb_response = dynamodb_table.query(
-        IndexName="YEAR_ACCESS",
-        KeyConditionExpression=Key(
-            "YEAR").eq(ratings_year)
-    )
-
-    logging.info("load_one_year - obtained dynamodb_response")
-
-    if len(dynamodb_response["Items"]) == 0:
-        logging.info(
-            "load_one_year - dynamodb_response Items list empty"
+    try:
+        dynamodb_table = boto3.resource(
+            "dynamodb", 
+            os.environ.get("AWS_REGION")
+        ).Table(
+            "prod_toonami_ratings"
         )
-        return([], None)
 
-    return(
-        _convert_dynamodb_query_to_entity(
-            dynamodb_response["Items"]
-        ),
-        None
-    )
+        logging.info("load_one_year - obtained table resource")
+
+        dynamodb_response = dynamodb_table.query(
+            IndexName="YEAR_ACCESS",
+            KeyConditionExpression=Key("YEAR").eq(ratings_year)
+        )
+
+        logging.info("load_one_year - obtained dynamodb_response")
+
+        if len(dynamodb_response["Items"]) == 0:
+            logging.info(
+                "load_one_year - dynamodb_response Items list empty"
+            )
+            return([], None)
+
+        return(
+            _convert_dynamodb_query_to_entity(
+                dynamodb_response["Items"]
+            ),
+            None
+        )
+
+
+    except Exception as error_suppression:
+        logging.exception("load_year_date - unexpected error")
+        return(
+            None, 
+            "load_year_date - error while retrieving television ratings"
+        )
+
+
 
 if __name__ == "__main__":
     from time import strftime

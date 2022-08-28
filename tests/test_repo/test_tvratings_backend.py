@@ -81,7 +81,7 @@ class TestTvratingsBackend(unittest.TestCase):
     @patch("boto3.resource")
     def test_load_one_year(self, 
         boto3_resource_mock: MagicMock):
-        """"""
+        """Load one year of TelevisionRating Entities"""
         from fixtures.ratings_fixtures import fake_dynamodb_query_response
         from tvratings.entities.entity_model import TelevisionRating
         from tvratings.repo.tvratings_backend import load_one_year
@@ -92,9 +92,11 @@ class TestTvratingsBackend(unittest.TestCase):
             fake_dynamodb_query_response(mock_num_ratings)
         )
 
+
         valid_tv_ratings, ratings_retrieval_error = load_one_year(
             mock_ratings_year
         )
+
 
         self.assertIsNone(ratings_retrieval_error)
         self.assertEqual(len(valid_tv_ratings), mock_num_ratings)
@@ -106,38 +108,26 @@ class TestTvratingsBackend(unittest.TestCase):
         self.assertIsNotNone(kwargs["KeyConditionExpression"])
         
 
-    @unittest.skip("skipping for now")
     @patch("boto3.resource")
     def test_load_one_year_unexpected_error(self, 
         boto3_resource_mock: MagicMock):
-        """"""
-        from botocore.stub import ANY
-        from botocore.stub import Stubber
-        from datetime import date
-        from fixtures.ratings_fixtures import fake_dynamodb_query_response
+        """Boto3 throws runtime error"""
         from tvratings.repo.tvratings_backend import load_one_year
-        import botocore.session
-        import boto3
-
-        dynamodb_client = (
-            botocore.session.get_session().create_client("dynamodb")
-        )
-        mock_error_message = "simulate boto3 client error"
-        mock_ratings_year = 2014
-        with Stubber(dynamodb_client) as dynamodb_stubber:
-            dynamodb_stubber.add_response(
-                "query", 
-                fake_dynamodb_query_response(4),
-                
-                expected_params={}
-            )
-            # boto3_resource_mock.return_value.Table.return_value = (
-            #     dynamodb_client
-            # )
-            # load_one_year(mock_ratings_year)
-            print("assertion")
         
-        ''' TODO - feedback test logic
-        '''
+
+        mock_error_message = "simulate boto3 client error"
+        boto3_resource_mock.return_value.Table.return_value.query.side_effect = RuntimeError(
+            mock_error_message
+        )
+        mock_ratings_year = 2014
+        
+
+        valid_tv_ratings, ratings_retrieval_error = load_one_year(
+            mock_ratings_year
+        )
+        
+        
+        self.assertIsNone(valid_tv_ratings)
+        self.assertIsInstance(ratings_retrieval_error, str)
 
         
