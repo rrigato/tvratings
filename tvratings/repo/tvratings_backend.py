@@ -20,6 +20,9 @@ def _convert_dynamodb_query_to_entity(dynamodb_items: list[dict],
         tv_show = TelevisionRating()
 
         tv_show.show_air_date = ratings_occurred_on
+        # tv_show.show_air_date = date.fromisoformat(
+        #     dynamodb_item["RATING_OCCURRED_ON"]
+        # )
         tv_show.time_slot = dynamodb_item["TIME"]
         tv_show.show_name = dynamodb_item["SHOW"]
 
@@ -91,7 +94,10 @@ def load_one_date(ratings_occurred_on: date) -> tuple[Union[list[TelevisionRatin
         logging.info("load_one_date - invoking _convert_dynamodb_query_to_entity")
 
         return(
-            _convert_dynamodb_query_to_entity(dynamodb_response["Items"], ratings_occurred_on),
+            _convert_dynamodb_query_to_entity(
+                dynamodb_response["Items"], 
+                ratings_occurred_on
+            ),
             None
         )
         
@@ -132,8 +138,13 @@ def load_one_year(ratings_year: int) -> tuple[
         )
         return([], None)
 
-
-
+    return(
+        _convert_dynamodb_query_to_entity(
+            dynamodb_response["Items"], 
+            None
+        ),
+        None
+    )
 
 if __name__ == "__main__":
     from time import strftime
