@@ -84,7 +84,10 @@ def fake_dynamodb_query_response(number_of_ratings: int) -> dict[str, Union[int,
 
 
 
+'''TODO - Modify to make 
+highest_rating and lowest_rating TelevisionRating Entities
 
+'''
 def mock_year_rating_summary() -> YearRatingSummary:
     """mock YearRatingSummary with all fields populated
     """

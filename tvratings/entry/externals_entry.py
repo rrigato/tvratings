@@ -142,8 +142,8 @@ def year_ratings_summary(rating_year: int) -> Union[
         ))
 
     logging.info(
-        f"year_ratings_summary - ratings retrieved for{rating_year}"
-        )
+        f"year_ratings_summary - ratings retrieved for - {rating_year}"
+    )
     
     if len(year_of_ratings) == 0:
         logging.info(
@@ -168,7 +168,7 @@ if __name__ == "__main__":
         format="%(levelname)s | %(asctime)s.%(msecs)03d" + strftime("%z") + " | %(message)s",
         datefmt="%Y-%m-%dT%H:%M:%S", level=logging.DEBUG
     )
-    entry_response = get_one_night_ratings(get_valid_date("2014-01-04"))
+    entry_response = year_ratings_summary(2014)
 
     if bool(entry_response):
         print(entry_response.response_value)
