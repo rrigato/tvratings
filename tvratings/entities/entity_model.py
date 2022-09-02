@@ -146,7 +146,7 @@ class YearRatingSummary():
         self.lowest_rating = None
 
     @property
-    def highest_rating(self):
+    def highest_rating(self) -> TelevisionRating:
         return(self._highest_rating)
 
     @highest_rating.setter
@@ -161,7 +161,7 @@ class YearRatingSummary():
 
 
     @property
-    def lowest_rating(self):
+    def lowest_rating(self) -> TelevisionRating:
         return(self._lowest_rating)
 
     @lowest_rating.setter

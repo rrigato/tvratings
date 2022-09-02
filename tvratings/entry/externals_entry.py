@@ -111,13 +111,15 @@ def _orchestrate_ratings_summary(
 
     
     ratings_summary_instance.highest_rating = select_highest_ratings(
-        year_of_ratings).rating
+        year_of_ratings
+    )
 
     logging.info(
         "_orchestrate_ratings_summary - obtained highest rating")
 
     ratings_summary_instance.lowest_rating = select_lowest_ratings(
-        year_of_ratings).rating
+        year_of_ratings
+    )
 
     logging.info(
         "_orchestrate_ratings_summary - obtained lowest rating")
@@ -165,13 +167,17 @@ if __name__ == "__main__":
     import os
     os.environ["AWS_REGION"] = "us-east-1"
     logging.basicConfig(
-        format="%(levelname)s | %(asctime)s.%(msecs)03d" + strftime("%z") + " | %(message)s",
-        datefmt="%Y-%m-%dT%H:%M:%S", level=logging.DEBUG
+        format="%(levelname)s | %(asctime)s.%(msecs)03d" 
+        + strftime("%z") + " | %(message)s",
+        datefmt="%Y-%m-%dT%H:%M:%S", level=logging.info
     )
     entry_response = year_ratings_summary(2014)
 
     if bool(entry_response):
-        print(entry_response.response_value)
+        print(entry_response.lowest_rating.show_name)
+        print(entry_response.lowest_rating.rating)
+        print(entry_response.highest_rating.show_name)
+        print(entry_response.highest_rating.rating)
     
     if bool(entry_response) == False:
         print(entry_response.error_message)
