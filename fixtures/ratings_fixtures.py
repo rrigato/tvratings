@@ -91,13 +91,25 @@ highest_rating and lowest_rating TelevisionRating Entities
 def mock_year_rating_summary() -> YearRatingSummary:
     """mock YearRatingSummary with all fields populated
     """
+    mock_tv_ratings = get_mock_television_ratings(2)
+    
+    '''Double the properties of TelevisionRating
+    element 0 to create a simulated low and high tv rating
+    '''
+    mock_tv_ratings[0].household = mock_tv_ratings[1].household * 2
+    mock_tv_ratings[0].household_18_49 = (
+        mock_tv_ratings[1].household_18_49 * 2
+    )
+    mock_tv_ratings[0].rating = mock_tv_ratings[1].rating * 2
+    mock_tv_ratings[0].rating_18_49 = (
+        mock_tv_ratings[1].rating_18_49 * 2
+    )
+    
     mock_year_rating_summary = YearRatingSummary()
 
-    mock_year_rating_summary.highest_rating = min(int(
-        100 * paretovariate(1)), 9999)
+    mock_year_rating_summary.highest_rating = mock_tv_ratings[0]
 
-    mock_year_rating_summary.lowest_rating = min(int(
-        100 * paretovariate(1)), 9999)
+    mock_year_rating_summary.lowest_rating = mock_tv_ratings[1]
 
     return(mock_year_rating_summary)
 
