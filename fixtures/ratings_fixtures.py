@@ -85,6 +85,12 @@ def fake_dynamodb_query_response(number_of_ratings: int) -> dict[str, Union[int,
 
 def mock_year_rating_summary() -> YearRatingSummary:
     """mock YearRatingSummary with all fields populated
+
+    Raises
+    ------
+    AssertionError
+        If returned YearRatingSummary().highest_rating
+        is less than or equal YearRatingSummary().lowest_rating
     """
     mock_tv_ratings = get_mock_television_ratings(2)
     
@@ -106,6 +112,14 @@ def mock_year_rating_summary() -> YearRatingSummary:
 
     mock_year_rating_summary.lowest_rating = mock_tv_ratings[1]
 
+    assert (
+        mock_year_rating_summary.highest_rating.rating >
+        mock_year_rating_summary.lowest_rating.rating 
+    ), f"""
+    highest_rating {mock_year_rating_summary.highest_rating.rating} 
+    property not higher than 
+    lowest_rating {mock_year_rating_summary.lowest_rating.rating} """
+        
     return(mock_year_rating_summary)
 
 
