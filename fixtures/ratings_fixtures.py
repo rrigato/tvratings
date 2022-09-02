@@ -89,7 +89,7 @@ def mock_year_rating_summary() -> YearRatingSummary:
     Raises
     ------
     AssertionError
-        If returned YearRatingSummary().highest_rating
+        Raised if YearRatingSummary().highest_rating
         is less than or equal YearRatingSummary().lowest_rating
     """
     mock_tv_ratings = get_mock_television_ratings(2)
