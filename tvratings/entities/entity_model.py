@@ -150,7 +150,7 @@ class YearRatingSummary():
         return(self._highest_rating)
 
     @highest_rating.setter
-    def highest_rating(self, highest_rating):
+    def highest_rating(self, highest_rating: TelevisionRating):
         if type(highest_rating) not in (
             TelevisionRating, type(None)):
             raise TypeError(
@@ -165,7 +165,7 @@ class YearRatingSummary():
         return(self._lowest_rating)
 
     @lowest_rating.setter
-    def lowest_rating(self, lowest_rating):
+    def lowest_rating(self, lowest_rating: TelevisionRating):
         if type(lowest_rating) not in (
             TelevisionRating, type(None)):
             raise TypeError(

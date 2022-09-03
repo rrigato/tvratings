@@ -111,6 +111,27 @@
                             ]
                         }
                     ]
+                },
+                {
+                    "name": "RatingsYearIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "ratings_year",
+                            "type": "AMAZON.FOUR_DIGIT_NUMBER",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {},
+                            "validations": [
+                                {
+                                    "type": "isGreaterThanOrEqualTo",
+                                    "prompt": "Slot.Validation.1567080151845.604443913760.932436814417",
+                                    "value": "2012"
+                                }
+                            ]
+                        }
+                    ]
                 }
             ],
             "delegationStrategy": "ALWAYS"
@@ -143,6 +164,19 @@
                     {
                         "type": "PlainText",
                         "value": "The oldest rating information we have is from May twenty-sixth, two thousand and tweleve"
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.1567080151845.604443913760.932436814417",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "The oldest rating information we have is beginning in two thousand and tweleve"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "Please provide a year from two thousand and tweleve until this year"
                     }
                 ]
             }
