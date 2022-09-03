@@ -94,7 +94,7 @@ def mock_year_rating_summary() -> YearRatingSummary:
     """
     mock_tv_ratings = get_mock_television_ratings(2)
     
-    '''Double the properties of TelevisionRating
+    '''Double the properties of mock TelevisionRating
     element 0 to create a simulated low and high tv rating
     '''
     mock_tv_ratings[0].household = mock_tv_ratings[1].household * 2

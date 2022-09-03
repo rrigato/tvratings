@@ -66,6 +66,23 @@
                         "tell me the ratings",
                         "what are the ratings"
                     ]
+                },
+                {
+                    "name": "RatingsYearIntent",
+                    "slots": [
+                        {
+                            "name": "ratings_year",
+                            "type": "AMAZON.FOUR_DIGIT_NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "Which shows had the lowest ratings in {ratings_year}",
+                        "Which show performed best in {ratings_year}",
+                        "Best and worse ratings for {ratings_year}",
+                        "What is the lowest rating for {ratings_year}",
+                        "Give me the the rating summary for {ratings_year}",
+                        "What is the highest rating for {ratings_year}"
+                    ]
                 }
             ],
             "types": []
