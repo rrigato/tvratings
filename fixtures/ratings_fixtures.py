@@ -133,3 +133,15 @@ def mock_year_high_low_intent() -> dict:
 
     return(deepcopy(intent_request))
 
+
+def mock_ratings_year_intent() -> dict:
+    """Loads the RatingsYearIntent json as a dict from here
+    tests/events/intent_requests/ratings_night_intent.json
+    """
+    with open(
+        "tests/events/intent_requests/ratings_year_intent.json", 
+        "r") as intent_request:
+        intent_request = json.load(intent_request)
+
+    return(deepcopy(intent_request))
+

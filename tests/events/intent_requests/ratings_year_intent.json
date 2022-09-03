@@ -39,8 +39,8 @@
         "name": "YearRatingsIntent",
         "confirmationStatus": "NONE",
         "slots": {
-          "rating_year": {
-            "name": "rating_year",
+          "ratings_year": {
+            "name": "ratings_year",
             "value": 2014,
             "confirmationStatus": "NONE",
             "source": "USER"
