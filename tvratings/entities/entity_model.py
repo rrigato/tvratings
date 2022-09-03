@@ -146,27 +146,31 @@ class YearRatingSummary():
         self.lowest_rating = None
 
     @property
-    def highest_rating(self):
+    def highest_rating(self) -> TelevisionRating:
         return(self._highest_rating)
 
     @highest_rating.setter
     def highest_rating(self, highest_rating):
-        if type(highest_rating) not in (int, type(None)):
+        if type(highest_rating) not in (
+            TelevisionRating, type(None)):
             raise TypeError(
-            "YearRatingSummary - highest_rating datatype must be a int"
+                "YearRatingSummary - highest_rating datatype " +
+                "must be a TelevisionRating or None"
             )
         self._highest_rating = highest_rating
 
 
     @property
-    def lowest_rating(self):
+    def lowest_rating(self) -> TelevisionRating:
         return(self._lowest_rating)
 
     @lowest_rating.setter
     def lowest_rating(self, lowest_rating):
-        if type(lowest_rating) not in (int, type(None)):
+        if type(lowest_rating) not in (
+            TelevisionRating, type(None)):
             raise TypeError(
-            "YearRatingSummary - lowest_rating datatype must be a int"
+                "YearRatingSummary - lowest_rating datatype " +
+                "must be a TelevisionRating or None"
             )
         self._lowest_rating = lowest_rating
 
