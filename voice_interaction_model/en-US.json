@@ -82,6 +82,7 @@
                         "What is the lowest rating for {ratings_year}",
                         "Give me the the rating summary for {ratings_year}",
                         "about the rating summary for {ratings_year}",
+                        "about the ratings summary for {ratings_year}",
                         "What is the highest rating for {ratings_year}",
                         "for the ratings summary for {ratings_year}"
                     ]
