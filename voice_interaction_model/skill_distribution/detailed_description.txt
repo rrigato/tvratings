@@ -1,4 +1,6 @@
-Use this skill to get the television ratings for the Adult Swim Saturday night Toonami television block
+Use this skill to get the television ratings for the Adult Swim Saturday night Toonami television block.
+
+You can ask for a specific night or a summary of the ratings in a year.
 
 
 **FAQ**

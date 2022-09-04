@@ -136,7 +136,7 @@ def mock_year_high_low_intent() -> dict:
 
 def mock_ratings_year_intent() -> dict:
     """Loads the RatingsYearIntent json as a dict from here
-    tests/events/intent_requests/ratings_night_intent.json
+    tests/events/intent_requests/ratings_year_intent.json
     """
     with open(
         "tests/events/intent_requests/ratings_year_intent.json", 
