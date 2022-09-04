@@ -12,12 +12,18 @@ class TestRatingsYearIntent(unittest.TestCase):
         year_ratings_summary_mock: MagicMock):
         """RatingsYearIntentHandler.handle executes succesfully"""
         from externals.alexa_intents.intent_dispatcher import get_alexa_lambda_handler
-        from fixtures.ratings_fixtures import get_mock_television_ratings
         from fixtures.ratings_fixtures import mock_ratings_year_intent
-        from tvratings.entry.response_objects import ResponseSuccess
-        from tvratings.entry.request_objects import ValidRequest
+        from fixtures.ratings_fixtures import mock_year_rating_summary
         
-        expected_message = "stub ratings year response"
+        year_ratings_summary_mock.return_value = (
+            mock_year_rating_summary()
+        )
+
+        
+        expected_messages = [
+            "The highest rated show for ",
+            "The lowest rated show for "
+        ]
 
 
         alexa_lambda_handler = get_alexa_lambda_handler()
@@ -31,17 +37,25 @@ class TestRatingsYearIntent(unittest.TestCase):
 
         args, kwars = year_ratings_summary_mock.call_args
         self.assertIsInstance(args[0], int)
+        [
+            self.assertTrue(
+                expected_message in 
+                actual_response_message["response"
+                ]["outputSpeech"]["ssml"],
+                msg=f"""\n
+                    Expected Alexa Response -
+                    {expected_message} 
+
+                    Actual Alexa Response - 
+                    {actual_response_message["response"
+                    ]["outputSpeech"]["ssml"]}
+                """
+            )
+            for expected_message in expected_messages
+        ]
+        
 
         self.assertTrue(
-            expected_message in actual_response_message["response"]["outputSpeech"]["ssml"],
-            msg=f"""\n
-                Expected Alexa Response -
-                {expected_message} 
-
-                Actual Alexa Response - 
-                {actual_response_message["response"]["outputSpeech"]["ssml"]}
-            """
+            actual_response_message["response"]["shouldEndSession"]
         )
-
-        self.assertTrue(actual_response_message["response"]["shouldEndSession"])
 

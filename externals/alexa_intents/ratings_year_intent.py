@@ -13,9 +13,40 @@ import logging
 
 
 
+def _invoke_ratings_summary_entry(rating_year: int) -> str:
+    """invocation and error checking for entry function
+    """
+    logging.info(f"_invoke_ratings_summary_entry - invocation begin")
+    ratings_summary_response = year_ratings_summary(
+        rating_year
+    )
+    if bool(ratings_summary_response) == False:
+        logging.info(
+            f"_invoke_ratings_summary_entry - ResponseFailure" +
+            f"{ratings_summary_response.error_message}"
+        )
+        return(f"Unable to load ratings for {rating_year}")
+    
+    logging.info(f"_invoke_ratings_summary_entry - happy path")
+    
+    return(f"""
+        The highest rated show for {rating_year} was 
+        {ratings_summary_response.highest_rating.show_name} 
+        on {ratings_summary_response.highest_rating.show_air_date} 
+        with {ratings_summary_response.highest_rating.rating}  
+        thousand viewers.
+
+        The lowest rated show for {rating_year} was 
+        {ratings_summary_response.lowest_rating.show_name} 
+        on {ratings_summary_response.lowest_rating.show_air_date} 
+        with {ratings_summary_response.lowest_rating.rating}  
+        thousand viewers.
+    """)
+
+
+
 def _orchestrate_ratings_summary(handler_input: HandlerInput) -> str:
-    """
-    """
+    """"""
     try:
         logging.info(f"_orchestrate_ratings_summary - invocation begin")
         
@@ -30,16 +61,16 @@ def _orchestrate_ratings_summary(handler_input: HandlerInput) -> str:
 
         if year_retrieval_error is not None:
             logging.info(
-                f"_orchestrate_ratings_summary - {year_retrieval_error}")
+                f"_orchestrate_ratings_summary - {year_retrieval_error}"
+            )
             return("Invalid year provided - year must 4 digits" +
                 f"from 2012 up until {date.today().year}"
             )
 
-        year_ratings_summary(
-            parsed_year
+        logging.info(
+            f"_orchestrate_ratings_summary - parsed_year {parsed_year}"
         )
-        logging.info(f"_orchestrate_ratings_summary - invocation end")
-        return("stub ratings year response")
+        return(_invoke_ratings_summary_entry(parsed_year))
 
     except Exception as error_passthrough:
         logging.exception(
