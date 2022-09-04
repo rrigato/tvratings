@@ -1,25 +1,13 @@
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
 from ask_sdk_core.handler_input import HandlerInput
-from ask_sdk_core.utils import get_slot
 from ask_sdk_core.utils import is_intent_name
 from ask_sdk_model.response import Response
+from externals.reuse.alexa_helpers import get_intent_slot_value
 from tvratings.entities.entity_model import TelevisionRating
 from tvratings.entry.externals_entry import get_valid_date
 from tvratings.entry.externals_entry import get_one_night_ratings
 
 import logging
-
-
-
-def _get_intent_slot_value(handler_input: HandlerInput, slot_name_to_select: str) -> str:
-    """loads the slot_name_to_select from handler_input or returns None"""
-    try:
-        return(get_slot(handler_input=handler_input, slot_name=slot_name_to_select).value)
-    except Exception:
-        logging.exception("_get_intent_slot_value - error retrieving slot")
-        return(None)
-
-
 
 
 def _time_slot_data_quality(television_rating: TelevisionRating) -> str:
@@ -91,7 +79,7 @@ def _orchestrate_ratings_retrieval(handler_input: HandlerInput) -> str:
         logging.info("_orchestrate_ratings_retrieval - invocation begin")
         
         valid_ratings_night = get_valid_date(
-            _get_intent_slot_value(handler_input, "rating_occurred_on")
+            get_intent_slot_value(handler_input, "rating_occurred_on")
         )
         
         if bool(valid_ratings_night) is False:
