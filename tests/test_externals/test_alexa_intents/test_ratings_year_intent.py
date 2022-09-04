@@ -37,6 +37,7 @@ class TestRatingsYearIntent(unittest.TestCase):
 
         args, kwars = year_ratings_summary_mock.call_args
         self.assertIsInstance(args[0], int)
+
         [
             self.assertTrue(
                 expected_message in 
@@ -54,7 +55,6 @@ class TestRatingsYearIntent(unittest.TestCase):
             for expected_message in expected_messages
         ]
         
-
         self.assertTrue(
             actual_response_message["response"]["shouldEndSession"]
         )

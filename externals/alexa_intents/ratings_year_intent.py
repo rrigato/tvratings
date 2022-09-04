@@ -1,11 +1,9 @@
-from datetime import date
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
 from ask_sdk_core.handler_input import HandlerInput
-from ask_sdk_core.utils import get_slot
 from ask_sdk_core.utils import is_intent_name
 from ask_sdk_model.response import Response
+from datetime import date
 from externals.reuse.alexa_helpers import get_intent_slot_value
-from tvratings.entities.entity_model import TelevisionRating
 from tvratings.entry.externals_entry import valid_year
 from tvratings.entry.externals_entry import year_ratings_summary
 
@@ -17,9 +15,11 @@ def _invoke_ratings_summary_entry(rating_year: int) -> str:
     """invocation and error checking for entry function
     """
     logging.info(f"_invoke_ratings_summary_entry - invocation begin")
+
     ratings_summary_response = year_ratings_summary(
         rating_year
     )
+
     if bool(ratings_summary_response) == False:
         logging.info(
             f"_invoke_ratings_summary_entry - ResponseFailure" +
@@ -50,7 +50,6 @@ def _orchestrate_ratings_summary(handler_input: HandlerInput) -> str:
     try:
         logging.info(f"_orchestrate_ratings_summary - invocation begin")
         
-        get_intent_slot_value(handler_input, "ratings_year_intent")
         parsed_year, year_retrieval_error = valid_year(
             int(
                 get_intent_slot_value(
@@ -63,8 +62,8 @@ def _orchestrate_ratings_summary(handler_input: HandlerInput) -> str:
             logging.info(
                 f"_orchestrate_ratings_summary - {year_retrieval_error}"
             )
-            return("Invalid year provided - year must 4 digits" +
-                f"from 2012 up until {date.today().year}"
+            return("Invalid year provided - year must be 4 digits" +
+                f" from 2012 up until {date.today().year}"
             )
 
         logging.info(
@@ -82,27 +81,18 @@ def _orchestrate_ratings_summary(handler_input: HandlerInput) -> str:
         )
 
 
-
-
 class RatingsYearIntentHandler(AbstractRequestHandler):
     """Handler for RatingsYearIntent"""
     def can_handle(self, handler_input: HandlerInput) -> bool:
-        """Determines the type of input the class can handle
-
-            Returns
-            -------
-            can_class_handle_request: bool
-                True if this class can handle the provided request, False otherwise
+        """True if this is a RatingsYearIntent, False otherwise
         """
-        return is_intent_name("RatingsYearIntent")(handler_input)
+        return(is_intent_name("RatingsYearIntent")(handler_input))
 
 
     def handle(self, handler_input: HandlerInput) -> Response:
-        """Applies business logic for the appropriate class handler"""
+        """Implements business logic for the intent"""
 
         logging.info("RatingsYearIntentHandler - handle")
-        
-        
 
         return (
             handler_input.response_builder
