@@ -45,7 +45,7 @@ class TestRatingsNightIntent(unittest.TestCase):
         )
 
 
-        self.assertTrue(get_valid_date_mock.assert_called)
+        get_valid_date_mock.assert_called_once()
 
         self.assertTrue(
             expected_message in actual_response_message["response"]["outputSpeech"]["ssml"],

@@ -5,7 +5,7 @@ from ask_sdk_core.utils import is_intent_name
 from ask_sdk_model.response import Response
 from tvratings.entities.entity_model import TelevisionRating
 from tvratings.entry.externals_entry import get_valid_date
-from tvratings.entry.externals_entry import get_one_night_ratings
+from tvratings.entry.externals_entry import year_ratings_summary
 
 import logging
 

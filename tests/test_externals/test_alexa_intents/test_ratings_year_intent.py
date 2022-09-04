@@ -7,10 +7,11 @@ import unittest
 class TestRatingsYearIntent(unittest.TestCase):
 
 
-    @patch("externals.alexa_intents.ratings_year_intent.get_one_night_ratings")
+    @patch("externals.alexa_intents.ratings_year_intent.year_ratings_summary")
     @patch("externals.alexa_intents.ratings_year_intent.get_valid_date")
-    def test_ratings_year_intent(self, get_valid_date_mock: MagicMock, 
-        get_one_night_ratings_mock: MagicMock):
+    def test_ratings_year_intent(self, 
+        get_valid_date_mock: MagicMock, 
+        year_ratings_summary_mock: MagicMock):
         """RatingsYearIntentHandler.handle executes succesfully"""
         from externals.alexa_intents.intent_dispatcher import get_alexa_lambda_handler
         from fixtures.ratings_fixtures import get_mock_television_ratings
@@ -30,7 +31,7 @@ class TestRatingsYearIntent(unittest.TestCase):
         )
 
 
-        self.assertTrue(get_valid_date_mock.assert_called)
+        
 
         self.assertTrue(
             expected_message in actual_response_message["response"]["outputSpeech"]["ssml"],
