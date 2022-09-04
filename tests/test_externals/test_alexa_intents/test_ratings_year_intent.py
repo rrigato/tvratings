@@ -29,7 +29,8 @@ class TestRatingsYearIntent(unittest.TestCase):
         )
 
 
-        year_ratings_summary_mock.assert_called_once()
+        args, kwars = year_ratings_summary_mock.call_args
+        self.assertIsInstance(args[0], int)
 
         self.assertTrue(
             expected_message in actual_response_message["response"]["outputSpeech"]["ssml"],
