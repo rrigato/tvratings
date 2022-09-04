@@ -12,7 +12,7 @@ import logging
 
 
 class RatingsYearIntentHandler(AbstractRequestHandler):
-    """Handler for RatingsNightIntent"""
+    """Handler for RatingsYearIntent"""
     def can_handle(self, handler_input: HandlerInput) -> bool:
         """Determines the type of input the class can handle
 
@@ -21,7 +21,7 @@ class RatingsYearIntentHandler(AbstractRequestHandler):
             can_class_handle_request: bool
                 True if this class can handle the provided request, False otherwise
         """
-        return is_intent_name("RatingsNightIntent")(handler_input)
+        return is_intent_name("RatingsYearIntent")(handler_input)
 
 
     def handle(self, handler_input: HandlerInput) -> Response:

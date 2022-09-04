@@ -18,24 +18,14 @@ class TestRatingsYearIntent(unittest.TestCase):
         from tvratings.entry.response_objects import ResponseSuccess
         from tvratings.entry.request_objects import ValidRequest
         
-        mock_ratings_ocurred_on = mock_ratings_year_intent(
-        )["request"]["intent"]["slots"]["ratings_year"]["value"]
+        expected_message = "stub ratings year response"
 
-        expected_message = "The ratings for that Saturday night were"
-        mock_television_ratings = get_mock_television_ratings(7)
-
-        get_valid_date_mock.return_value = ValidRequest(request_filters={
-            "ratings_date": mock_ratings_ocurred_on
-        })
-        get_one_night_ratings_mock.return_value = ResponseSuccess(
-            response_value=mock_television_ratings
-        )
 
         alexa_lambda_handler = get_alexa_lambda_handler()
 
 
         actual_response_message = alexa_lambda_handler(
-            mock_ratings_year_intent(), 
+            mock_ratings_year_intent(),
             None
         )
 
