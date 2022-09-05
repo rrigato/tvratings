@@ -94,7 +94,7 @@ def mock_year_rating_summary() -> YearRatingSummary:
     """
     mock_tv_ratings = get_mock_television_ratings(2)
     
-    '''Double the properties of TelevisionRating
+    '''Double the properties of mock TelevisionRating
     element 0 to create a simulated low and high tv rating
     '''
     mock_tv_ratings[0].household = mock_tv_ratings[1].household * 2
@@ -130,6 +130,18 @@ def mock_year_high_low_intent() -> dict:
     with open("tests/events/intent_requests/year_high_low_intent.json",
         "r") as intent_json:
         intent_request = json.load(intent_json)
+
+    return(deepcopy(intent_request))
+
+
+def mock_ratings_year_intent() -> dict:
+    """Loads the RatingsYearIntent json as a dict from here
+    tests/events/intent_requests/ratings_year_intent.json
+    """
+    with open(
+        "tests/events/intent_requests/ratings_year_intent.json", 
+        "r") as intent_request:
+        intent_request = json.load(intent_request)
 
     return(deepcopy(intent_request))
 
