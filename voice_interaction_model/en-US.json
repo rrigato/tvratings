@@ -78,11 +78,17 @@
                     "samples": [
                         "Which shows had the lowest ratings in {ratings_year}",
                         "Which show performed best in {ratings_year}",
-                        "Best and worse ratings for {ratings_year}",
+                        "Best and worst ratings for {ratings_year}",
+                        "find the best and worst ratings for {ratings_year}",
+                        "to find the best and worst ratings in {ratings_year}",
+                        "find the best and worst ratings in {ratings_year}",
                         "What is the lowest rating for {ratings_year}",
                         "Give me the the rating summary for {ratings_year}",
-                        "about the rating summary for {ratings_year}",
-                        "about the ratings summary for {ratings_year}",
+                        "the rating summary for {ratings_year}",
+                        "the ratings summary for {ratings_year}",
+                        "load the ratings summary for {ratings_year}",
+                        "get the ratings summary for {ratings_year}",
+                        "to pull the ratings summary for {ratings_year}",
                         "What is the highest rating for {ratings_year}",
                         "for the ratings summary for {ratings_year}"
                     ]
