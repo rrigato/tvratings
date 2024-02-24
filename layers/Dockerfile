@@ -27,7 +27,8 @@ RUN cd /opt && \
 RUN cd /opt/Python-$PYTHON_VERSION && \ 
     ./configure --enable-optimizations && make altinstall
 
-RUN python3.9 -m venv avenv
+
+RUN /opt/Python-$PYTHON_VERSION/python -m venv avenv
 
 COPY requirements/ requirements/
 
