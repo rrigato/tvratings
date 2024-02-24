@@ -1,8 +1,11 @@
-FROM amazonlinux:latest
+# Make sure to use the amazonlinux version appropriate to python version 
+# of the operating system documented here:
+# https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html
+FROM amazonlinux:2
 
 ARG BUILT_LAYER_NAME
 
-ENV PYTHON_VERSION="3.9.13"
+ENV PYTHON_VERSION="3.11.8"
 
 RUN yum install -y tar \
     wget \
