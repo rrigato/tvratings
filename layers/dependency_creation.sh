@@ -1,4 +1,4 @@
-export BUILT_LAYER_NAME="ask_sdk_core_1_17_1.zip"
+export BUILT_LAYER_NAME="ask_sdk_core_1_19_0.zip"
 export CONTAINER_NAME="lambda-container"
 export IMAGE_NAME="lambda-dependency"
 

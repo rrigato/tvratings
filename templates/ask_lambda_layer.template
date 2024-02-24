@@ -11,10 +11,18 @@ Parameters:
     Type: String
     Default: layers/ask_sdk_core_most_recent.zip
 
+  askMostRecentPython311Description:
+    Type: String
+    Default: ask-sdk-core==1.19.0 python 3.11.8 runtime
+
+  askMostRecentPython311BucketKey:
+    Type: String
+    Default: layers/ask_sdk_core_1_19_0.zip
+
   askMostRecentVersionDescription:
     Type: String
     Default: ask-sdk-core==1.17.1 will always be the latest version
- 
+
   askMostRecentVersionName:
     Type: String
     Default: ask-sdk-core-most-recent
@@ -53,5 +61,17 @@ Resources:
         S3Bucket: !Ref deploymentBucketName
         S3Key: !Ref askMostRecentBucketKey
       Description: !Ref askMostRecentVersionDescription
+      LayerName: !Ref askMostRecentVersionName
+
+
+  askMostRecentLayerPython311:
+    Type: AWS::Lambda::LayerVersion
+    Properties:
+      CompatibleRuntimes:
+        - python3.11
+      Content:
+        S3Bucket: !Ref deploymentBucketName
+        S3Key: !Ref askMostRecentPython311BucketKey
+      Description: !Ref askMostRecentPython311Description
       LayerName: !Ref askMostRecentVersionName
 
