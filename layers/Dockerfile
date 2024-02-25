@@ -10,14 +10,16 @@ ENV PYTHON_VERSION="3.11.8"
 RUN yum install -y tar \
     wget \
     gcc \
-    openssl-devel \
+    openssl11-devel \
+    openssl11 \
     bzip2-devel \
     libffi-devel \
     gzip \
     make \
     zip
 
-#python3 download
+
+# python3 download
 RUN cd /opt && \
     wget https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz && \
     tar xzf Python-$PYTHON_VERSION.tgz && \
@@ -32,10 +34,10 @@ RUN /opt/Python-$PYTHON_VERSION/python -m venv avenv
 
 COPY requirements/ requirements/
 
-#ask-sdk-core install
+# #ask-sdk-core install
 RUN source avenv/bin/activate && \
     mkdir python && \
-    pip install -r requirements/requirements-ask-layer.txt --target ./python 
+    pip install -r requirements/requirements-dev.txt --target ./python 
 
 #bundle dependency for deployment as layer
 RUN zip -r $BUILT_LAYER_NAME python
