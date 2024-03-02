@@ -7,6 +7,9 @@ ARG BUILT_LAYER_NAME
 
 ENV PYTHON_VERSION="3.11.8"
 
+# note that openssl-devel since it is version openssl v3.x.x 
+# is not compatiable with python 3.11.8
+# The below installs openssl v1.x.x
 RUN yum install -y tar \
     wget \
     gcc \
