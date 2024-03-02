@@ -1,6 +1,6 @@
 aws s3api put-object --bucket lambda-deployment-bundles \
     --key layers/ask_sdk_core_most_recent.zip \
-    --body layers/ask_sdk_core_1_17_1.zip
+    --body layers/ask_sdk_core_1_19_0.zip
 
 
 aws cloudformation create-change-set \

@@ -7,17 +7,22 @@ ARG BUILT_LAYER_NAME
 
 ENV PYTHON_VERSION="3.11.8"
 
+# note that openssl-devel since it is version openssl v3.x.x 
+# is not compatiable with python 3.11.8
+# The below installs openssl v1.x.x
 RUN yum install -y tar \
     wget \
     gcc \
-    openssl-devel \
+    openssl11-devel \
+    openssl11 \
     bzip2-devel \
     libffi-devel \
     gzip \
     make \
     zip
 
-#python3 download
+
+# python3 download
 RUN cd /opt && \
     wget https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz && \
     tar xzf Python-$PYTHON_VERSION.tgz && \
@@ -27,14 +32,15 @@ RUN cd /opt && \
 RUN cd /opt/Python-$PYTHON_VERSION && \ 
     ./configure --enable-optimizations && make altinstall
 
-RUN python3.9 -m venv avenv
+
+RUN /opt/Python-$PYTHON_VERSION/python -m venv avenv
 
 COPY requirements/ requirements/
 
-#ask-sdk-core install
+# #ask-sdk-core install
 RUN source avenv/bin/activate && \
     mkdir python && \
-    pip install -r requirements/requirements-ask-layer.txt --target ./python 
+    pip install -r requirements/requirements-dev.txt --target ./python 
 
 #bundle dependency for deployment as layer
 RUN zip -r $BUILT_LAYER_NAME python

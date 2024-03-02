@@ -64,7 +64,7 @@ Resources:
       LayerName: !Ref askMostRecentVersionName
 
 
-  askMostRecentLayerPython311:
+  askMostRecentPython311:
     Type: AWS::Lambda::LayerVersion
     Properties:
       CompatibleRuntimes:
