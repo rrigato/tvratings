@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
 
 Description: |
-  Lambda function specification for a custom alexa skill and an s3 bucket for 
+  Lambda function specification for a custom alexa skill and an s3 bucket for
   built aws lambda layers
 
 Parameters:
@@ -12,7 +12,7 @@ Parameters:
 
   alexaSkillsKitLayerVersion:
     Type: String
-    Default: 1
+    Default: 2
 
   functionHandler:
     Type: String
@@ -42,6 +42,10 @@ Parameters:
     Type: String
     Default: tvratings
 
+  pythonVersion:
+    Type: String
+    Default: python3.11
+
 Resources:
 
 
@@ -58,7 +62,7 @@ Resources:
 
   lambdaPythonFunction:
     Type: AWS::Lambda::Function
-    Properties: 
+    Properties:
 
       Code:
         S3Bucket: !Ref artifactBucket
@@ -69,13 +73,13 @@ Resources:
       FunctionName: !Sub ${projectName}-alexa-skill
       Handler: !Ref functionHandler
 
-      Layers: 
+      Layers:
         - !Sub 'arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:layer:${alexaSkillsKitLayerName}:${alexaSkillsKitLayerVersion}'
 
       MemorySize: !Ref lambdaMemorySize
       PackageType: Zip
       Role: !Sub arn:aws:iam::${AWS::AccountId}:role/${lambdaExecutionRoleName}
-      Runtime: python3.9
+      Runtime: !Ref pythonVersion
       Timeout: !Ref lambdaTimeout
-      TracingConfig: 
+      TracingConfig:
         Mode: Active
