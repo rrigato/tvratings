@@ -23,15 +23,6 @@ Parameters:
     Type: String
     Default: lambda-deployment-bundles
 
-  oldLayerBucketKey:
-    Type: String
-    Default: ask_layer.zip
-
-  oldLayerBucketName:
-    Type: String
-    Default: burnday-app-artifacts
-
-
 Resources:
 
   askMostRecentPython311:
