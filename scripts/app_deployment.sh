@@ -1,7 +1,16 @@
-#! /bin/bash
-
 #exits program immediately if a command is not sucessful
 set -e
+
+if [ -z "$1" ]; then
+    echo "Missing commit message arguement 1"
+    exit 1
+fi
+
+
+git add -A
+
+git commit -m "$1"
+
 
 export PROJECT_NAME="tvratings"
 export BUCKET_NAME="${PROJECT_NAME}-app-artifacts"
@@ -49,6 +58,15 @@ aws lambda update-function-code --function-name $FUNCTION_NAME \
 deactivate
 
 git push origin dev
+
+echo "pushed to remote"
+
+gh pr create --title "$1" \
+--body "Automated PR creation" \
+--head dev \
+--base master
+
+echo "created PR"
 
 echo "----------------------"
 echo "deployment successful"

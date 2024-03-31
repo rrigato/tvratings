@@ -33,17 +33,6 @@ Parameters:
 
 
 Resources:
-  askPythonLayer:
-    Type: AWS::Lambda::LayerVersion
-    Properties:
-      CompatibleRuntimes:
-        - python3.9
-      Content:
-        S3Bucket: !Ref oldLayerBucketName
-        S3Key: !Ref oldLayerBucketKey
-      Description: Alexa Skills kit python sdk for v1.16.1
-      LayerName: ask-core-1-16-1
-
 
   askMostRecentPython311:
     Type: AWS::Lambda::LayerVersion
