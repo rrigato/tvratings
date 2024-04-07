@@ -28,3 +28,17 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.11
+
+      - name: make-scripts-executable
+        run: |
+          chmod +x 'scripts/tvratings_build_test.sh'
+
+      
+
+      - name: test-and-build-deployment-archive
+        shell: bash
+        env:
+          AWS_ACCOUNT_ID: ${{secrets.AWS_ACCOUNT_ID}}
+          PROJECT_NAME: ${{vars.PROJECT_NAME}}
+          REGION_NAME: ${{vars.REGION_NAME}}
+        run: 'scripts/tvratings_build_test.sh'
