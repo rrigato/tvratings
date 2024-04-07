@@ -1,7 +1,5 @@
 name: application pipeline
 
-env:
-  AWS_ACCOUNT_ID: ${{secrets.AWS_ACCOUNT_ID}}
 
 on:
   push:
@@ -43,5 +41,4 @@ jobs:
         shell: bash
         env:
           AWS_ACCOUNT_ID: ${{secrets.AWS_ACCOUNT_ID}}
-          
         run: 'scripts/tvratings_build_test.sh'
