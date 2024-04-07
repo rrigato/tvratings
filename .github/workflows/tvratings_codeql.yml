@@ -1,4 +1,4 @@
-name: "CodeQLSecurityScan"
+name: "tvratings_codeql"
 
 on:
   push:
