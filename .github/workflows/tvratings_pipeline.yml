@@ -35,6 +35,12 @@ jobs:
         run: |
           chmod +x 'scripts/tvratings_build_test.sh'
 
+      - name: assume-github-actions-role
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          audience: sts.amazonaws.com
+          aws-region: ${{vars.DEFAULT_AWS_REGION}}
+          role-to-assume: arn:aws:iam::${{secrets.AWS_ACCOUNT_ID}}:role/${{secrets.PIPELINE_ROLE_NAME}}
 
 
       - name: test-and-build-deployment-archive
