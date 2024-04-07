@@ -1,4 +1,8 @@
 name: application pipeline
+
+env:
+  AWS_ACCOUNT_ID: ${{secrets.AWS_ACCOUNT_ID}}
+
 on:
   push:
     branches:
@@ -33,12 +37,11 @@ jobs:
         run: |
           chmod +x 'scripts/tvratings_build_test.sh'
 
-      
+
 
       - name: test-and-build-deployment-archive
         shell: bash
         env:
           AWS_ACCOUNT_ID: ${{secrets.AWS_ACCOUNT_ID}}
-          PROJECT_NAME: ${{vars.PROJECT_NAME}}
-          REGION_NAME: ${{vars.REGION_NAME}}
+          
         run: 'scripts/tvratings_build_test.sh'
