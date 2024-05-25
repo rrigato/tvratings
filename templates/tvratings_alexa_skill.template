@@ -18,6 +18,11 @@ Parameters:
     Type: String
     Default: tvratings_skill.alexa_lambda_handler
 
+  githubUser:
+    Default: rrigato
+    Description: 'GitHub organization name'
+    Type: String
+
   lambdaExecutionRoleName:
     Type: String
     Default: tvratings_lambda_role
@@ -37,6 +42,11 @@ Parameters:
     Default: 5
     MinValue: 1
     MaxValue: 900
+
+  oidcAudience:
+    Default: 'sts.amazonaws.com'
+    Description: 'The audience for the OIDC provider'
+    Type: String
 
   projectName:
     Type: String
@@ -83,3 +93,24 @@ Resources:
       Timeout: !Ref lambdaTimeout
       TracingConfig:
         Mode: Active
+
+  projectRoleForGitHubActions:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Action: sts:AssumeRoleWithWebIdentity
+            Principal:
+              Federated:
+                Fn::ImportValue:
+                  githubOidcProviderArn
+            Condition:
+              StringEquals:
+                token.actions.githubusercontent.com:aud: !Ref oidcAudience
+              StringLike:
+                token.actions.githubusercontent.com:sub: !Sub repo:${githubUser}/${projectName}:*
+      Description: !Sub '${projectName} GitHub Actions role to assume'
+      ManagedPolicyArns:
+        - !Sub arn:aws:iam::${AWS::AccountId}:policy/${projectName}_pipeline_permissions
+      RoleName: !Sub ${projectName}-github-actions-role
