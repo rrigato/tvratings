@@ -3,6 +3,9 @@ set -e
 
 export BUCKET_NAME="${PROJECT_NAME}-app-artifacts"
 export DEPLOYMENT_PACKAGE="${PROJECT_NAME}_deployment_package.zip"
+export FUNCTION_NAME="${PROJECT_NAME}-alexa-skill"
+
+
 
 
 python -m venv avenv
@@ -25,3 +28,34 @@ python -m unittest
 deactivate
 
 echo "--------beginning bundle--------"
+
+# removes the deployment .zip package locally if it exists
+if [ -e $DEPLOYMENT_PACKAGE ]; then
+    rm $DEPLOYMENT_PACKAGE
+fi
+
+zip $DEPLOYMENT_PACKAGE -r tvratings externals  \
+    -x *__pycache__*  --quiet
+
+
+#add tvratings_skill.py to root of project
+zip -u $DEPLOYMENT_PACKAGE -j handlers/tvratings_skill.py  \
+    -x *__pycache__* --quiet
+
+echo "--------bundle complete--------"
+
+aws s3api put-object --bucket $BUCKET_NAME \
+    --key $DEPLOYMENT_PACKAGE \
+    --body $DEPLOYMENT_PACKAGE \
+    --tagging "cloudformation_managed=no&project=${PROJECT_NAME}&prod=yes"
+
+
+aws lambda update-function-code --function-name $FUNCTION_NAME \
+    --s3-bucket $BUCKET_NAME \
+    --s3-key $DEPLOYMENT_PACKAGE \
+    --no-cli-pager
+
+
+
+echo "----------------------"
+echo "deployment successful"
