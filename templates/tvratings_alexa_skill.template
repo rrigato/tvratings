@@ -19,7 +19,7 @@ Parameters:
     Default: tvratings_skill.alexa_lambda_handler
 
   githubUser:
-    Default: rrigato
+    Default: ryanrigato
     Description: 'GitHub organization name'
     Type: String
 

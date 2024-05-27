@@ -44,6 +44,8 @@ zip -u $DEPLOYMENT_PACKAGE -j handlers/tvratings_skill.py  \
 
 echo "--------bundle complete--------"
 
+echo $BUCKET_NAME
+echo $DEPLOYMENT_PACKAGE
 aws s3api put-object --bucket $BUCKET_NAME \
     --key $DEPLOYMENT_PACKAGE \
     --body $DEPLOYMENT_PACKAGE \
