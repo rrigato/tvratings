@@ -47,4 +47,5 @@ jobs:
         shell: bash
         env:
           AWS_ACCOUNT_ID: ${{secrets.AWS_ACCOUNT_ID}}
+          PROJECT_NAME: ${{vars.PROJECT_NAME}}
         run: 'scripts/tvratings_build_test.sh'
